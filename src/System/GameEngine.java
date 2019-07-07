@@ -18,6 +18,7 @@ public class GameEngine {
     private PhysicsEngine pe_physEngine;
     private RenderEngine re_renderer;
     private InputEngine ie_inputProcessor;
+    private IOEngine ioe_fileCommunicator;
 
     public GameEngine() {
         //cstr
@@ -26,6 +27,7 @@ public class GameEngine {
         this.pe_physEngine = new PhysicsEngine();
         this.re_renderer = new RenderEngine();
         this.ie_inputProcessor = new InputEngine();
+        this.ioe_fileCommunicator = new IOEngine();
     }
 
     //dstr would go here, but java is a thing so..........

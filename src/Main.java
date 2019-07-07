@@ -7,8 +7,11 @@ Main will definitely call GameEngine to start the game execution
  */
 
 import System.GameEngine;
+import UserInput.Console;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Main {
     //entry method, args is cmd line arguments
@@ -20,22 +23,20 @@ public class Main {
 
         System.out.println("Engine finished running, ending program..."); //placeholder line
 
-        //temp lines
-        java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-        String line;
-        try {
-            while (true) {
-                line = br.readLine();
-                if (line != null) {
-                    if (line.equals("end")) {
-                        break; //break out of the while loop
+        ArrayList<String> inputs = new ArrayList<String>();
+        ArrayList<String> errors = new ArrayList<String>();
+
+        while (true) {
+
+            if (Console.getConsoleOutput(inputs, errors)) {
+                for (String str : inputs) {
+                    if (str.equals("end")) {
+                        break;
+                    } else {
+                        System.out.println(str);
                     }
-                    System.out.println(line);
                 }
             }
-        }
-        catch(IOException error) {
-            System.out.println("IO error occurred");
         }
     }
 }
