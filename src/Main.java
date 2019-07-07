@@ -14,7 +14,7 @@ public class Main {
         System.out.println("hello there, program starting..."); //placeholder line
 
         GameEngine e = new GameEngine();
-        e.startEngine();
+        e.startEngine("GameData/game.sav");
 
         System.out.println("Engine finished running, ending program..."); //placeholder line
     }
