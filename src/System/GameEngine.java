@@ -32,6 +32,8 @@ public class GameEngine {
         this.re_renderer = new RenderEngine();
         this.ie_inputProcessor = new InputEngine();
         this.ioe_fileCommunicator = new IOEngine();
+
+        this.v_gs_scriptQueue = new Vector<GameScript>();
     }
 
     //dstr would go here, but java is a thing so..........
@@ -50,7 +52,12 @@ public class GameEngine {
      */
     public void run() {
         while (true) {
+            this.v_gs_scriptQueue.clear();
             this.v_gs_scriptQueue.addAll(this.ie_inputProcessor.run()); //runs the input processor
+
+            for (GameScript gs_temp : this.v_gs_scriptQueue) {
+                this.ioe_fileCommunicator.outputToConsole(gs_temp);
+            }
         }
     }
 }

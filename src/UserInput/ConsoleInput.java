@@ -12,10 +12,11 @@ The Console class handles console inputs and everything related to that
 -getConsoleOutput attempts to read from the console, and will return true if a user has typed something
 
  */
-public class Console {
+public class ConsoleInput {
     //member vars
     private static String str_currentLine = null; //a variable used to hold the current line in the console(null if no input detected)
-    private static BufferedReader br_console = new BufferedReader(new InputStreamReader(System.in)); //console reader reading from System.in
+    private static InputStreamReader isr_reader = new InputStreamReader(System.in); //input stream reader for System.in
+    private static BufferedReader br_console = new BufferedReader(isr_reader); //console reader reading from System.in
 
     /*
     This method takes an ArrayList<String> reference v_str_output as a parameter, that ArrayList will be the output for the method
@@ -38,12 +39,14 @@ public class Console {
 
         //try catch for reading from console
         try {
-            str_currentLine = br_console.readLine(); //reads line from console
+            if (br_console.ready()) {
+                str_currentLine = br_console.readLine(); //reads line from console
 
-            if (str_currentLine != null) //if user has input
-            {
-                v_str_output.add(str_currentLine);
-                returnVal = true; //user has inputted, return true
+                if (str_currentLine != null) //if user has input
+                {
+                    v_str_output.add(str_currentLine);
+                    returnVal = true; //user has inputted, return true
+                }
             }
         }
         catch (IOException error) {

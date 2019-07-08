@@ -18,7 +18,7 @@ public class DataProcessor {
     public static void processErrorData(Vector<GameScript> v_gs_output, Vector<String> v_str_data) {
         Iterator<String> it = v_str_data.iterator(); //iterates through the data and adds each one as a new log request to the output
         while (it.hasNext()) {
-            v_gs_output.add(new LogRequest(it.next()));
+            v_gs_output.add(new LogRequest("ERROR: " + it.next()));
         }
     }
 

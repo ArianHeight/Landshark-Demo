@@ -28,11 +28,13 @@ public class ConsoleWatch extends Observable {
 
     //checks the Console for user input and if there is such an input, notify the input engine to grab the new data
     public void run() {
-        if (Console.getConsoleOutput(this.v_str_inputs, this.v_str_errors)) {
+        if (ConsoleInput.getConsoleOutput(this.v_str_inputs, this.v_str_errors)) {
             if (this.v_str_errors.size() != 0) {
+                this.setChanged();
                 this.notifyObservers(GameScript.LOG_DATA);
             }
             if (this.v_str_inputs.size() != 0) {
+                this.setChanged();
                 this.notifyObservers(GameScript.PROCESS_DATA);
             }
         }
