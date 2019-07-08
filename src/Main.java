@@ -10,7 +10,7 @@ import System.GameEngine;
 import UserInput.Console;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Vector;
 import java.util.Iterator;
 
 public class Main {
@@ -23,8 +23,8 @@ public class Main {
 
         System.out.println("Engine finished running, ending program..."); //placeholder line
 
-        ArrayList<String> inputs = new ArrayList<String>();
-        ArrayList<String> errors = new ArrayList<String>();
+        Vector<String> inputs = new Vector<String>();
+        Vector<String> errors = new Vector<String>();
 
         while (true) {
 

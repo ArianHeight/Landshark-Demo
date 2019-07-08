@@ -1,9 +1,11 @@
 package System;
 
+import Data.Communication.GameScript;
 import Render.RenderEngine;
 import Physics.PhysicsEngine;
 import UserInput.InputEngine;
 import IO.IOEngine;
+import java.util.Vector;
 
 /*
 
@@ -19,6 +21,8 @@ public class GameEngine {
     private RenderEngine re_renderer;
     private InputEngine ie_inputProcessor;
     private IOEngine ioe_fileCommunicator;
+
+    private Vector<GameScript> v_gs_scriptQueue; //a queue to store all scripts waiting to be executed
 
     public GameEngine() {
         //cstr
@@ -37,5 +41,16 @@ public class GameEngine {
      */
     public int startEngine(String str_fileLoc) {
         return 0;
+    }
+
+    /*
+
+    TODO descrription...
+
+     */
+    public void run() {
+        while (true) {
+            this.v_gs_scriptQueue.addAll(this.ie_inputProcessor.run()); //runs the input processor
+        }
     }
 }
