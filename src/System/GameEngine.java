@@ -21,6 +21,7 @@ public class GameEngine {
     private RenderEngine re_renderer;
     private InputEngine ie_inputProcessor;
     private IOEngine ioe_fileCommunicator;
+    private TimeProcessor tp_timer;
 
     private boolean b_gameloop;
     private Vector<GameScript> v_gs_scriptQueue; //a queue to store all scripts waiting to be executed
@@ -28,11 +29,12 @@ public class GameEngine {
     public GameEngine() {
         //cstr
 
-        //initialize all member vars
+        //initialize all member vars TODO maybe move some to startEngine
         this.pe_physEngine = new PhysicsEngine();
         this.re_renderer = new RenderEngine();
         this.ie_inputProcessor = new InputEngine();
         this.ioe_fileCommunicator = new IOEngine();
+        this.tp_timer = new TimeProcessor();
 
         this.b_gameloop = true;
         this.v_gs_scriptQueue = new Vector<GameScript>();
@@ -53,7 +55,11 @@ public class GameEngine {
     public void processScript(GameScript gs_script) {
         switch (gs_script.getCmd()) {
             case GameScript.LOG_DATA:
+                this.tp_timer.tagScript(gs_script);
                 this.ioe_fileCommunicator.processRequest(gs_script);
+                break;
+            case GameScript.END_PROGRAM:
+                this.b_gameloop = false; //end program here
                 break;
         }
     }

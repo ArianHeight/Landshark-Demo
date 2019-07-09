@@ -1,8 +1,8 @@
 package Data;
 
 import java.util.Vector;
-import Data.Structure.Component;
+import Data.Structure.*;
 
 public class GameObject {
-    private Vector<Component> v_c_memberComponents;
+    private Vector<GameComponent> v_c_memberComponents;
 }

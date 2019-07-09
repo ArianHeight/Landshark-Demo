@@ -1,7 +1,5 @@
 package Data.Communication;
 
-import UserInput.Console;
-
 /*
 
 Extends the GameScript Class

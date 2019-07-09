@@ -11,6 +11,7 @@ public abstract class GameScript {
     public final static int LOG_DATA = 0;
     public final static int COUT_DATA = 1;
     public final static int PROCESS_DATA = 2;
+    public final static int END_PROGRAM = 3;
 
     private int i_cmd; //the type of script, for example LOG_DATA would be processed as a request to log the information
     private String str_data; //contains potentially extra information about the script
@@ -37,5 +38,23 @@ public abstract class GameScript {
      */
     public String getData() {
         return this.str_data;
+    }
+
+    /*
+    REQUIRES:int input
+    MODIFIES:this
+    EFFECT:Sets a new script type based on the input
+     */
+    public void setCmd(int i_newCmd) {
+        this.i_cmd = i_newCmd;
+    }
+
+    /*
+    REQUIRES:String input
+    MODIFIES:this
+    EFFECT:Sets the data contained to str_newData
+     */
+    public void setData(String str_newData) {
+        this.str_data = str_newData;
     }
 }
