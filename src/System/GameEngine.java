@@ -48,6 +48,12 @@ public class GameEngine {
     public int startEngine(String str_fileLoc) {
         this.v_gs_scriptQueue.add(new LogRequest("Game Engine Initiallizing...")); //starts the engine
 
+        this.v_gs_scriptQueue.add(new LogRequest("Creating Window Context...")); //opens the game window
+        String str_tempLog = this.re_renderer.openWindow();
+        if (!str_tempLog.equals("")) {
+            this.v_gs_scriptQueue.add(new LogRequest(str_tempLog)); //log if there is error
+        }
+
         return 0;
     }
 
@@ -78,6 +84,7 @@ public class GameEngine {
 
                 //temp code
                 if (gs_temp.getData().equals("end")) {
+                    this.re_renderer.closeWindow();
                     return; //temp exit code
                 }
             }

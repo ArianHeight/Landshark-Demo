@@ -17,7 +17,7 @@ public abstract class GameScript {
     private String str_data; //contains potentially extra information about the script
 
     //cstr, creates a gamescript with i_type for type and str_info for data
-    public GameScript(int i_type, String str_info) {
+    protected GameScript(int i_type, String str_info) {
         this.i_cmd = i_type;
         this.str_data = str_info;
     }
