@@ -12,6 +12,7 @@ import System.TimeProcessor;
 public class Main {
     //entry method, args is cmd line arguments
     public static void main(String args[]) {
+        Tester.run();
 
         TimeProcessor t = new TimeProcessor();
         System.out.println(t.tagMsg("I say hi"));

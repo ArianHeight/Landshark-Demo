@@ -48,13 +48,17 @@ public class GameEngine {
     TODO description
      */
     public int startEngine(String str_fileLoc) {
-        this.v_gs_scriptQueue.add(new LogRequest("Game Engine Initiallizing...")); //starts the engine
+        this.v_gs_scriptQueue.add(new LogRequest("Game Engine Initializing...")); //starts the engine
 
         this.v_gs_scriptQueue.add(new LogRequest("Creating Window Context...")); //opens the game window
         String str_tempLog = this.re_renderer.openWindow();
         if (!str_tempLog.equals("")) {
             this.v_gs_scriptQueue.add(new LogRequest(str_tempLog)); //log if there is error
         }
+
+        this.v_gs_scriptQueue.add(new LogRequest("Attempting to link keyboard handler to window context..."));
+        this.re_renderer.addKeyListenerToWindow(this.ie_inputProcessor.getKeyHandler());
+        this.v_gs_scriptQueue.add(new LogRequest("Link established..."));
 
         return 0;
     }
@@ -84,7 +88,7 @@ public class GameEngine {
             for (GameScript gs_temp : this.v_gs_scriptQueue) {
                 this.processScript(gs_temp);
 
-                //temp code
+                //TODO remove temp code
                 if (gs_temp.getData().equals("end")) {
                     this.re_renderer.closeWindow();
                     return; //temp exit code

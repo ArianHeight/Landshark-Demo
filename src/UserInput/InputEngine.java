@@ -1,6 +1,7 @@
 package UserInput;
 
 import Data.Communication.GameScript;
+import GameLogic.KeyBindings;
 import Utility.DataProcessor;
 
 import java.util.Observable;
@@ -16,11 +17,15 @@ public class InputEngine implements Observer{
     //member vars
     private ConsoleWatch cw_listener;
     private Vector<GameScript> v_gs_scripts;
+    private GameKeyInput gki_listener;
 
     //cstr
     public InputEngine() {
         this.cw_listener = new ConsoleWatch(this); //makes a linked cw obj
         this.v_gs_scripts = new Vector<GameScript>();
+        gki_listener = new GameKeyInput();
+
+        KeyBindings.createKeyBindings(); //make the key bindings
     }
 
     /*
@@ -31,6 +36,7 @@ public class InputEngine implements Observer{
     public Vector<GameScript> run() {
         this.v_gs_scripts.clear(); //clears the scripts
         this.cw_listener.run(); //tells the console watch to listen
+        this.gki_listener.refresh(this.v_gs_scripts); //gives this.v_gs_scripts as an output to the listener's refresh method
 
         return this.v_gs_scripts; //outputs the scripts
     }
@@ -51,5 +57,12 @@ public class InputEngine implements Observer{
                     break;
             }
         }
+    }
+
+    /*
+    this method returns a reference to the gki_listener
+     */
+    public GameKeyInput getKeyHandler() {
+        return gki_listener;
     }
 }

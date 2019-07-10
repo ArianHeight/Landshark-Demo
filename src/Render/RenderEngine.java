@@ -6,6 +6,7 @@ import Data.Structure.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.util.Iterator;
@@ -131,6 +132,11 @@ public class RenderEngine {
             error.printStackTrace();
             v_gs_engineRequests.add(new LogRequest("Renderer encountered an error while attempting to draw frame"));
         }
+    }
+
+    //adds a KeyListener to window context
+    public void addKeyListenerToWindow(KeyListener kl_listener) {
+        this.j_windowContext.addKeyListener(kl_listener);
     }
 
     //takes a double x and y coord in world space and translates it to screen space
