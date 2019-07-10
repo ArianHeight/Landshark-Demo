@@ -5,8 +5,8 @@ import java.util.Vector;
 import Data.Structure.*;
 
 public class GameObject {
-    private Vector<GameComponent> v_c_memberComponents;
-    private Vector<GameObject> v_go_memberObjects;
+    protected Vector<GameComponent> v_c_memberComponents;
+    protected Vector<GameObject> v_go_memberObjects;
 
     //cstr
     public GameObject() {
@@ -19,6 +19,13 @@ public class GameObject {
      */
     public void addComponent(GameComponent gc_component) {
         this.v_c_memberComponents.add(gc_component);
+    }
+
+    /*
+    takes a GameObject as an input and adds it to the memberObjects list
+     */
+    public void addGameObject(GameObject go_obj) {
+        this.v_go_memberObjects.add(go_obj);
     }
 
     /*

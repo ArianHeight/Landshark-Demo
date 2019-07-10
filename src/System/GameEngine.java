@@ -74,7 +74,7 @@ public class GameEngine {
 
     /*
 
-    TODO descrription...
+    TODO description...
 
      */
     public void run() {

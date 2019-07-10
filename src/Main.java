@@ -17,7 +17,7 @@ public class Main {
         System.out.println(t.tagMsg("I say hi"));
 
         GameEngine e = new GameEngine();
-        e.startEngine("GameData/game.sav");
+        e.startEngine("./Game/System/Save/game_active.sav");
 
         e.run();
 

@@ -3,7 +3,8 @@ package Data.Structure;
 public abstract class GameComponent {
     public enum gcType { //enums for determining type of component
         VISUAL_TEXTURE,
-        VISUAL_ANIM
+        VISUAL_ANIM,
+        PHYSICS
     }
 
     private gcType gct_componentType;

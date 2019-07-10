@@ -132,4 +132,9 @@ public class RenderEngine {
             v_gs_engineRequests.add(new LogRequest("Renderer encountered an error while attempting to draw frame"));
         }
     }
+
+    //takes a double x and y coord in world space and translates it to screen space
+    public static int worldSpaceToScreenSpace (double d_x, double d_y) {
+        return 0; //TODO temp
+    }
 }
