@@ -30,7 +30,7 @@ public class GameObject {
 
     /*
     Takes a vector of GameComponents as input
-    that vector will be used as an output queue to store all game components of type gct_type into
+    that vector will be used as an output queue to store all active game components of type gct_type into
 
     does not clear the vector output
      */
@@ -42,7 +42,7 @@ public class GameObject {
         Iterator<GameComponent> gct_it = this.v_c_memberComponents.iterator();
         while (gct_it.hasNext()) {
             gc_temp = gct_it.next();
-            if (gc_temp.getType() == gct_type) {
+            if (gc_temp.getType() == gct_type && gc_temp.isActive()) {
                 v_gc_output.add(gc_temp); //only add if the type matches
             }
         }

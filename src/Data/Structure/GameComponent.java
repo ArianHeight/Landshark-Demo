@@ -8,8 +8,10 @@ public abstract class GameComponent {
     }
 
     private gcType gct_componentType;
+    private boolean b_isActive;
 
     protected GameComponent(gcType gct_type) {
+        this.b_isActive = true;
         this.gct_componentType = gct_type;
     }
 
@@ -28,4 +30,25 @@ public abstract class GameComponent {
     EFFECT:Returns data that is carried by this component
      */
     public abstract Object getData();
+
+    /*
+    REQUIRES:NONE
+    MODIFIES:this
+    EFFECT:Activates the GameComponent
+     */
+    public void activate() { this.b_isActive = true; }
+
+    /*
+    REQUIRES:NONE
+    MODIFIES:this
+    EFFECT:Deactivates the GameComponent
+     */
+    public void deactivate() { this.b_isActive = false; }
+
+    /*
+    REQUIRES:NONE
+    MODIFIES:NONE
+    EFFECT:Returns whether the component is active or not
+     */
+    public boolean isActive() { return this.b_isActive; }
 }

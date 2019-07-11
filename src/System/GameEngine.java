@@ -93,6 +93,9 @@ public class GameEngine {
                     this.re_renderer.closeWindow();
                     return; //temp exit code
                 }
+                if (gs_temp.getData().equals("Jump")) {
+                    System.out.println("jump");
+                }
             }
             this.v_gs_scriptQueue.clear();
         }
