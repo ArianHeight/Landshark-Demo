@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Vector;
 import Data.Structure.*;
 
-public class GameObject {
+public abstract class GameObject {
     protected Vector<GameComponent> v_c_memberComponents;
     protected Vector<GameObject> v_go_memberObjects;
 

@@ -1,7 +1,9 @@
 package System;
 
 import Data.Communication.*;
-import Data.Structure.*;
+import Data.GameObject;
+import Data.GameScene;
+import GameLogic.LogicEngine;
 import Render.RenderEngine;
 import Physics.PhysicsEngine;
 import UserInput.InputEngine;
@@ -24,9 +26,11 @@ public class GameEngine {
     private InputEngine ie_inputProcessor;
     private IOEngine ioe_fileCommunicator;
     private TimeProcessor tp_timer;
+    private LogicEngine le_logicProcessor;
 
     private boolean b_gameloop;
     private Vector<GameScript> v_gs_scriptQueue; //a queue to store all scripts waiting to be executed
+    private GameObject go_scene; //the scene graph for the entire game
 
     public GameEngine() {
         //cstr
@@ -40,6 +44,7 @@ public class GameEngine {
 
         this.b_gameloop = true;
         this.v_gs_scriptQueue = new Vector<GameScript>();
+        this.go_scene = new GameScene();
     }
 
     //dstr would go here, but java is a thing so..........
@@ -84,6 +89,10 @@ public class GameEngine {
     public void run() {
         while (this.b_gameloop) {
             this.v_gs_scriptQueue.addAll(this.ie_inputProcessor.run()); //runs the input processor
+            //Game Logic
+            this.pe_physEngine.doSceneCollisionDetection(this.go_scene, this.v_gs_scriptQueue); //do physics
+            //more game logic
+            this.re_renderer.renderSceneToWindow(this.go_scene, this.v_gs_scriptQueue); //draws to window
 
             for (GameScript gs_temp : this.v_gs_scriptQueue) {
                 this.processScript(gs_temp);

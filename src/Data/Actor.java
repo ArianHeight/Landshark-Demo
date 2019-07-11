@@ -1,4 +1,4 @@
-package GameLogic;
+package Data;
 
 import Data.GameObject;
 import java.util.Iterator;

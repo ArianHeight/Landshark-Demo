@@ -39,7 +39,7 @@ public class RenderEngine {
         this.j_windowContext.setResizable(b_standardResizableWindow);
         this.j_windowContext.setDefaultCloseOperation(i_standardCloseBehaviour);
 
-        Vector<GameComponent> v_gc_renderTargets = new Vector<GameComponent>(); //for rendering
+        this.v_gc_renderTargets = new Vector<GameComponent>(); //for rendering
     }
 
     /*
@@ -129,7 +129,7 @@ public class RenderEngine {
             bs_buffer.show(); //flush the buffer to screen
         }
         catch (Exception error) {
-            error.printStackTrace();
+            //error.printStackTrace();
             v_gs_engineRequests.add(new LogRequest("Renderer encountered an error while attempting to draw frame"));
         }
     }

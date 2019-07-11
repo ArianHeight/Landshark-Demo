@@ -102,11 +102,40 @@ public class PhysicsEngine {
         //all pc_two coords - pc_one coords
         HitboxAABB hb_one = (HitboxAABB) pc_one.getData();
         HitboxAABB hb_two = (HitboxAABB) pc_two.getData();
-        double d_deltaLeft = hb_two.getRight() - hb_one.getLeft();
-        double d_deltaRight = hb_two.getLeft() - hb_one.getRight();
-        double d_deltaTop = hb_two.getBottom() - hb_one.getTop();
-        double d_deltaBottom = hb_two.getTop() - hb_one.getBottom();
+        double d_deltaLeft = hb_two.getRight() - hb_one.getLeft(); //positive if overlapping
+        double d_deltaRight = hb_one.getRight() - hb_two.getLeft(); //pos if overlapping
+        double d_deltaTop = hb_one.getTop() - hb_two.getBottom(); //pos if overlapping
+        double d_deltaBottom = hb_two.getTop() - hb_one.getBottom(); //pos if overlapping
 
-        //TODO finish this part of the code
+        //stores the movements that hb_one will have to undergo
+        double d_xMove = 0.0;
+        double d_yMove = 0.0;
+
+        if (d_deltaLeft >= 0) {
+            d_xMove = d_deltaLeft;
+        }
+        else {
+            d_xMove = -d_deltaRight;
+        }
+        if (d_deltaTop >= 0) {
+            d_yMove = -d_deltaTop;
+        }
+        else {
+            d_yMove = d_deltaBottom;
+        }
+
+        //picks the direction with the least movement required and moves the hitboxes according to their masses
+        if (Math.abs(d_xMove) < Math.abs(d_yMove)) {
+            hb_one.moveX(d_xMove * d_favorOnePercentage);
+            hb_two.moveX(-d_xMove * (1.0 - d_favorOnePercentage));
+        }
+        else {
+            hb_one.moveY(d_yMove * d_favorOnePercentage);
+            hb_two.moveY(-d_yMove * (1.0 - d_favorOnePercentage));
+        }
+
+        //flags for update in the two components
+        pc_one.setUpdated();
+        pc_two.setUpdated();
     }
 }

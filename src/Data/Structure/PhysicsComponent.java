@@ -64,7 +64,7 @@ public class PhysicsComponent extends GameComponent{
     public boolean updatedByEngine() { return this.b_updated; }
 
     //returns whether or not the object can be moved
-    public boolean canBeMoved() { return (this.d_mass < 0); }
+    public boolean canBeMoved() { return (this.d_mass >= 0); }
 
     //returns the mass of the object
     public double getMass() { return this.d_mass; }
