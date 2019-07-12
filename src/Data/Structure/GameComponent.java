@@ -4,7 +4,8 @@ public abstract class GameComponent {
     public enum gcType { //enums for determining type of component
         VISUAL_TEXTURE,
         VISUAL_ANIM,
-        PHYSICS
+        PHYSICS,
+        HITPOINT
     }
 
     private gcType gct_componentType;

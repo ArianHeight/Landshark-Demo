@@ -36,7 +36,8 @@ public abstract class GameObject {
     /*
     MODIFIES:v_gc_output
     EFFECT:Takes a vector of GameComponents as input
-           that vector will be used as an output queue to store all active game components of type gct_type into
+           that vector will be used as an output queue to store all active game components of type gct_type
+           from this Object and all of its children into
            does not clear the vector output
      */
     public void compileComponentList(Vector<GameComponent> v_gc_output, GameComponent.gcType gct_type) {
@@ -57,5 +58,26 @@ public abstract class GameObject {
         while (go_it.hasNext()) {
             go_it.next().compileComponentList(v_gc_output, gct_type); //recursive call
         }
+    }
+
+    /*
+    MODIFIES:None
+    EFFECT:takes a game component type and returns the first active component of that type of this object
+           returns null if nothing is found
+     */
+    public GameComponent findFirstActiveComponentInObj(GameComponent.gcType gct_type) {
+        //variable to store individual GameComponents
+        GameComponent gc_temp = null;
+
+        //iterates through all components and only add the matching ones
+        Iterator<GameComponent> gct_it = this.v_c_memberComponents.iterator();
+        while (gct_it.hasNext()) {
+            gc_temp = gct_it.next();
+            if (gc_temp.getType() == gct_type && gc_temp.isActive()) {
+                return gc_temp;
+            }
+        }
+
+        return null; //non found
     }
 }

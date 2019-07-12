@@ -93,7 +93,7 @@ public class PhysicsEngine {
                 break;
             case 3:
             default: //both can be moved
-                d_favorOnePercentage = pc_one.getMass() / (pc_one.getMass() + pc_two.getMass()); //potential divide by zero error
+                d_favorOnePercentage = pc_two.getMass() / (pc_one.getMass() + pc_two.getMass()); //potential divide by zero error
         }
 
         //all pc_two coords - pc_one coords
