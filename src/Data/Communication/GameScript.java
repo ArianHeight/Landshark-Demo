@@ -46,7 +46,7 @@ public abstract class GameScript {
     MODIFIES:this
     EFFECT:Sets a new script type based on the input
      */
-    public void setCmd(int i_newCmd) {
+    private void setCmd(int i_newCmd) {
         this.i_cmd = i_newCmd;
     }
 

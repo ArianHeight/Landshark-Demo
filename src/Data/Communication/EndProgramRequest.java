@@ -11,4 +11,8 @@ public class EndProgramRequest extends GameScript{
     public EndProgramRequest() {
         super(END_PROGRAM, "");
     }
+
+    //locking the setData() to do nothing because there is no data to set
+    @Override
+    public void setData(String str_newData) { }
 }
