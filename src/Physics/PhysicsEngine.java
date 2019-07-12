@@ -105,26 +105,14 @@ public class PhysicsEngine {
         double d_deltaUp = hb_two.getTop() - hb_one.getBottom(); //pos if overlapping
 
         //stores the movements that hb_one will have to undergo
-        double d_xMove = 0.0;
-        double d_yMove = 0.0;
+        double d_xMove = -d_deltaLeft;
+        double d_yMove = -d_deltaDown;
 
-        if (d_deltaLeft >= 0 && (d_deltaRight < 0 || d_deltaLeft < d_deltaRight)) {
-            d_xMove = -d_deltaLeft;
-        }
-        else if (d_deltaRight >= 0) {
+        if (Math.abs(d_deltaRight) < Math.abs(d_xMove) ) {
             d_xMove = d_deltaRight;
         }
-        else {
-            d_xMove = Double.MAX_VALUE;
-        }
-        if (d_deltaUp >= 0 && (d_deltaDown < 0 || d_deltaUp < d_deltaDown)) {
+        if (Math.abs(d_deltaUp) < Math.abs(d_yMove)) {
             d_yMove = d_deltaUp;
-        }
-        else if (d_deltaDown >= 0) {
-            d_yMove = -d_deltaDown;
-        }
-        else {
-            d_yMove = Double.MAX_VALUE;
         }
 
         //picks the direction with the least movement required and moves the hitboxes according to their masses

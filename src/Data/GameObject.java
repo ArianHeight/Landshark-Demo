@@ -1,8 +1,9 @@
 package Data;
 
+import Data.Structure.GameComponent;
+
 import java.util.Iterator;
 import java.util.Vector;
-import Data.Structure.*;
 
 public abstract class GameObject {
     protected Vector<GameComponent> v_c_memberComponents;
@@ -15,24 +16,28 @@ public abstract class GameObject {
     }
 
     /*
-    takes a GameComponent as an input and attaches it to the object
+    REQUIRES:gc_component is not null
+    MODIFIES:this
+    EFFECT:takes a GameComponent as an input and attaches it to the object
      */
     public void addComponent(GameComponent gc_component) {
         this.v_c_memberComponents.add(gc_component);
     }
 
     /*
-    takes a GameObject as an input and adds it to the memberObjects list
+    REQUIRES:go_obj is not null
+    MODIFIES:this
+    EFFECT:takes a GameObject as an input and adds it to the memberObjects list
      */
     public void addGameObject(GameObject go_obj) {
         this.v_go_memberObjects.add(go_obj);
     }
 
     /*
-    Takes a vector of GameComponents as input
-    that vector will be used as an output queue to store all active game components of type gct_type into
-
-    does not clear the vector output
+    MODIFIES:v_gc_output
+    EFFECT:Takes a vector of GameComponents as input
+           that vector will be used as an output queue to store all active game components of type gct_type into
+           does not clear the vector output
      */
     public void compileComponentList(Vector<GameComponent> v_gc_output, GameComponent.gcType gct_type) {
         //variable to store individual GameComponents

@@ -42,7 +42,7 @@ public abstract class GameScript {
     }
 
     /*
-    REQUIRES:int input
+    REQUIRES:input from a public int field in this class
     MODIFIES:this
     EFFECT:Sets a new script type based on the input
      */

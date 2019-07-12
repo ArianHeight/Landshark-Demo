@@ -27,11 +27,11 @@ public class GameFileWriter {
     }
 
     /*
-    This method is to be called before any other method can be called, may chain from cstr in future
-    Opens a file without truncating it, for writing
-    Takes a boolean param b_truncFile which will determine if the file will be truncated before any writing
-
-    this method returns an empty string if every thing goes well, but will return an error msg if there is an error
+    IMPORTANT:This method is to be called before any other method can be called, may chain from cstr in future
+    MODIFIES:this
+    EFFECT:Opens a file without truncating it, for writing
+           Takes a boolean param b_truncFile which will determine if the file will be truncated before any writing
+           this method returns an empty string if every thing goes well, but will return an error msg if there is an error
      */
     public String openFile(boolean b_truncFile) {
         if (this.b_isOpen) {
@@ -61,10 +61,11 @@ public class GameFileWriter {
     }
 
     /*
-    This method is to be called after everything that you want to be written has been written
-    Closes a file that was open for writing
-
-    this method returns an empty string if every thing goes well, but will return an error msg if there is an exception thrown
+    IMPORTANT:This method is to be called after everything that you want to be written has been written
+    REQUIRES:The file has been opened(this.OpenFile(boolean) has been called once and this method has not)
+    MODIFIES:this
+    EFFECT:Closes a file that was open for writing
+           this method returns an empty string if every thing goes well, but will return an error msg if there is an exception thrown
      */
     public String closeFile() {
         if (!this.b_isOpen) { //file guard
@@ -83,9 +84,11 @@ public class GameFileWriter {
     }
 
     /*
-    Takes String message as an input and writes that msg to the file if it has been opened
-    Takes a boolean var as an input and will create a newline based on that
-    Please remember to call openFile beforehand
+    REQUIRES:A legible message to be written in str_msg
+    MODIFIES:this
+    EFFECT:Takes String message as an input and writes that msg to the file if it has been opened
+           Takes a boolean var as an input and will create a newline based on that
+           Please remember to call openFile beforehand
      */
     public String writeContentToFile(String str_msg, boolean b_newline) {
         if (!this.b_isOpen) { //file guard

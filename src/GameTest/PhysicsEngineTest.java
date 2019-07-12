@@ -26,7 +26,7 @@ public class PhysicsEngineTest {
     }
 
     @Test
-    public void test1b () {
+    public void test1b () { //test AABB detection method
         HitboxAABB hb_one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
         HitboxAABB hb_two = new HitboxAABB(0.5, 1.5, 1.0, 0.0);
         assertTrue(pe.doCollisionDetection(hb_one, hb_two));
