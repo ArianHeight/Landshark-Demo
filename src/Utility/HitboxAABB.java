@@ -46,6 +46,6 @@ public class HitboxAABB {
     //moves the hitbox in the positive x direction by d_moveRight
     public void moveX(double d_moveRight) {
         this.d_left += d_moveRight;
-        this.d_bottom += d_moveRight;
+        this.d_right += d_moveRight;
     }
 }

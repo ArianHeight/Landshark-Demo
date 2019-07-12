@@ -1,14 +1,13 @@
 package Physics;
 
-import java.util.Iterator;
-import java.util.Vector;
-import java.lang.Math.*;
-
 import Data.Communication.CollisionDetectedRequest;
 import Data.Communication.GameScript;
-import Data.Structure.*;
-import Data.*;
+import Data.GameObject;
+import Data.Structure.GameComponent;
+import Data.Structure.PhysicsComponent;
 import Utility.HitboxAABB;
+
+import java.util.Vector;
 
 /*
 
@@ -54,10 +53,8 @@ public class PhysicsEngine {
 
     /*
     this method takes two hitboxes and checks if they are colliding
-
-    private so only this class can use it XD
      */
-    private static boolean doCollisionDetection(HitboxAABB hb_one, HitboxAABB hb_two) {
+    public static boolean doCollisionDetection(HitboxAABB hb_one, HitboxAABB hb_two) {
         //AABB collision detection
         if (hb_one.getLeft() <= hb_two.getRight() && hb_one.getRight() >= hb_two.getLeft()) {
             if (hb_one.getTop() >= hb_two.getBottom() && hb_one.getBottom() <= hb_two.getTop()) {
@@ -102,26 +99,32 @@ public class PhysicsEngine {
         //all pc_two coords - pc_one coords
         HitboxAABB hb_one = (HitboxAABB) pc_one.getData();
         HitboxAABB hb_two = (HitboxAABB) pc_two.getData();
-        double d_deltaLeft = hb_two.getRight() - hb_one.getLeft(); //positive if overlapping
-        double d_deltaRight = hb_one.getRight() - hb_two.getLeft(); //pos if overlapping
-        double d_deltaTop = hb_one.getTop() - hb_two.getBottom(); //pos if overlapping
-        double d_deltaBottom = hb_two.getTop() - hb_one.getBottom(); //pos if overlapping
+        double d_deltaRight = hb_two.getRight() - hb_one.getLeft(); //positive if overlapping
+        double d_deltaLeft = hb_one.getRight() - hb_two.getLeft(); //pos if overlapping
+        double d_deltaDown = hb_one.getTop() - hb_two.getBottom(); //pos if overlapping
+        double d_deltaUp = hb_two.getTop() - hb_one.getBottom(); //pos if overlapping
 
         //stores the movements that hb_one will have to undergo
         double d_xMove = 0.0;
         double d_yMove = 0.0;
 
-        if (d_deltaLeft >= 0) {
-            d_xMove = d_deltaLeft;
+        if (d_deltaLeft >= 0 && (d_deltaRight < 0 || d_deltaLeft < d_deltaRight)) {
+            d_xMove = -d_deltaLeft;
+        }
+        else if (d_deltaRight >= 0) {
+            d_xMove = d_deltaRight;
         }
         else {
-            d_xMove = -d_deltaRight;
+            d_xMove = Double.MAX_VALUE;
         }
-        if (d_deltaTop >= 0) {
-            d_yMove = -d_deltaTop;
+        if (d_deltaUp >= 0 && (d_deltaDown < 0 || d_deltaUp < d_deltaDown)) {
+            d_yMove = d_deltaUp;
+        }
+        else if (d_deltaDown >= 0) {
+            d_yMove = -d_deltaDown;
         }
         else {
-            d_yMove = d_deltaBottom;
+            d_yMove = Double.MAX_VALUE;
         }
 
         //picks the direction with the least movement required and moves the hitboxes according to their masses
