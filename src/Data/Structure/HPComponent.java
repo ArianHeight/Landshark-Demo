@@ -37,4 +37,12 @@ public class HPComponent extends GameComponent {
         this.i_hp -= i_dmg;
         return this.isAlive();
     }
+
+    /*
+    takes an int input
+    sets the health value to that int value
+     */
+    public void setHP(int i_newValue) {
+        this.i_hp = i_newValue;
+    }
 }

@@ -15,7 +15,8 @@ public class KeyBindings {
     populates the hashmap to use the key bindings
      */
     public static void createKeyBindings() {
-        hm_kgs_clickBindings.put(KeyEvent.VK_SPACE, new GameEventRequest("Jump"));
+        hm_kgs_clickBindings.put(KeyEvent.VK_SPACE, new GameEventRequest("JumpPlayer"));
+        hm_kgs_clickBindings.put(KeyEvent.VK_CONTROL, new GameEventRequest("CrouchPlayer"));
         hm_kgs_clickBindings.put(KeyEvent.VK_ESCAPE, new GameEventRequest("TogglePause"));
     }
 

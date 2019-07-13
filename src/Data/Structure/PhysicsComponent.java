@@ -6,6 +6,7 @@ import Utility.HitboxAABB;
 /*
 Extends GameComponent
 represents a "physical" hitbox that the physics engine can work with
+TODO add gravity stuff
  */
 public class PhysicsComponent extends GameComponent{
     private HitboxAABB hb_hitbox;

@@ -20,10 +20,10 @@ public class Actor extends GameObject {
     }
 
     //alt cstr
-    public Actor(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, Image im_texture, int hp) {
+    public Actor(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, Image im_texture, int i_hp) {
         this.addComponent(new PhysicsComponent(d_topLeftX, d_topLeftY, d_width, d_height, d_mass)); //physics
         this.addComponent(new VisualTextureComponent(im_texture, new Rectangle(0, 0, 1, 1))); //texture
-        this.addComponent(new HPComponent(hp)); //hp
+        this.addComponent(new HPComponent(i_hp)); //hp
     }
 
     /*
@@ -35,7 +35,7 @@ public class Actor extends GameObject {
      */
     public int TakeDmg(int i_dmg) {
         //grabs the hp
-        HPComponent hpc_health = (HPComponent) this.findFirstActiveComponentInObj(GameComponent.gcType.HITPOINT);
+        HPComponent hpc_health = this.findHPComponent();
 
         if (hpc_health == null) { //null guard
             return -1;
@@ -47,5 +47,24 @@ public class Actor extends GameObject {
         }
 
         return 0; //obj is ded
+    }
+
+    /*
+    this method takes an int input and sets the hp to that value
+     */
+    public void setHP(int i_newHP) {
+        //grabs the hp
+        HPComponent hpc_health = this.findHPComponent();
+
+        if (hpc_health == null) { //null guard
+            return; //no hp
+        }
+
+        hpc_health.setHP(i_newHP); //sets the hp
+    }
+
+    //private method to find the HPComponent quickly
+    private HPComponent findHPComponent() {
+        return (HPComponent) this.findFirstActiveComponentInObj(GameComponent.gcType.HITPOINT);
     }
 }

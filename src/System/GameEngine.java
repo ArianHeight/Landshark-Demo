@@ -102,7 +102,7 @@ public class GameEngine {
                     this.re_renderer.closeWindow();
                     return; //temp exit code
                 }
-                if (gs_temp.getData().equals("Jump")) {
+                if (gs_temp.getData().equals("JumpPlayer")) {
                     System.out.println("jump");
                 }
             }
