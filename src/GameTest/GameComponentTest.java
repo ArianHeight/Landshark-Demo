@@ -70,7 +70,7 @@ public class GameComponentTest {
 
     @Test
     public void test3() {
-        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, 2.0);
+        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, 2.0, true);
         hb = (HitboxAABB) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
@@ -83,7 +83,7 @@ public class GameComponentTest {
 
     @Test
     public void test4() {
-        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, -2.0);
+        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, -2.0, true);
         hb = (HitboxAABB) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
@@ -109,7 +109,7 @@ public class GameComponentTest {
 
     @Test
     public void test6() {
-        gc_subject = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), -1.0);
+        gc_subject = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), -1.0, true);
         hb = (HitboxAABB) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
@@ -122,7 +122,7 @@ public class GameComponentTest {
 
     @Test
     public void test7() {
-        gc_subject = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 50.0);
+        gc_subject = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 50.0, true);
         hb = (HitboxAABB) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);

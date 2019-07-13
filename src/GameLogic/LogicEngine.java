@@ -1,6 +1,7 @@
 package GameLogic;
 
 import Data.Communication.GameScript;
+import Data.ControlInterface;
 import Data.GameObject;
 
 import java.util.Vector;
@@ -11,6 +12,8 @@ handling everything from what happens to an object on collision
 to what happens to a player when their hp hits 0
  */
 public class LogicEngine {
+    ControlInterface ci_player;
+
     //cstr
     public LogicEngine() {
         //idk what to put
@@ -23,6 +26,9 @@ public class LogicEngine {
      */
     public void startGame(GameObject go_scene, Vector<GameScript> v_gs_scripts) {
         //TODO write the actual game now
+        LandSharkPlayer lsp_player = new LandSharkPlayer();
+        this.ci_player = lsp_player;
+        go_scene.addGameObject(lsp_player);
     }
 
     /*
@@ -31,6 +37,8 @@ public class LogicEngine {
     most of the code for main updates to the game will be run from here
      */
     public void runScript(GameScript gs_script, GameObject go_scene) {
-
+        if (gs_script.getData().endsWith("Player")) {
+            this.ci_player.inputResponse(gs_script.getData());
+        }
     }
 }

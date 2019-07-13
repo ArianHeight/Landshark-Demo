@@ -7,6 +7,7 @@ import Data.Structure.GameComponent;
 import Data.Structure.PhysicsComponent;
 import Utility.HitboxAABB;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 /*
@@ -18,27 +19,40 @@ uses the PhysicsComponent class
 public class PhysicsEngine {
     //member vars
     private Vector<GameComponent> v_gc_physicsComponents;
+    private double d_gravityX;
+    private double d_gravityY;
 
     //cstr
     public PhysicsEngine() {
         //initializes member var
         this.v_gc_physicsComponents = new Vector<GameComponent>();
+        this.d_gravityX = 0.0;
+        this.d_gravityY = -5.0; //TODO add way to change
     }
 
     /*
     this method goes through all hitboxes in the game and check for collision between each other
     takes a scene GameObject as an input
     takes a Vector<GameScript> as an output for error requests
+    takes a double as the time in seconds elapsed since last tick
      */
-    public void doSceneCollisionDetection(GameObject go_scene, Vector<GameScript> v_gs_scripts) {
+    public void doSceneCollisionDetection(GameObject go_scene, Vector<GameScript> v_gs_scripts, double d_timeElapsed) {
         //clears storage vector for storing new data
         this.v_gc_physicsComponents.clear();
         go_scene.compileComponentList(this.v_gc_physicsComponents, GameComponent.gcType.PHYSICS); //grabs all active physicscomponents
 
+        //gravity and position
+        Iterator<GameComponent> gc_it = this.v_gc_physicsComponents.iterator();
+        PhysicsComponent pc_one;
+        while (gc_it.hasNext()) {
+            pc_one = (PhysicsComponent)gc_it.next();
+            doGravityCalculations(pc_one, this.d_gravityX, this.d_gravityY, d_timeElapsed);
+            doPositionCalculations(pc_one, d_timeElapsed);
+        }
+
         //TODO maybe find a better way
         //collision detection
         int i_sizeOfVector = this.v_gc_physicsComponents.size();
-        PhysicsComponent pc_one;
         PhysicsComponent pc_two;
         for (int i = 0; i < i_sizeOfVector; i++) {
             pc_one = (PhysicsComponent) (this.v_gc_physicsComponents.get(i));
@@ -63,6 +77,34 @@ public class PhysicsEngine {
         }
 
         return false;
+    }
+
+    /*
+    this method takes a PhysicsComponent, 2 doubles for acceleration, and a double for timeElapsed
+    calculates gravity stuff
+     */
+    public static void doGravityCalculations(PhysicsComponent pc_subject, double d_accelX, double d_accelY, double d_timeElapsed) {
+        if (pc_subject.affectedByGravity()) {
+            //update gravity
+            pc_subject.addVelX(d_accelX * d_timeElapsed);
+            pc_subject.addVelY(d_accelY * d_timeElapsed);
+        }
+    }
+
+    /*
+    this method takes a PhysicsComponent, and a double for timeElapsed
+    updates the position based on velocity of the obj
+     */
+    public static void doPositionCalculations(PhysicsComponent pc_subject, double d_timeElapsed) {
+        if (pc_subject.canBeMoved()) {
+            HitboxAABB hb = (HitboxAABB) pc_subject.getData();
+            hb.moveX(pc_subject.getVelX() * d_timeElapsed);
+            hb.moveY(pc_subject.getVelY() * d_timeElapsed);
+        }
+        else {
+            pc_subject.setVelY(0.0);
+            pc_subject.setVelX(0.0);
+        }
     }
 
     /*
@@ -119,10 +161,14 @@ public class PhysicsEngine {
         if (Math.abs(d_xMove) < Math.abs(d_yMove)) {
             hb_one.moveX(d_xMove * d_favorOnePercentage);
             hb_two.moveX(-d_xMove * (1.0 - d_favorOnePercentage));
+            pc_one.setVelX(0.0);
+            pc_two.setVelY(0.0);
         }
         else {
             hb_one.moveY(d_yMove * d_favorOnePercentage);
             hb_two.moveY(-d_yMove * (1.0 - d_favorOnePercentage));
+            pc_one.setVelY(0.0);
+            pc_two.setVelY(0.0);
         }
 
         //flags for update in the two components

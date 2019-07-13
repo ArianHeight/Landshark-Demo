@@ -13,6 +13,10 @@ extends GameObject
  */
 public class Actor extends GameObject {
     //cstr
+    //adds in order
+    //physics
+    //texture
+    //hp
     public Actor(PhysicsComponent pc_physics, VisualTextureComponent vtc_texture, HPComponent hpc_health) {
         this.addComponent(pc_physics); //add physics
         this.addComponent(vtc_texture); //add texture
@@ -20,8 +24,12 @@ public class Actor extends GameObject {
     }
 
     //alt cstr
-    public Actor(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, Image im_texture, int i_hp) {
-        this.addComponent(new PhysicsComponent(d_topLeftX, d_topLeftY, d_width, d_height, d_mass)); //physics
+    //adds in order
+    //physics
+    //texture
+    //hp
+    public Actor(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, boolean b_grav, Image im_texture, int i_hp) {
+        this.addComponent(new PhysicsComponent(d_topLeftX, d_topLeftY, d_width, d_height, d_mass, b_grav)); //physics
         this.addComponent(new VisualTextureComponent(im_texture, new Rectangle(0, 0, 1, 1))); //texture
         this.addComponent(new HPComponent(i_hp)); //hp
     }

@@ -18,8 +18,8 @@ public class Player extends Actor implements ControlInterface {
     }
 
     //alt cstr
-    public Player(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, Image im_texture, int i_hp) {
-        super(d_topLeftX, d_topLeftY, d_width, d_height, d_mass, im_texture, i_hp);
+    public Player(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, boolean b_grav, Image im_texture, int i_hp) {
+        super(d_topLeftX, d_topLeftY, d_width, d_height, d_mass, b_grav, im_texture, i_hp);
     }
 
     /*

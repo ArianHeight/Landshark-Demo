@@ -90,7 +90,8 @@ public class GameEngine {
         while (this.b_gameloop) {
             this.v_gs_scriptQueue.addAll(this.ie_inputProcessor.run()); //runs the input processor
             //Game Logic
-            this.pe_physEngine.doSceneCollisionDetection(this.go_scene, this.v_gs_scriptQueue); //do physics
+            this.tp_timer.tick();
+            this.pe_physEngine.doSceneCollisionDetection(this.go_scene, this.v_gs_scriptQueue, this.tp_timer.getTimeElapsed()); //do physics
             //more game logic
             this.re_renderer.renderSceneToWindow(this.go_scene, this.v_gs_scriptQueue); //draws to window
 
