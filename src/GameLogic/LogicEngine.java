@@ -35,6 +35,7 @@ public class LogicEngine {
         LandSharkPlayer lsp_player = new LandSharkPlayer();
         this.ci_player = lsp_player;
         go_scene.addGameObject(lsp_player);
+        go_scene.addGameObject(new LandSharkMap());
     }
 
     /*
@@ -46,7 +47,7 @@ public class LogicEngine {
         if (gs_script.getData().endsWith("Player")) {
             this.ci_player.inputResponse(gs_script.getData());
         }
-        if (gs_script.getData() == "Collision") {
+        if (gs_script.getData() == "Collision") { //todo maybe move somewhere else
             PhysicsComponent pc_one = ((CollisionDetectedRequest)gs_script).getOne();
             PhysicsComponent pc_two = ((CollisionDetectedRequest)gs_script).getTwo();
 
@@ -87,9 +88,18 @@ public class LogicEngine {
     }
 
     /*
+    this method is called once per frame
+    updates all game logic related stuff
+     */
+    public void logicUpdate() {
+        this.v_gs_collisionResponseRequests.clear();
+    }
+
+    /*
     this method returns a reference to this.v_gs_collisionResponseRequest
      */
     public Vector<GameScript> getCollisionRequestQueue() {
+        //debug code
         return this.v_gs_collisionResponseRequests;
     }
 }

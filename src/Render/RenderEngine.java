@@ -3,6 +3,7 @@ package Render;
 import Data.Communication.*;
 import Data.GameObject;
 import Data.Structure.*;
+import Utility.HitboxAABB;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +24,7 @@ public class RenderEngine {
     private static final int i_standardCloseBehaviour = JFrame.DISPOSE_ON_CLOSE;
     private static final boolean b_standardResizableWindow = false;
     private static final String str_standardContextName = "LandShark AI Simulation";
+    private static final Color c_black = new Color(0);
 
     //actual member vars
     private JFrame j_windowContext;
@@ -97,7 +99,21 @@ public class RenderEngine {
      */
     private void renderToWindow(VisualTextureComponent vtc_renderTarget, Graphics g_context) {
         Rectangle r = vtc_renderTarget.getRenderPlane(); //temp holder for rendering plane
-        g_context.drawImage(vtc_renderTarget.getTexture(), r.x, r.y, r.width, r.height, null); //draws image to screen
+        HitboxAABB hb = vtc_renderTarget.getWorldPosRef();
+
+        if (hb != null) {
+            Dimension di_topLeft = worldSpaceToScreenSpace(hb.getLeft(), hb.getTop(), null);
+            Dimension di_bottomRight = worldSpaceToScreenSpace(hb.getRight(), hb.getBottom(), null);
+            r.setRect(di_topLeft.width, di_topLeft.height, di_bottomRight.width - di_topLeft.width, di_bottomRight.height - di_topLeft.height);
+        }
+
+        if (vtc_renderTarget.getTexture() == null) { //no texture
+            g_context.setColor(c_black);
+            g_context.fillRect(r.x, r.y, r.width, r.height);
+        }
+        else { //texture exists
+            g_context.drawImage(vtc_renderTarget.getTexture(), r.x, r.y, r.width, r.height, null); //draws image to screen
+        }
     }
 
     /*
@@ -143,7 +159,7 @@ public class RenderEngine {
     //takes a double x and y coord in world space and translates it to screen space
     public static Dimension worldSpaceToScreenSpace (double d_x, double d_y, GameComponent gc_camera) {
         if (gc_camera == null) {
-            return new Dimension((int)(d_x * 1280.0 / 10.0), (int)(720 - (d_y * 1280.0 / 10.0)));
+            return new Dimension((int)(d_x * 1280.0 / 32.0), (int)(700 - (d_y * 720.0 / 18.0)));
         }
 
         return new Dimension(0 , 1); //TODO add stuff for custom camera

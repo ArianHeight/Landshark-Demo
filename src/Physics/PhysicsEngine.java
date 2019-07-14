@@ -27,7 +27,7 @@ public class PhysicsEngine {
         //initializes member var
         this.v_gc_physicsComponents = new Vector<GameComponent>();
         this.d_gravityX = 0.0;
-        this.d_gravityY = -5.0; //TODO add way to change
+        this.d_gravityY = -24.0; //TODO add way to change
     }
 
     /*
@@ -162,14 +162,18 @@ public class PhysicsEngine {
         if (Math.abs(d_xMove) < Math.abs(d_yMove)) {
             hb_one.moveX(d_xMove * d_favorOnePercentage);
             hb_two.moveX(-d_xMove * (1.0 - d_favorOnePercentage));
-            pc_one.setVelX(0.0);
-            pc_two.setVelY(0.0);
+            if (Math.abs(d_xMove) == 0.0) {
+                pc_one.setVelX(0.0);
+                pc_two.setVelX(0.0);
+            }
         }
         else {
             hb_one.moveY(d_yMove * d_favorOnePercentage);
             hb_two.moveY(-d_yMove * (1.0 - d_favorOnePercentage));
-            pc_one.setVelY(0.0);
-            pc_two.setVelY(0.0);
+            if (Math.abs(d_yMove) == 0.0) {
+                pc_one.setVelY(0.0);
+                pc_two.setVelY(0.0);
+            }
         }
 
         //flags for update in the two components

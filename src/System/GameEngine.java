@@ -102,8 +102,8 @@ public class GameEngine {
     public void run() {
         while (this.b_gameloop) {
             this.v_gs_scriptQueue.addAll(this.ie_inputProcessor.run()); //runs the input processor
-            //Game Logic
             this.tp_timer.tick();
+            this.le_logicProcessor.logicUpdate();
             this.pe_physEngine.doScenePhysics(this.go_scene, this.v_gs_scriptQueue, this.tp_timer.getTimeElapsed()); //do physics
 
             for (GameScript gs_temp : this.v_gs_scriptQueue) {

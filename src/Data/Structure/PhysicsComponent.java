@@ -15,8 +15,8 @@ public class PhysicsComponent extends GameComponent{
     private boolean b_gravity = true; //true if gravity-related calculations are done
     private double d_velX = 0.0;
     private double d_velY = 0.0;
-    private double d_terminalVelX = 1.0; //abs terminal x velocity
-    private double d_terminalVelY = 1.0; //abs terminal y vel
+    private double d_terminalVelX = 32.0; //abs terminal x velocity
+    private double d_terminalVelY = 32.0; //abs terminal y vel
 
     //cstr
     public PhysicsComponent(double d_topLeftX, double d_topLeftY, double d_width, double d_height) {
