@@ -32,11 +32,12 @@ public class PhysicsEngine {
 
     /*
     this method goes through all hitboxes in the game and check for collision between each other
+    also runs gravity and position calculations on everything
     takes a scene GameObject as an input
     takes a Vector<GameScript> as an output for error requests
     takes a double as the time in seconds elapsed since last tick
      */
-    public void doSceneCollisionDetection(GameObject go_scene, Vector<GameScript> v_gs_scripts, double d_timeElapsed) {
+    public void doScenePhysics(GameObject go_scene, Vector<GameScript> v_gs_scripts, double d_timeElapsed) {
         //clears storage vector for storing new data
         this.v_gc_physicsComponents.clear();
         go_scene.compileComponentList(this.v_gc_physicsComponents, GameComponent.gcType.PHYSICS); //grabs all active physicscomponents

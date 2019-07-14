@@ -20,10 +20,11 @@ public class LandSharkPlayer extends Player {
     //cstr TODO some stuff w/ file loading and such
     public LandSharkPlayer() {
         super(new PhysicsComponent(0.0, 1.0, 2.0, 1.0, 1.0, true),
-                new VisualTextureComponent(new ImageIcon("./Game/Assets/zombieKnight.png").getImage(), new Rectangle(0, 0, 1, 1)),
+                new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/zombieKnight.png").getImage(), new Rectangle(0, 0, 64, 64)),
                 new HPComponent(1));
         this.addComponent(new PhysicsComponent(0.0, 0.5, 2.0,0.5, 1.0, true)); //crouch hitbox
         this.v_c_memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
+        this.setAllTags("Player");
         this.b_crouchCalled = false;
     }
 
@@ -32,7 +33,7 @@ public class LandSharkPlayer extends Player {
     MODIFIES:this
     EFFECT:Calls Player.inputResponse with parameter of str_input
            calls this.jump() if str_input equals "JumpPlayer"
-           calls this.crouch if str_input equals "CrouchPlayer"
+           calls this.crouch() if str_input equals "CrouchPlayer"
      */
     @Override
     public void inputResponse(String str_input) {

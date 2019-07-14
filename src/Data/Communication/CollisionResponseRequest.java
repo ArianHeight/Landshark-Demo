@@ -3,16 +3,16 @@ package Data.Communication;
 import Data.Structure.PhysicsComponent;
 
 /*
-this class extends the GameEventRequest
-a data structure used to store two physics components
+This class will extend the GameScript class
+will represent a single request to do collision response
  */
-public class CollisionDetectedRequest extends GameEventRequest{
+public class CollisionResponseRequest extends GameScript {
     private PhysicsComponent pc_one;
     private PhysicsComponent pc_two;
 
     //cstr
-    public CollisionDetectedRequest(PhysicsComponent one, PhysicsComponent two) {
-        super("Collision");
+    public CollisionResponseRequest(PhysicsComponent one, PhysicsComponent two) {
+        super(COLLISION_RESPONSE, "");
         this.pc_one = one;
         this.pc_two = two;
     }

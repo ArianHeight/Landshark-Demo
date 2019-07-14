@@ -34,6 +34,18 @@ public abstract class GameObject {
     }
 
     /*
+    REQUIRES:A valid String
+    MODIFIES:this
+    EFFECT:Sets the tags for every member component to the str_input
+     */
+    public void setAllTags(String str_tag) {
+        Iterator<GameComponent> gc_it = this.v_c_memberComponents.iterator();
+        while (gc_it.hasNext()) {
+            gc_it.next().setTag(str_tag);
+        }
+    }
+
+    /*
     MODIFIES:v_gc_output
     EFFECT:Takes a vector of GameComponents as input
            that vector will be used as an output queue to store all active game components of type gct_type

@@ -15,11 +15,13 @@ public class Player extends Actor implements ControlInterface {
     //cstr
     public Player(PhysicsComponent pc_physics, VisualTextureComponent vtc_texture, HPComponent hpc_health) {
         super(pc_physics, vtc_texture, hpc_health);
+        this.setAllTags("Player");
     }
 
     //alt cstr
     public Player(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, boolean b_grav, Image im_texture, int i_hp) {
         super(d_topLeftX, d_topLeftY, d_width, d_height, d_mass, b_grav, im_texture, i_hp);
+        this.setAllTags("Player");
     }
 
     /*

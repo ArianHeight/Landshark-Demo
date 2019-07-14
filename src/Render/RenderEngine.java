@@ -106,7 +106,7 @@ public class RenderEngine {
      */
     public void renderSceneToWindow(GameObject go_scene, Vector<GameScript> v_gs_engineRequests) {
         if (!this.b_windowOpen) { //window guard
-            v_gs_engineRequests.add(new LogRequest("Renderer attempted to draw frame to a closed window"));
+            //v_gs_engineRequests.add(new LogRequest("Renderer attempted to draw frame to a closed window"));
             return;
         }
 
@@ -131,6 +131,7 @@ public class RenderEngine {
         catch (Exception error) {
             //error.printStackTrace();
             v_gs_engineRequests.add(new LogRequest("Renderer encountered an error while attempting to draw frame"));
+            this.closeWindow();
         }
     }
 
@@ -140,7 +141,11 @@ public class RenderEngine {
     }
 
     //takes a double x and y coord in world space and translates it to screen space
-    public static int worldSpaceToScreenSpace (double d_x, double d_y) {
-        return 0; //TODO temp
+    public static Dimension worldSpaceToScreenSpace (double d_x, double d_y, GameComponent gc_camera) {
+        if (gc_camera == null) {
+            return new Dimension((int)(d_x * 1280.0 / 10.0), (int)(720 - (d_y * 1280.0 / 10.0)));
+        }
+
+        return new Dimension(0 , 1); //TODO add stuff for custom camera
     }
 }

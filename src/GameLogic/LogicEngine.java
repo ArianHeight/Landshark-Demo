@@ -1,8 +1,12 @@
 package GameLogic;
 
+import Data.Communication.CollisionDetectedRequest;
+import Data.Communication.CollisionResponseRequest;
+import Data.Communication.GameEventRequest;
 import Data.Communication.GameScript;
 import Data.ControlInterface;
 import Data.GameObject;
+import Data.Structure.PhysicsComponent;
 
 import java.util.Vector;
 
@@ -13,10 +17,12 @@ to what happens to a player when their hp hits 0
  */
 public class LogicEngine {
     ControlInterface ci_player;
+    Vector<GameScript> v_gs_collisionResponseRequests;
 
     //cstr
     public LogicEngine() {
         //idk what to put
+        this.v_gs_collisionResponseRequests = new Vector<GameScript>();
     }
 
     /*
@@ -40,5 +46,50 @@ public class LogicEngine {
         if (gs_script.getData().endsWith("Player")) {
             this.ci_player.inputResponse(gs_script.getData());
         }
+        if (gs_script.getData() == "Collision") {
+            PhysicsComponent pc_one = ((CollisionDetectedRequest)gs_script).getOne();
+            PhysicsComponent pc_two = ((CollisionDetectedRequest)gs_script).getTwo();
+
+            int map = 0;
+            int enemy = 0;
+            int player = 0;
+
+            String str_tagOne = pc_one.getTag();
+            String str_tagTwo = pc_two.getTag();
+            if (str_tagOne.equals("Player")) {
+                player++;
+            }
+            else if (str_tagOne.equals("Enemy")) {
+                enemy++;
+            }
+            else if (str_tagOne.equals("Map")) {
+                map++;
+            }
+
+            if (str_tagTwo.equals("Player")) {
+                player++;
+            }
+            else if (str_tagTwo.equals("Enemy")) {
+                enemy++;
+            }
+            else if (str_tagTwo.equals("Map")) {
+                map++;
+            }
+
+            if ((enemy == 1 || player == 1) && map == 1) {
+                //queue for collisionResponse
+                this.v_gs_collisionResponseRequests.add(new CollisionResponseRequest(pc_one, pc_two));
+            }
+            else if (player == 1 && enemy == 1) { //kill player
+                this.runScript(new GameEventRequest("KillPlayer"), go_scene);
+            }
+        }
+    }
+
+    /*
+    this method returns a reference to this.v_gs_collisionResponseRequest
+     */
+    public Vector<GameScript> getCollisionRequestQueue() {
+        return this.v_gs_collisionResponseRequests;
     }
 }

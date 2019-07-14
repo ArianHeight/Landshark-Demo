@@ -13,6 +13,7 @@ public abstract class GameScript {
     public final static int PROCESS_DATA = 2;
     public final static int END_PROGRAM = 3;
     public final static int GAME_EVENT = 4;
+    public final static int COLLISION_RESPONSE = 5;
 
     private int i_cmd; //the type of script, for example LOG_DATA would be processed as a request to log the information
     private String str_data; //contains potentially extra information about the script

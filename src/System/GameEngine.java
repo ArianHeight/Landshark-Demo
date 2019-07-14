@@ -41,6 +41,7 @@ public class GameEngine {
         this.ie_inputProcessor = new InputEngine();
         this.ioe_fileCommunicator = new IOEngine();
         this.tp_timer = new TimeProcessor();
+        this.le_logicProcessor = new LogicEngine();
 
         this.b_gameloop = true;
         this.v_gs_scriptQueue = new Vector<GameScript>();
@@ -65,20 +66,32 @@ public class GameEngine {
         this.re_renderer.addKeyListenerToWindow(this.ie_inputProcessor.getKeyHandler());
         this.v_gs_scriptQueue.add(new LogRequest("Link established..."));
 
+        //TODO flesh out this part
+        this.le_logicProcessor.startGame(this.go_scene, this.v_gs_scriptQueue);
+
         return 0;
     }
 
     //TODO dis is temp home for linker sort of method??
-    public void processScript(GameScript gs_script) {
+    public boolean processScript(GameScript gs_script) {
         switch (gs_script.getCmd()) {
             case GameScript.LOG_DATA:
                 this.tp_timer.tagScript(gs_script);
                 this.ioe_fileCommunicator.processRequest(gs_script);
                 break;
+            case GameScript.GAME_EVENT:
+                this.le_logicProcessor.runScript(gs_script, this.go_scene);
+                break;
             case GameScript.END_PROGRAM:
                 this.b_gameloop = false; //end program here
                 break;
+            case GameScript.COLLISION_RESPONSE:
+                this.pe_physEngine.doCollisionResponse(((CollisionResponseRequest)gs_script).getOne(), ((CollisionResponseRequest)gs_script).getTwo());
+            default:
+                return false;
         }
+
+        return true;
     }
 
     /*
@@ -91,24 +104,24 @@ public class GameEngine {
             this.v_gs_scriptQueue.addAll(this.ie_inputProcessor.run()); //runs the input processor
             //Game Logic
             this.tp_timer.tick();
-            this.pe_physEngine.doSceneCollisionDetection(this.go_scene, this.v_gs_scriptQueue, this.tp_timer.getTimeElapsed()); //do physics
-            //more game logic
-            this.re_renderer.renderSceneToWindow(this.go_scene, this.v_gs_scriptQueue); //draws to window
+            this.pe_physEngine.doScenePhysics(this.go_scene, this.v_gs_scriptQueue, this.tp_timer.getTimeElapsed()); //do physics
 
             for (GameScript gs_temp : this.v_gs_scriptQueue) {
                 this.processScript(gs_temp);
-
-                //TODO remove temp code
-                if (gs_temp.getData().equals("end")) {
-                    this.re_renderer.closeWindow();
-                    return; //temp exit code
-                }
-                if (gs_temp.getData().equals("JumpPlayer")) {
-                    System.out.println("jump");
-                }
             }
             this.v_gs_scriptQueue.clear();
+
+            this.v_gs_scriptQueue.addAll(this.le_logicProcessor.getCollisionRequestQueue()); //grab the stuff that needs to have collision responses computed
+            for (GameScript gs_temp : this.v_gs_scriptQueue) {
+                this.processScript(gs_temp);
+            }
+            this.v_gs_scriptQueue.clear();
+
+            //TODO update position from physics component
+            this.re_renderer.renderSceneToWindow(this.go_scene, this.v_gs_scriptQueue); //draws to window
         }
+
+        this.re_renderer.closeWindow(); //exit code
     }
 
     /*

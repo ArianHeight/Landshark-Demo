@@ -9,11 +9,13 @@ public abstract class GameComponent {
     }
 
     private gcType gct_componentType;
+    private String str_tag;
     private boolean b_isActive;
 
     protected GameComponent(gcType gct_type) {
         this.b_isActive = true;
         this.gct_componentType = gct_type;
+        this.str_tag = "";
     }
 
     /*
@@ -31,6 +33,20 @@ public abstract class GameComponent {
     EFFECT:Returns data that is carried by this component
      */
     public abstract Object getData();
+
+    /*
+    REQUiRES:NONE
+    MODIFIES:NONE
+    EFFECT:Returns the tag that is carried by this component
+     */
+    public String getTag() { return this.str_tag; }
+
+    /*
+    REQUiRES:NONE
+    MODIFIES:NONE
+    EFFECT:Sets the tag that is going to be carried by the component
+     */
+    public void setTag(String str_newTag) { this.str_tag = str_newTag; }
 
     /*
     REQUIRES:NONE
