@@ -27,7 +27,8 @@ public class LandSharkPlayer extends Player {
         this.v_c_memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
         this.setAllTags("Player");
         this.b_crouchCalled = false;
-        ((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef((HitboxAABB) (this.v_c_memberComponents.get(WALKING_HITBOX_INDEX).getData()));
+        //((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef((HitboxAABB) (this.v_c_memberComponents.get(WALKING_HITBOX_INDEX).getData()));
+        ((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef(new HitboxAABB(0.0, 2.0, 1.0, 0.0));
     }
 
     /*
@@ -51,5 +52,20 @@ public class LandSharkPlayer extends Player {
 
     private void jump() {
         ((PhysicsComponent)this.v_c_memberComponents.get(WALKING_HITBOX_INDEX)).setVelY(JUMP_VELOCITY);
+    }
+
+    /*
+    this method updates the visual draw box to the actual hitbox
+     */
+    @Override
+    public void updateObj() {
+        //TODO temp code will change with crouch
+        HitboxAABB hb_target = ((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).getWorldPosRef();
+        HitboxAABB hb_source = (HitboxAABB)this.v_c_memberComponents.get(WALKING_HITBOX_INDEX).getData();
+
+        hb_target.alignBottomY(hb_source);
+        hb_target.alignCenterX(hb_source);
+
+        super.updateObj();
     }
 }

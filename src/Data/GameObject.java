@@ -92,4 +92,20 @@ public abstract class GameObject {
 
         return null; //non found
     }
+
+    /*
+    this method takes no inputs and gives no outut
+    it runs an updateObj() call on the object itself, followed by a recursive call to
+    every child object
+
+    it is up to the child objects to implement their own update code and call super.updateObj() at the end of it
+    as GameObject.updateObj() is the recursive call to all child objects
+     */
+    public void updateObj() {
+        //recursive call
+        Iterator<GameObject> go_it = this.v_go_memberObjects.iterator();
+        while (go_it.hasNext()) {
+            go_it.next().updateObj();
+        }
+    }
 }

@@ -48,4 +48,43 @@ public class HitboxAABB {
         this.d_left += d_moveRight;
         this.d_right += d_moveRight;
     }
+
+    //alignment methods which assume HitboxAABB input is not null
+    //aligns the left side of the hitbox
+    public void alignLeftX(HitboxAABB hb_ref) {
+        double d_diff = hb_ref.getLeft() - this.d_left;
+        this.moveX(d_diff);
+    }
+
+    //aligns the right side of the hitbox
+    public void alignRightX(HitboxAABB hb_ref) {
+        double d_diff = hb_ref.getRight() - this.d_right;
+        this.moveX(d_diff);
+    }
+
+    //aligns the center of the hitbox on the x axis
+    public void alignCenterX(HitboxAABB hb_ref) {
+        double d_diff = (hb_ref.getRight() + hb_ref.getLeft()) / 2.0;
+        d_diff -= ((this.d_right + this.d_left) / 2.0);
+        this.moveX(d_diff);
+    }
+
+    //aligns the top side of the hitbox
+    public void alignTopY(HitboxAABB hb_ref) {
+        double d_diff = hb_ref.getTop() - this.d_top;
+        this.moveY(d_diff);
+    }
+
+    //aligns the bottom side of the hitbox
+    public void alignBottomY(HitboxAABB hb_ref) {
+        double d_diff = hb_ref.getBottom() - this.d_bottom;
+        this.moveY(d_diff);
+    }
+
+    //aligns the center of the hitbox on the y axis
+    public void alignCenterY(HitboxAABB hb_ref) {
+        double d_diff = (hb_ref.getTop() + hb_ref.getBottom()) / 2.0;
+        d_diff -= ((this.d_top + this.d_bottom) / 2.0);
+        this.moveY(d_diff);
+    }
 }

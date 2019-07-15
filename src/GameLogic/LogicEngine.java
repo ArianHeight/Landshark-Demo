@@ -36,6 +36,7 @@ public class LogicEngine {
         this.ci_player = lsp_player;
         go_scene.addGameObject(lsp_player);
         go_scene.addGameObject(new LandSharkMap());
+        go_scene.addGameObject(new SpiderEnemy()); //TODO temp code
     }
 
     /*
@@ -91,8 +92,10 @@ public class LogicEngine {
     this method is called once per frame
     updates all game logic related stuff
      */
-    public void logicUpdate() {
+    public void logicUpdate(GameObject go_scene) {
         this.v_gs_collisionResponseRequests.clear();
+
+        go_scene.updateObj();
     }
 
     /*
