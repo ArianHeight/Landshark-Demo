@@ -25,6 +25,14 @@ public class Player extends Actor implements ControlInterface {
     }
 
     /*
+    returns whether or not the player is still alive
+     */
+    @Override
+    public boolean isAlive() {
+        return this.findHPComponent().isAlive();
+    }
+
+    /*
     REQUIRES:A valid String
     MODIFIES:this
     EFFECT:If the str_input equals "Die", then set player's hp to 0

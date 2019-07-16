@@ -19,11 +19,28 @@ public class SpiderEnemy extends Actor {
     private final static int HP_INDEX = 2;
 
     //cstr TODO CHANGE THE TEXTURE!!
-    public SpiderEnemy() {
+    public SpiderEnemy(double d_vel) {
         super(new PhysicsComponent(16.0, 6.0, 1.0, 1.0, 1.0, false),
                 new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/spider1.png").getImage(), new Rectangle(0, 0, 64, 64)),
                 new HPComponent(1));
         this.setAllTags("Enemy");
         ((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef((HitboxAABB) (this.v_c_memberComponents.get(WALKING_HITBOX_INDEX).getData()));
+        ((PhysicsComponent)this.v_c_memberComponents.get(WALKING_HITBOX_INDEX)).setVelX(d_vel);
+    }
+
+    /*
+   this method updates obj for deleting
+    */
+    @Override
+    public void updateObj() {
+        if (((HitboxAABB)this.v_c_memberComponents.get(WALKING_HITBOX_INDEX).getData()).getRight() <= -1.0) {
+            this.setHP(0);
+        }
+
+        if (!this.findHPComponent().isAlive()) {
+            this.setForDelete();
+        }
+
+        super.updateObj();
     }
 }

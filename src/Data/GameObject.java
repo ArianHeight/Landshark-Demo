@@ -8,11 +8,13 @@ import java.util.Vector;
 public abstract class GameObject {
     protected Vector<GameComponent> v_c_memberComponents;
     protected Vector<GameObject> v_go_memberObjects;
+    private boolean b_delete; //if true then delete from the scene
 
     //cstr
     public GameObject() {
         this.v_c_memberComponents = new Vector<GameComponent>();
         this.v_go_memberObjects = new Vector<GameObject>();
+        this.b_delete = false;
     }
 
     /*
@@ -100,12 +102,27 @@ public abstract class GameObject {
 
     it is up to the child objects to implement their own update code and call super.updateObj() at the end of it
     as GameObject.updateObj() is the recursive call to all child objects
+
+    Also removes objs set up for deleting from the scene graph
      */
     public void updateObj() {
         //recursive call
         Iterator<GameObject> go_it = this.v_go_memberObjects.iterator();
+        GameObject go_temp = null;
         while (go_it.hasNext()) {
-            go_it.next().updateObj();
+            go_temp = go_it.next();
+            go_temp.updateObj();
+
+            if (go_temp.b_delete) {
+                go_it.remove();
+            }
         }
+    }
+
+    /*
+    this method, when called, will set the object to be deleted
+     */
+    protected void setForDelete() {
+        this.b_delete = true;
     }
 }

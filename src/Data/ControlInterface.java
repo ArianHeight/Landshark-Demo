@@ -10,4 +10,11 @@ public interface ControlInterface {
     EFFECT:takes a String input and executes some action based on which the input is
      */
     public void inputResponse(String str_input);
+
+    /*
+    REQUIRES:none
+    MODIFIES:none
+    EFFECT:returns whether or not the hp of the obj called is over 0
+     */
+    public boolean isAlive();
 }

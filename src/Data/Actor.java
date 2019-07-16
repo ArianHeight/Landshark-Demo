@@ -71,8 +71,8 @@ public class Actor extends GameObject {
         hpc_health.setHP(i_newHP); //sets the hp
     }
 
-    //private method to find the HPComponent quickly
-    private HPComponent findHPComponent() {
+    //protected method to find the HPComponent quickly
+    protected HPComponent findHPComponent() {
         return (HPComponent) this.findFirstActiveComponentInObj(GameComponent.gcType.HITPOINT);
     }
 }

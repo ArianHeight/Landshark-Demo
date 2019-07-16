@@ -54,6 +54,8 @@ public class LandSharkPlayer extends Player {
 
     /*
     this method updates the visual draw box to the actual hitbox
+
+    also update obj for deleting
      */
     @Override
     public void updateObj() {
@@ -63,6 +65,10 @@ public class LandSharkPlayer extends Player {
 
         hb_target.alignBottomY(hb_source);
         hb_target.alignRightX(hb_source);
+
+        if (!this.findHPComponent().isAlive()) {
+            this.setForDelete();
+        }
 
         super.updateObj();
     }
