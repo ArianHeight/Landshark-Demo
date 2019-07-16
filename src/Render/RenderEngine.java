@@ -1,16 +1,18 @@
 package Render;
 
-import Data.Communication.*;
+import Data.Communication.GameScript;
+import Data.Communication.LogRequest;
 import Data.GameObject;
-import Data.Structure.*;
+import Data.Structure.GameComponent;
+import Data.Structure.VisualTextureComponent;
 import Utility.HitboxAABB;
+import Utility.Sorter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
-import java.util.Iterator;
 import java.util.Vector;
 
 /*
@@ -135,10 +137,12 @@ public class RenderEngine {
             this.v_gc_renderTargets.clear(); //clear before compiling list
             go_scene.compileComponentList(this.v_gc_renderTargets, GameComponent.gcType.VISUAL_TEXTURE);
 
+            //sorts them by layer
+            Sorter.quicksortForVTC(this.v_gc_renderTargets, this.v_gc_renderTargets.size() / 2);
+
             //iterates through textures and renders them one by one
-            Iterator<GameComponent> gc_it = this.v_gc_renderTargets.iterator();
-            while (gc_it.hasNext()) {
-                this.renderToWindow((VisualTextureComponent)gc_it.next(), g_context);
+            for (int i = this.v_gc_renderTargets.size() - 1; i >= 0; i--) {
+                this.renderToWindow((VisualTextureComponent)this.v_gc_renderTargets.get(i), g_context);
             }
 
             g_context.dispose();
@@ -159,7 +163,7 @@ public class RenderEngine {
     //takes a double x and y coord in world space and translates it to screen space
     public static Dimension worldSpaceToScreenSpace (double d_x, double d_y, GameComponent gc_camera) {
         if (gc_camera == null) {
-            return new Dimension((int)(d_x * 1280.0 / 21.0), (int)(720 - (d_y * 720.0 / 12.0)));
+            return new Dimension((int)(d_x * 1280.0 / 21.0), (int)(720 - (d_y * 720.0 / 15.0)));
         }
 
         return new Dimension(0 , 1); //TODO add stuff for custom camera

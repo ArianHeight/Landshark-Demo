@@ -27,6 +27,7 @@ public class GameEngine {
     private IOEngine ioe_fileCommunicator;
     private TimeProcessor tp_timer;
     private LogicEngine le_logicProcessor;
+    private ScriptProcessor sp_scriptProcessor;
 
     private boolean b_gameloop;
     private Vector<GameScript> v_gs_scriptQueue; //a queue to store all scripts waiting to be executed
@@ -42,6 +43,7 @@ public class GameEngine {
         this.ioe_fileCommunicator = new IOEngine();
         this.tp_timer = new TimeProcessor();
         this.le_logicProcessor = new LogicEngine();
+        this.sp_scriptProcessor = new ScriptProcessor();
 
         this.b_gameloop = true;
         this.v_gs_scriptQueue = new Vector<GameScript>();
@@ -79,6 +81,9 @@ public class GameEngine {
                 this.tp_timer.tagScript(gs_script);
                 this.ioe_fileCommunicator.processRequest(gs_script);
                 break;
+            case GameScript.PROCESS_DATA:
+                this.sp_scriptProcessor.addScriptToProcess(gs_script);
+                break;
             case GameScript.GAME_EVENT:
                 this.le_logicProcessor.runScript(gs_script, this.go_scene);
                 break;
@@ -110,6 +115,7 @@ public class GameEngine {
                 this.processScript(gs_temp);
             }
             this.v_gs_scriptQueue.clear();
+            this.sp_scriptProcessor.processScriptsInQueue(this.v_gs_scriptQueue);
 
             this.v_gs_scriptQueue.addAll(this.le_logicProcessor.getCollisionRequestQueue()); //grab the stuff that needs to have collision responses computed
             for (GameScript gs_temp : this.v_gs_scriptQueue) {

@@ -14,21 +14,19 @@ public class LandSharkPlayer extends Player {
     private final static int DEFAULT_TEXTURE_INDEX = 1;
     private final static int HP_INDEX = 2;
     private final static int CROUCHING_HITBOX_INDEX = 3;
-    private final static double JUMP_VELOCITY = 10.0;
+    private final static double JUMP_VELOCITY = 12.0;
 
     private boolean b_crouchCalled; //whether or not crouch() has been called
 
     //cstr TODO some stuff w/ file loading and such
     public LandSharkPlayer() {
         super(new PhysicsComponent(2.0, 6.0, 2.0, 1.0, 1.0, true),
-                new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/zombieKnight.png").getImage(), new Rectangle(0, 0, 64, 64)),
+                new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage(), new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0), 0),
                 new HPComponent(1));
         this.addComponent(new PhysicsComponent(0.0, 0.5, 2.0,0.5, 1.0, true)); //crouch hitbox
         this.v_c_memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
         this.setAllTags("Player");
         this.b_crouchCalled = false;
-        //((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef((HitboxAABB) (this.v_c_memberComponents.get(WALKING_HITBOX_INDEX).getData()));
-        ((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef(new HitboxAABB(0.0, 2.0, 1.0, 0.0));
     }
 
     /*
@@ -64,7 +62,7 @@ public class LandSharkPlayer extends Player {
         HitboxAABB hb_source = (HitboxAABB)this.v_c_memberComponents.get(WALKING_HITBOX_INDEX).getData();
 
         hb_target.alignBottomY(hb_source);
-        hb_target.alignCenterX(hb_source);
+        hb_target.alignRightX(hb_source);
 
         super.updateObj();
     }

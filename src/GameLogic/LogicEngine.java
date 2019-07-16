@@ -7,7 +7,10 @@ import Data.Communication.GameScript;
 import Data.ControlInterface;
 import Data.GameObject;
 import Data.Structure.PhysicsComponent;
+import Data.Structure.VisualTextureComponent;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Vector;
 
 /*
@@ -32,6 +35,7 @@ public class LogicEngine {
      */
     public void startGame(GameObject go_scene, Vector<GameScript> v_gs_scripts) {
         //TODO write the actual game now
+        go_scene.addComponent(new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/blank.png").getImage(), new Rectangle(0, 0, 1280, 720), null, 2));
         LandSharkPlayer lsp_player = new LandSharkPlayer();
         this.ci_player = lsp_player;
         go_scene.addGameObject(lsp_player);

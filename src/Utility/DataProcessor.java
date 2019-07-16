@@ -27,8 +27,12 @@ public class DataProcessor {
      */
     public static void processStringData(Vector<GameScript> v_gs_output, Vector<String> v_str_data) {
         Iterator<String> it = v_str_data.iterator(); //iterates through the data and adds each one as a new process request to the output
+        String str_temp = "";
         while (it.hasNext()) {
-            v_gs_output.add(new ProcessRequest(it.next()));
+            str_temp = it.next();
+            if (str_temp.startsWith("/")) { //check if it's a command
+                v_gs_output.add(new ProcessRequest(str_temp.replaceFirst("/", ""))); //take out the / at the front
+            }
         }
     }
 }
