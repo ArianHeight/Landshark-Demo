@@ -4,6 +4,7 @@ import Data.Communication.GameScript;
 import Data.Communication.LogRequest;
 import Data.GameObject;
 import Data.Structure.GameComponent;
+import Data.Structure.VisualAnimationComponent;
 import Data.Structure.VisualTextureComponent;
 import Utility.HitboxAABB;
 import Utility.Sorter;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.util.Iterator;
 import java.util.Vector;
 
 /*
@@ -31,6 +33,7 @@ public class RenderEngine {
     //actual member vars
     private JFrame j_windowContext;
     private Vector<GameComponent> v_gc_renderTargets;
+    private Vector<GameComponent> v_gc_animations;
     private boolean b_windowOpen;
 
     //default cstr
@@ -44,6 +47,7 @@ public class RenderEngine {
         this.j_windowContext.setDefaultCloseOperation(i_standardCloseBehaviour);
 
         this.v_gc_renderTargets = new Vector<GameComponent>(); //for rendering
+        this.v_gc_animations = new Vector<GameComponent>(); //for rendering also
     }
 
     /*
@@ -122,7 +126,7 @@ public class RenderEngine {
     this method takes a GameObject and renders every attached GameObject to the window
     TODO maybe seperate this method into a few different methods
      */
-    public void renderSceneToWindow(GameObject go_scene, Vector<GameScript> v_gs_engineRequests) {
+    public void renderSceneToWindow(GameObject go_scene, Vector<GameScript> v_gs_engineRequests, double d_timeElapsed) {
         if (!this.b_windowOpen) { //window guard
             //v_gs_engineRequests.add(new LogRequest("Renderer attempted to draw frame to a closed window"));
             return;
@@ -136,6 +140,17 @@ public class RenderEngine {
             //grabs all the textures into a single vector
             this.v_gc_renderTargets.clear(); //clear before compiling list
             go_scene.compileComponentList(this.v_gc_renderTargets, GameComponent.gcType.VISUAL_TEXTURE);
+
+            //grabs all the animations into a single vector, and adds the current sprites to the texture vector
+            this.v_gc_animations.clear();
+            go_scene.compileComponentList(this.v_gc_animations, GameComponent.gcType.VISUAL_ANIM);
+
+            //grabs the current sprite and puts it into the renderTargets
+            //also updates the sprite timings
+            Iterator<GameComponent> gc_it = this.v_gc_animations.iterator();
+            while (gc_it.hasNext()) {
+                this.v_gc_renderTargets.add(((VisualAnimationComponent)gc_it.next()).getCurrentSprite(d_timeElapsed));
+            }
 
             //sorts them by layer
             Sorter.quicksortForVTC(this.v_gc_renderTargets, this.v_gc_renderTargets.size() / 2);

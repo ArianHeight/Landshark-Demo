@@ -134,7 +134,7 @@ public class GameEngine {
             this.v_gs_scriptQueue.clear();
 
             //TODO update position from physics component
-            this.re_renderer.renderSceneToWindow(this.go_scene, this.v_gs_scriptQueue); //draws to window
+            this.re_renderer.renderSceneToWindow(this.go_scene, this.v_gs_scriptQueue, this.tp_timer.getTimeElapsed()); //draws to window
         }
 
         this.re_renderer.closeWindow(); //exit code
