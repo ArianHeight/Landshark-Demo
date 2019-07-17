@@ -1,13 +1,16 @@
 package System;
 
-import Data.Communication.*;
+import Data.Communication.CollisionResponseRequest;
+import Data.Communication.GameScript;
+import Data.Communication.LogRequest;
 import Data.GameObject;
 import Data.GameScene;
+import GameLogic.GameScore;
 import GameLogic.LogicEngine;
-import Render.RenderEngine;
-import Physics.PhysicsEngine;
-import UserInput.InputEngine;
 import IO.IOEngine;
+import Physics.PhysicsEngine;
+import Render.RenderEngine;
+import UserInput.InputEngine;
 
 import java.util.Vector;
 
@@ -70,6 +73,13 @@ public class GameEngine {
 
         //TODO flesh out this part
         this.le_logicProcessor.startGame(this.go_scene, this.v_gs_scriptQueue);
+
+        //TODO temp test code
+        Vector<GameScore> v_gsc_scores = new Vector<GameScore>();
+        this.ioe_fileCommunicator.readGameScore(v_gsc_scores);
+        for (GameScore score : v_gsc_scores) {
+            System.out.println(score);
+        }
 
         return 0;
     }

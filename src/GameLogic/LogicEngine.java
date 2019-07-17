@@ -27,6 +27,7 @@ public class LogicEngine {
     double d_distance;
     boolean b_paused;
     double d_timeSinceLastGen;
+    double d_timeSinceLastSecond;
 
     //cstr
     public LogicEngine() {
@@ -37,6 +38,7 @@ public class LogicEngine {
         this.d_distance = 0.0;
         this.b_paused = false;
         this.d_timeSinceLastGen = 0.0;
+        this.d_timeSinceLastSecond = 0.0;
     }
 
     /*
@@ -116,15 +118,19 @@ public class LogicEngine {
         this.v_gs_collisionResponseRequests.clear();
 
         if (!this.b_paused) {
-            if (RandomNumberGenerator.randomBetween(0, 100) < 20 && this.d_timeSinceLastGen >= 1.0) {
+            //TODO may move enemy spawning code to another place
+            double d_randomNum = RandomNumberGenerator.randomBetween(0, 100);
+            d_randomNum *= Math.atan(2.0 * (this.d_timeSinceLastGen - 1 - 2.5 * this.d_vel));
+            if (d_randomNum > 90 && this.d_timeSinceLastSecond >= 1.0) {
                 ((LandSharkPlayer)this.ci_player).addGameObject(new SpiderEnemy(this.d_vel));
                 this.d_timeSinceLastGen = 0.0;
             }
-            else if (this.d_timeSinceLastGen >= 1.0) {
-                this.d_timeSinceLastGen = 0.0;
+            else if (this.d_timeSinceLastSecond >= 1.0) {
+                this.d_timeSinceLastSecond = 0.0;
             }
             else {
                 this.d_timeSinceLastGen += d_timeElapsed;
+                this.d_timeSinceLastSecond += d_timeElapsed;
             }
 
             this.d_vel -= this.d_acceleration * d_timeElapsed;

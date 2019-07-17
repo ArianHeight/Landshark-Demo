@@ -1,6 +1,9 @@
 package IO;
 
 import Data.Communication.GameScript;
+import GameLogic.GameScore;
+
+import java.util.Vector;
 
 /*
 
@@ -10,11 +13,14 @@ TODO do the file input part XD
  */
 public class IOEngine {
     private GameFileWriter gfw_logWriter; //responsible for writing game logs
+    private GameFileReader gfr_scoreReader; //responsible for reading high scores
 
     //cstr
     public IOEngine() {
         this.gfw_logWriter = new GameFileWriter("./Game/System/Logs/game_active.log");
+        this.gfr_scoreReader = new GameFileReader("./Game/System/Data/scores.sav");
         System.out.println(this.gfw_logWriter.openFile(true)); //resets the file and opens it
+        System.out.println(this.gfr_scoreReader.openFile()); //opens the file for reading
     }
 
     /*
@@ -43,6 +49,13 @@ public class IOEngine {
     }
 
     /*
+    this method takes a Vector<GameScore> as an output, reads all high scores and stores them in the vector
+     */
+    public void readGameScore(Vector<GameScore> v_gsc_scores) {
+        v_gsc_scores.add(new GameScore("Tester", this.gfr_scoreReader.getNextInt())); //TODO temp code
+    }
+
+    /*
     call this when game engine closes!
     does cleanup for the file IO
 
@@ -50,6 +63,7 @@ public class IOEngine {
      */
     public void closeSystem() {
         this.gfw_logWriter.closeFile();
+        this.gfr_scoreReader.closeFile();
     }
 
     //TODO temp method

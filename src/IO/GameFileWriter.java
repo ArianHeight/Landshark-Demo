@@ -14,7 +14,7 @@ to be called from IOEngine class whenever a request for logging or saving comes 
 BIG WARNING THIS CLASS WILL NOT CLOSE FILES BY ITSELF PLEASE MANAGE CORRECTLY AND CALL close()!
 
  */
-public class GameFileWriter {
+public class GameFileWriter implements GameFileHandler, GameWriteable {
     private String str_filePath;
     private File f;
     private FileWriter fw_writer;
@@ -60,6 +60,12 @@ public class GameFileWriter {
         return ""; //return "" for no error encountered
     }
 
+    //opens the file without truncation
+    @Override
+    public String openFile() {
+        return this.openFile(false);
+    }
+
     /*
     IMPORTANT:This method is to be called after everything that you want to be written has been written
     REQUIRES:The file has been opened(this.OpenFile(boolean) has been called once and this method has not)
@@ -67,6 +73,7 @@ public class GameFileWriter {
     EFFECT:Closes a file that was open for writing
            this method returns an empty string if every thing goes well, but will return an error msg if there is an exception thrown
      */
+    @Override
     public String closeFile() {
         if (!this.b_isOpen) { //file guard
             return "The file system is attempting to close at " + this.str_filePath + " is not open...";
@@ -90,6 +97,7 @@ public class GameFileWriter {
            Takes a boolean var as an input and will create a newline based on that
            Please remember to call openFile beforehand
      */
+    @Override
     public String writeContentToFile(String str_msg, boolean b_newline) {
         if (!this.b_isOpen) { //file guard
             return "System encountered an error while trying to write msg \"" + str_msg + "\" to a file at " + this.str_filePath + " which was not opened";
@@ -110,6 +118,7 @@ public class GameFileWriter {
     }
 
     //this method returns whether or not the file has been opened for writing
+    @Override
     public boolean isOpen() {
         return this.b_isOpen;
     }
