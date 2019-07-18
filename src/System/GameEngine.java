@@ -24,33 +24,33 @@ keeps track of all assets in use, and all GameObjects created
 public class GameEngine {
 
     //member vars
-    private PhysicsEngine pe_physEngine;
-    private RenderEngine re_renderer;
-    private InputEngine ie_inputProcessor;
-    private IOEngine ioe_fileCommunicator;
-    private TimeProcessor tp_timer;
-    private LogicEngine le_logicProcessor;
-    private ScriptProcessor sp_scriptProcessor;
+    private PhysicsEngine physEngine;
+    private RenderEngine renderer;
+    private InputEngine inputProcessor;
+    private IOEngine fileCommunicator;
+    private TimeProcessor timer;
+    private LogicEngine logicProcessor;
+    private ScriptProcessor scriptProcessor;
 
-    private boolean b_gameloop;
-    private Vector<GameScript> v_gs_scriptQueue; //a queue to store all scripts waiting to be executed
-    private GameObject go_scene; //the scene graph for the entire game
+    private boolean gameloop;
+    private Vector<GameScript> scriptQueue; //a queue to store all scripts waiting to be executed
+    private GameObject sceneGraph; //the scene graph for the entire game
 
     public GameEngine() {
         //cstr
 
         //initialize all member vars TODO maybe move some to startEngine
-        this.pe_physEngine = new PhysicsEngine();
-        this.re_renderer = new RenderEngine();
-        this.ie_inputProcessor = new InputEngine();
-        this.ioe_fileCommunicator = new IOEngine();
-        this.tp_timer = new TimeProcessor();
-        this.le_logicProcessor = new LogicEngine();
-        this.sp_scriptProcessor = new ScriptProcessor();
+        this.physEngine = new PhysicsEngine();
+        this.renderer = new RenderEngine();
+        this.inputProcessor = new InputEngine();
+        this.fileCommunicator = new IOEngine();
+        this.timer = new TimeProcessor();
+        this.logicProcessor = new LogicEngine();
+        this.scriptProcessor = new ScriptProcessor();
 
-        this.b_gameloop = true;
-        this.v_gs_scriptQueue = new Vector<GameScript>();
-        this.go_scene = new GameScene();
+        this.gameloop = true;
+        this.scriptQueue = new Vector<GameScript>();
+        this.sceneGraph = new GameScene();
     }
 
     //dstr would go here, but java is a thing so..........
@@ -58,25 +58,25 @@ public class GameEngine {
     /*
     TODO description
      */
-    public int startEngine(String str_fileLoc) {
-        this.v_gs_scriptQueue.add(new LogRequest("Game Engine Initializing...")); //starts the engine
+    public int startEngine(String fileLoc) {
+        this.scriptQueue.add(new LogRequest("Game Engine Initializing...")); //starts the engine
 
-        this.v_gs_scriptQueue.add(new LogRequest("Creating Window Context...")); //opens the game window
-        String str_tempLog = this.re_renderer.openWindow();
+        this.scriptQueue.add(new LogRequest("Creating Window Context...")); //opens the game window
+        String str_tempLog = this.renderer.openWindow();
         if (!str_tempLog.equals("")) {
-            this.v_gs_scriptQueue.add(new LogRequest(str_tempLog)); //log if there is error
+            this.scriptQueue.add(new LogRequest(str_tempLog)); //log if there is error
         }
 
-        this.v_gs_scriptQueue.add(new LogRequest("Attempting to link keyboard handler to window context..."));
-        this.re_renderer.addKeyListenerToWindow(this.ie_inputProcessor.getKeyHandler());
-        this.v_gs_scriptQueue.add(new LogRequest("Link established..."));
+        this.scriptQueue.add(new LogRequest("Attempting to link keyboard handler to window context..."));
+        this.renderer.addKeyListenerToWindow(this.inputProcessor.getKeyHandler());
+        this.scriptQueue.add(new LogRequest("Link established..."));
 
         //TODO flesh out this part
-        this.le_logicProcessor.startGame(this.go_scene, this.v_gs_scriptQueue);
+        this.logicProcessor.startGame(this.sceneGraph, this.scriptQueue);
 
         //TODO temp test code
         Vector<GameScore> v_gsc_scores = new Vector<GameScore>();
-        this.ioe_fileCommunicator.readGameScore(v_gsc_scores);
+        this.fileCommunicator.readGameScore(v_gsc_scores);
         for (GameScore score : v_gsc_scores) {
             System.out.println(score);
         }
@@ -85,23 +85,23 @@ public class GameEngine {
     }
 
     //TODO dis is temp home for linker sort of method??
-    public boolean processScript(GameScript gs_script) {
-        switch (gs_script.getCmd()) {
+    public boolean processScript(GameScript script) {
+        switch (script.getCmd()) {
             case GameScript.LOG_DATA:
-                this.tp_timer.tagScript(gs_script);
-                this.ioe_fileCommunicator.processRequest(gs_script);
+                this.timer.tagScript(script);
+                this.fileCommunicator.processRequest(script);
                 break;
             case GameScript.PROCESS_DATA:
-                this.sp_scriptProcessor.addScriptToProcess(gs_script);
+                this.scriptProcessor.addScriptToProcess(script);
                 break;
             case GameScript.GAME_EVENT:
-                this.le_logicProcessor.runScript(gs_script, this.go_scene);
+                this.logicProcessor.runScript(script, this.sceneGraph);
                 break;
             case GameScript.END_PROGRAM:
-                this.b_gameloop = false; //end program here
+                this.gameloop = false; //end program here
                 break;
             case GameScript.COLLISION_RESPONSE:
-                this.pe_physEngine.doCollisionResponse(((CollisionResponseRequest)gs_script).getOne(), ((CollisionResponseRequest)gs_script).getTwo());
+                this.physEngine.doCollisionResponse(((CollisionResponseRequest)script).getOne(), ((CollisionResponseRequest)script).getTwo());
             default:
                 return false;
         }
@@ -115,35 +115,35 @@ public class GameEngine {
 
      */
     public void run() {
-        while (this.b_gameloop) {
-            this.v_gs_scriptQueue.addAll(this.ie_inputProcessor.run()); //runs the input processor
-            this.tp_timer.tick();
-            this.le_logicProcessor.logicUpdate(go_scene, this.tp_timer.getTimeElapsed());
-            this.pe_physEngine.doScenePhysics(this.go_scene, this.v_gs_scriptQueue, this.tp_timer.getTimeElapsed()); //do physics
+        while (this.gameloop) {
+            this.scriptQueue.addAll(this.inputProcessor.run()); //runs the input processor
+            this.timer.tick();
+            this.logicProcessor.logicUpdate(sceneGraph, this.timer.getTimeElapsed());
+            this.physEngine.doScenePhysics(this.sceneGraph, this.scriptQueue, this.timer.getTimeElapsed()); //do physics
 
-            for (GameScript gs_temp : this.v_gs_scriptQueue) {
+            for (GameScript gs_temp : this.scriptQueue) {
                 this.processScript(gs_temp);
             }
-            this.v_gs_scriptQueue.clear();
-            this.sp_scriptProcessor.processScriptsInQueue(this.v_gs_scriptQueue);
+            this.scriptQueue.clear();
+            this.scriptProcessor.processScriptsInQueue(this.scriptQueue);
 
-            this.v_gs_scriptQueue.addAll(this.le_logicProcessor.getCollisionRequestQueue()); //grab the stuff that needs to have collision responses computed
-            for (GameScript gs_temp : this.v_gs_scriptQueue) {
+            this.scriptQueue.addAll(this.logicProcessor.getCollisionRequestQueue()); //grab the stuff that needs to have collision responses computed
+            for (GameScript gs_temp : this.scriptQueue) {
                 this.processScript(gs_temp);
             }
-            this.v_gs_scriptQueue.clear();
+            this.scriptQueue.clear();
 
             //TODO update position from physics component
-            this.re_renderer.renderSceneToWindow(this.go_scene, this.v_gs_scriptQueue, this.tp_timer.getTimeElapsed()); //draws to window
+            this.renderer.renderSceneToWindow(this.sceneGraph, this.scriptQueue, this.timer.getTimeElapsed()); //draws to window
         }
 
-        this.re_renderer.closeWindow(); //exit code
+        this.renderer.closeWindow(); //exit code
     }
 
     /*
     TODO description and the actual functions
      */
     public void endEngine() {
-        this.ioe_fileCommunicator.closeSystem(); //closes the system
+        this.fileCommunicator.closeSystem(); //closes the system
     }
 }
