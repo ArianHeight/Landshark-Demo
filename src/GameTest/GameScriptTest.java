@@ -1,6 +1,8 @@
 package GameTest;
 
 import Data.Communication.*;
+import Data.Structure.PhysicsComponent;
+import Utility.HitboxAABB;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -76,11 +78,33 @@ public class GameScriptTest {
     }
 
     @Test
-    public void test6() { //EndProgram test
+    public void test6() { //GameEvent test
         gs_subject = new GameEventRequest("spawnactor");
         assertTrue(gs_subject.getCmd() == GameScript.GAME_EVENT);
         assertTrue(((String)gs_subject.getData()).equals("spawnactor"));
         gs_subject.setData("new");
         assertTrue(((String)gs_subject.getData()).equals("new"));
+    }
+
+    @Test
+    public void test7() { //CollisionDetected test
+        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 4.0, 1.0, 0.0), -2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(1.0, 3.0, 1.5, 0.5), 1.0, true);
+
+        gs_subject = new CollisionDetectedRequest(one, two);
+        assertTrue(gs_subject.getCmd() == GameScript.GAME_EVENT);
+        assertTrue(((CollisionDetectedRequest)gs_subject).getOne() == one);
+        assertTrue(((CollisionDetectedRequest)gs_subject).getTwo() == two);
+    }
+
+    @Test
+    public void test8() { //CollisionResponse test
+        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 4.0, 1.0, 0.0), -2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(1.0, 3.0, 1.5, 0.5), 1.0, true);
+
+        gs_subject = new CollisionResponseRequest(one, two);
+        assertTrue(gs_subject.getCmd() == GameScript.COLLISION_RESPONSE);
+        assertTrue(((CollisionResponseRequest)gs_subject).getOne() == one);
+        assertTrue(((CollisionResponseRequest)gs_subject).getTwo() == two);
     }
 }

@@ -73,4 +73,21 @@ public class GameObjectTest {
         obj4.compileComponentList(someVector, GameComponent.gcType.VISUAL_TEXTURE);
         assertTrue(someVector.size() == 0);
     }
+
+    @Test
+    public void test6() {
+        assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.gcType.PHYSICS) == gc1);
+        gc1.deactivate();
+        assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.gcType.PHYSICS) == null);
+    }
+
+    @Test
+    public void test7() {
+        obj1.setAllTags("1");
+        obj2.setAllTags("2");
+        obj3.setAllTags("3");
+        assertTrue(gc1.getTag().equals("1"));
+        assertTrue(gc2.getTag().equals("2"));
+        assertTrue(gc3.getTag().equals("3"));
+    }
 }
