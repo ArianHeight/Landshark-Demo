@@ -103,6 +103,9 @@ public class LogicEngine {
             if ((enemy == 1 || player == 1) && map == 1) {
                 //queue for collisionResponse
                 this.v_gs_collisionResponseRequests.add(new CollisionResponseRequest(pc_one, pc_two));
+                if (player == 1 && map == 1) {
+                    ((LandSharkPlayer)this.ci_player).setTouchingGroundTrue();
+                }
             }
             else if (player == 1 && enemy == 1) { //kill player
                 this.runScript(new GameEventRequest("KillPlayer"), go_scene);

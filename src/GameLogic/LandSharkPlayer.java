@@ -17,6 +17,8 @@ public class LandSharkPlayer extends Player {
     private final static double JUMP_VELOCITY = 12.0;
 
     private boolean b_crouchCalled; //whether or not crouch() has been called
+    private boolean thisFrameOnGround;
+    private boolean touchingGround;
 
     //cstr TODO some stuff w/ file loading and such
     public LandSharkPlayer() {
@@ -27,6 +29,8 @@ public class LandSharkPlayer extends Player {
         this.v_c_memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
         this.setAllTags("Player");
         this.b_crouchCalled = false;
+        this.thisFrameOnGround = false;
+        this.touchingGround = false;
     }
 
     /*
@@ -48,8 +52,16 @@ public class LandSharkPlayer extends Player {
         }
     }
 
+    //makes the player jump in the air if touching the ground
     private void jump() {
-        ((PhysicsComponent)this.v_c_memberComponents.get(WALKING_HITBOX_INDEX)).setVelY(JUMP_VELOCITY);
+        if (this.touchingGround) {
+            ((PhysicsComponent) this.v_c_memberComponents.get(WALKING_HITBOX_INDEX)).setVelY(JUMP_VELOCITY);
+        }
+    }
+
+    //self-explaining
+    public void setTouchingGroundTrue() {
+        this.thisFrameOnGround = true;
     }
 
     /*
@@ -65,6 +77,14 @@ public class LandSharkPlayer extends Player {
 
         hb_target.alignBottomY(hb_source);
         hb_target.alignRightX(hb_source);
+
+        if (this.thisFrameOnGround) {
+            this.touchingGround = true;
+        }
+        else {
+            this.touchingGround = false;
+        }
+        this.thisFrameOnGround = false;
 
         if (!this.findHPComponent().isAlive()) {
             this.setForDelete();
