@@ -26,7 +26,7 @@ public class TimeProcessorTest {
     @Test
     public void test2() {
         te_subject.tick();
-        assertTrue(te_subject.getTimeElapsed() > 0.0);
+        assertTrue(te_subject.getTimeElapsed() >= 0.0);
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
@@ -34,6 +34,6 @@ public class TimeProcessorTest {
             assertTrue(false);
         }
         te_subject.tick();
-        assertTrue(te_subject.getTimeElapsed() > 0.0);
+        assertTrue(te_subject.getTimeElapsed() >= 1.0);
     }
 }

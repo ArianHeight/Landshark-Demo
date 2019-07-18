@@ -45,12 +45,9 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
                 this.f.createNewFile(); //creates new file in place if the file does not exist
             }
 
-            this.fw_writer = new FileWriter(this.f); //makes file writer
+            //truncates the file if b_truncFile is true
+            this.fw_writer = new FileWriter(this.f, !b_truncFile); //makes file writer
             this.bw_writer = new BufferedWriter(this.fw_writer); //makes buffered writer
-
-            if (b_truncFile) {
-                this.bw_writer.flush(); //truncates the file if b_truncFile is true
-            }
         }
         catch (IOException error) { //catch io exceptions
             return "System encountered an error while trying to open a file at " + this.str_filePath;
