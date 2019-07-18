@@ -41,7 +41,7 @@ public class Actor extends GameObject {
     returns 0 if the obj has 0 hp
     returns 1 if the obj has more than 0 hp
      */
-    public int TakeDmg(int i_dmg) {
+    public int takeDmg(int i_dmg) {
         //grabs the hp
         HPComponent hpc_health = this.findHPComponent();
 

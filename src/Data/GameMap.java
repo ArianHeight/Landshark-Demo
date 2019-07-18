@@ -17,7 +17,7 @@ a map will have
  */
 public class GameMap extends GameObject {
     //cstr
-    protected GameMap(PhysicsComponent pc_hitbox, VisualTextureComponent vtc_texture) {
+    public GameMap(PhysicsComponent pc_hitbox, VisualTextureComponent vtc_texture) {
         this.addComponent(pc_hitbox); //add physics
         this.addComponent(vtc_texture); //add texture
         this.setAllTags("Map");
