@@ -15,15 +15,15 @@ TODO insert description of what class does here
  */
 public class InputEngine implements Observer{
     //member vars
-    private ConsoleWatch cw_listener;
-    private Vector<GameScript> v_gs_scripts;
-    private GameKeyInput gki_listener;
+    private ConsoleWatch cwListener;
+    private Vector<GameScript> scripts;
+    private GameKeyInput gkiListener;
 
     //cstr
     public InputEngine() {
-        this.cw_listener = new ConsoleWatch(this); //makes a linked cw obj
-        this.v_gs_scripts = new Vector<GameScript>();
-        gki_listener = new GameKeyInput();
+        this.cwListener = new ConsoleWatch(this); //makes a linked cw obj
+        this.scripts = new Vector<GameScript>();
+        gkiListener = new GameKeyInput();
 
         KeyBindings.createKeyBindings(); //make the key bindings
     }
@@ -34,11 +34,11 @@ public class InputEngine implements Observer{
 
      */
     public Vector<GameScript> run() {
-        this.v_gs_scripts.clear(); //clears the scripts
-        this.cw_listener.run(); //tells the console watch to listen
-        this.gki_listener.refresh(this.v_gs_scripts); //gives this.v_gs_scripts as an output to the listener's refresh method
+        this.scripts.clear(); //clears the scripts
+        this.cwListener.run(); //tells the console watch to listen
+        this.gkiListener.refresh(this.scripts); //gives this.scripts as an output to the listener's refresh method
 
-        return this.v_gs_scripts; //outputs the scripts
+        return this.scripts; //outputs the scripts
     }
 
     /*
@@ -46,23 +46,23 @@ public class InputEngine implements Observer{
      */
     @Override
     public void update(Observable o, Object arg) {
-        if (o == this.cw_listener) {
-            //only for updates from cw_listener
+        if (o == this.cwListener) {
+            //only for updates from cwListener
             switch((int) arg) {
                 case(GameScript.LOG_DATA): //gets error data and puts it in queue
-                    DataProcessor.processErrorData(this.v_gs_scripts, this.cw_listener.getErrors());
+                    DataProcessor.processErrorData(this.scripts, this.cwListener.getErrors());
                     break;
                 case(GameScript.PROCESS_DATA): //gets process requests and puts it in queue
-                    DataProcessor.processStringData(this.v_gs_scripts, this.cw_listener.getInputs());
+                    DataProcessor.processStringData(this.scripts, this.cwListener.getInputs());
                     break;
             }
         }
     }
 
     /*
-    this method returns a reference to the gki_listener
+    this method returns a reference to the gkiListener
      */
     public GameKeyInput getKeyHandler() {
-        return gki_listener;
+        return gkiListener;
     }
 }

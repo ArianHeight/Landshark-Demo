@@ -132,7 +132,7 @@ public class PhysicsEngine {
                 d_favorOnePercentage = 1.0;
                 break;
             case 2: //only pc_two can be moved
-                d_favorOnePercentage = 0.0;;
+                d_favorOnePercentage = 0.0;
                 break;
             case 3:
             default: //both can be moved

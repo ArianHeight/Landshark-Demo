@@ -14,44 +14,44 @@ The Console class handles console inputs and everything related to that
  */
 public class ConsoleInput {
     //member vars
-    private static String str_currentLine = null; //a variable used to hold the current line in the console(null if no input detected)
-    private static InputStreamReader isr_reader = new InputStreamReader(System.in); //input stream reader for System.in
-    private static BufferedReader br_console = new BufferedReader(isr_reader); //console reader reading from System.in
+    private static String currentLine = null; //a variable used to hold the current line in the console(null if no input detected)
+    private static InputStreamReader reader = new InputStreamReader(System.in); //input stream reader for System.in
+    private static BufferedReader console = new BufferedReader(reader); //console reader reading from System.in
 
     /*
-    This method takes an ArrayList<String> reference v_str_output as a parameter, that ArrayList will be the output for the method
-    this also takes another ArrayList<String> ref v_str_errors as a parameter, all errors encountered will be pushed through here
+    This method takes an ArrayList<String> reference output as a parameter, that ArrayList will be the output for the method
+    this also takes another ArrayList<String> ref errors as a parameter, all errors encountered will be pushed through here
     returns true if a user has typed something into the console or if an error has been encountered, false otherwise
 
-    this method gets one line of user input from the console and pushes it to v_str_output
+    this method gets one line of user input from the console and pushes it to output
 
-    parameter v_str_output will be cleared first, and all lines of input from the console will be added to the end of it
+    parameter output will be cleared first, and all lines of input from the console will be added to the end of it
      */
-    public static boolean getConsoleOutput(Vector<String> v_str_output, Vector<String> v_str_errors) {
+    public static boolean getConsoleOutput(Vector<String> output, Vector<String> errors) {
         //gets al output ready for processing
-        v_str_output.clear();
-        v_str_errors.clear();
-        v_str_output.ensureCapacity(1);
-        v_str_errors.ensureCapacity(1);
+        output.clear();
+        errors.clear();
+        output.ensureCapacity(1);
+        errors.ensureCapacity(1);
 
         //create returnVal
         boolean returnVal = false;
 
         //try catch for reading from console
         try {
-            if (br_console.ready()) {
-                str_currentLine = br_console.readLine(); //reads line from console
+            if (console.ready()) {
+                currentLine = console.readLine(); //reads line from console
 
-                if (str_currentLine != null) //if user has input
+                if (currentLine != null) //if user has input
                 {
-                    v_str_output.add(str_currentLine);
+                    output.add(currentLine);
                     returnVal = true; //user has inputted, return true
                 }
             }
         }
         catch (IOException error) {
-            v_str_errors.add("System encountered IO error whilst reading msg from console..."); //add error msg to output
-            v_str_output.clear(); //clears output
+            errors.add("System encountered IO error whilst reading msg from console..."); //add error msg to output
+            output.clear(); //clears output
 
             return true; //early return for error encountered
         }

@@ -22,7 +22,6 @@ keeps track of all assets in use, and all GameObjects created
 
  */
 public class GameEngine {
-
     //member vars
     private PhysicsEngine physEngine;
     private RenderEngine renderer;

@@ -21,7 +21,7 @@ public class Main {
 
         e.run();
 
-        e.endEngine();;
+        e.endEngine();
         System.out.println("Engine finished running, ending program..."); //placeholder line
 
     }
