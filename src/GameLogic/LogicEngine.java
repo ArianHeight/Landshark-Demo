@@ -53,7 +53,7 @@ public class LogicEngine {
         this.d_distance = 0.0;
         this.b_paused = false;
 
-        go_scene.addComponent(new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/blank.png").getImage(), new Rectangle(0, 0, 1280, 720), null, 2));
+        go_scene.addComponent(new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/backDrop.png").getImage(), new Rectangle(0, 0, 1280, 720), null, 2));
         LandSharkPlayer lsp_player = new LandSharkPlayer();
         this.ci_player = lsp_player;
         go_scene.addGameObject(lsp_player);

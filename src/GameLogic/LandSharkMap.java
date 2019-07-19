@@ -17,8 +17,8 @@ public class LandSharkMap extends GameMap{
 
     //cstr
     public LandSharkMap() {
-        super(new PhysicsComponent(new HitboxAABB(-5.0, 35.0, 5.0, -5.0), -1.0, false),
+        super(new PhysicsComponent(new HitboxAABB(-5.0, 35.0, 2.0, -5.0), -1.0, false),
                 new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1)));
-        ((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef((HitboxAABB) (this.v_c_memberComponents.get(HITBOX_INDEX).getData()));
+        ((VisualTextureComponent)this.memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef((HitboxAABB) (this.memberComponents.get(HITBOX_INDEX).getData()));
     }
 }

@@ -22,11 +22,11 @@ public class LandSharkPlayer extends Player {
 
     //cstr TODO some stuff w/ file loading and such
     public LandSharkPlayer() {
-        super(new PhysicsComponent(2.0, 6.0, 2.0, 1.0, 1.0, true),
+        super(new PhysicsComponent(2.0, 3.0, 2.0, 1.0, 1.0, true),
                 new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage(), new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0), 0),
                 new HPComponent(1));
         this.addComponent(new PhysicsComponent(0.0, 0.5, 2.0,0.5, 1.0, true)); //crouch hitbox
-        this.v_c_memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
+        this.memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
         this.setAllTags("Player");
         this.b_crouchCalled = false;
         this.thisFrameOnGround = false;
@@ -55,7 +55,7 @@ public class LandSharkPlayer extends Player {
     //makes the player jump in the air if touching the ground
     private void jump() {
         if (this.touchingGround) {
-            ((PhysicsComponent) this.v_c_memberComponents.get(WALKING_HITBOX_INDEX)).setVelY(JUMP_VELOCITY);
+            ((PhysicsComponent) this.memberComponents.get(WALKING_HITBOX_INDEX)).setVelY(JUMP_VELOCITY);
         }
     }
 
@@ -72,8 +72,8 @@ public class LandSharkPlayer extends Player {
     @Override
     public void updateObj() {
         //TODO temp code will change with crouch
-        HitboxAABB hb_target = ((VisualTextureComponent)this.v_c_memberComponents.get(DEFAULT_TEXTURE_INDEX)).getWorldPosRef();
-        HitboxAABB hb_source = (HitboxAABB)this.v_c_memberComponents.get(WALKING_HITBOX_INDEX).getData();
+        HitboxAABB hb_target = ((VisualTextureComponent)this.memberComponents.get(DEFAULT_TEXTURE_INDEX)).getWorldPosRef();
+        HitboxAABB hb_source = (HitboxAABB)this.memberComponents.get(WALKING_HITBOX_INDEX).getData();
 
         hb_target.alignBottomY(hb_source);
         hb_target.alignRightX(hb_source);

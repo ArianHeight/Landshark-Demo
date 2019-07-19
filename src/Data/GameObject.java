@@ -6,71 +6,71 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public abstract class GameObject {
-    protected Vector<GameComponent> v_c_memberComponents;
-    protected Vector<GameObject> v_go_memberObjects;
-    private boolean b_delete; //if true then delete from the scene
+    protected Vector<GameComponent> memberComponents;
+    protected Vector<GameObject> memberObjects;
+    private boolean delete; //if true then delete from the scene
 
     //cstr
     public GameObject() {
-        this.v_c_memberComponents = new Vector<GameComponent>();
-        this.v_go_memberObjects = new Vector<GameObject>();
-        this.b_delete = false;
+        this.memberComponents = new Vector<GameComponent>();
+        this.memberObjects = new Vector<GameObject>();
+        this.delete = false;
     }
 
     /*
-    REQUIRES:gc_component is not null
+    REQUIRES:component is not null
     MODIFIES:this
     EFFECT:takes a GameComponent as an input and attaches it to the object
      */
-    public void addComponent(GameComponent gc_component) {
-        this.v_c_memberComponents.add(gc_component);
+    public void addComponent(GameComponent component) {
+        this.memberComponents.add(component);
     }
 
     /*
-    REQUIRES:go_obj is not null
+    REQUIRES:obj is not null
     MODIFIES:this
     EFFECT:takes a GameObject as an input and adds it to the memberObjects list
      */
-    public void addGameObject(GameObject go_obj) {
-        this.v_go_memberObjects.add(go_obj);
+    public void addGameObject(GameObject obj) {
+        this.memberObjects.add(obj);
     }
 
     /*
     REQUIRES:A valid String
     MODIFIES:this
-    EFFECT:Sets the tags for every member component to the str_input
+    EFFECT:Sets the tags for every member component to the input
      */
-    public void setAllTags(String str_tag) {
-        Iterator<GameComponent> gc_it = this.v_c_memberComponents.iterator();
-        while (gc_it.hasNext()) {
-            gc_it.next().setTag(str_tag);
+    public void setAllTags(String tag) {
+        Iterator<GameComponent> gcIt = this.memberComponents.iterator();
+        while (gcIt.hasNext()) {
+            gcIt.next().setTag(tag);
         }
     }
 
     /*
-    MODIFIES:v_gc_output
+    MODIFIES:output
     EFFECT:Takes a vector of GameComponents as input
-           that vector will be used as an output queue to store all active game components of type gct_type
+           that vector will be used as an output queue to store all active game components of type type
            from this Object and all of its children into
            does not clear the vector output
      */
-    public void compileComponentList(Vector<GameComponent> v_gc_output, GameComponent.gcType gct_type) {
+    public void compileComponentList(Vector<GameComponent> output, GameComponent.gcType type) {
         //variable to store individual GameComponents
-        GameComponent gc_temp = null;
+        GameComponent gcTemp = null;
 
         //iterates through all components and only add the matching ones
-        Iterator<GameComponent> gct_it = this.v_c_memberComponents.iterator();
-        while (gct_it.hasNext()) {
-            gc_temp = gct_it.next();
-            if (gc_temp.getType() == gct_type && gc_temp.isActive()) {
-                v_gc_output.add(gc_temp); //only add if the type matches
+        Iterator<GameComponent> gcIt = this.memberComponents.iterator();
+        while (gcIt.hasNext()) {
+            gcTemp = gcIt.next();
+            if (gcTemp.getType() == type && gcTemp.isActive()) {
+                output.add(gcTemp); //only add if the type matches
             }
         }
 
         //iterates through all GameObjects to call this method recursively
-        Iterator<GameObject> go_it = this.v_go_memberObjects.iterator();
-        while (go_it.hasNext()) {
-            go_it.next().compileComponentList(v_gc_output, gct_type); //recursive call
+        Iterator<GameObject> goIt = this.memberObjects.iterator();
+        while (goIt.hasNext()) {
+            goIt.next().compileComponentList(output, type); //recursive call
         }
     }
 
@@ -79,16 +79,16 @@ public abstract class GameObject {
     EFFECT:takes a game component type and returns the first active component of that type of this object
            returns null if nothing is found
      */
-    public GameComponent findFirstActiveComponentInObj(GameComponent.gcType gct_type) {
+    public GameComponent findFirstActiveComponentInObj(GameComponent.gcType type) {
         //variable to store individual GameComponents
-        GameComponent gc_temp = null;
+        GameComponent gcTemp = null;
 
         //iterates through all components and only add the matching ones
-        Iterator<GameComponent> gct_it = this.v_c_memberComponents.iterator();
-        while (gct_it.hasNext()) {
-            gc_temp = gct_it.next();
-            if (gc_temp.getType() == gct_type && gc_temp.isActive()) {
-                return gc_temp;
+        Iterator<GameComponent> it = this.memberComponents.iterator();
+        while (it.hasNext()) {
+            gcTemp = it.next();
+            if (gcTemp.getType() == type && gcTemp.isActive()) {
+                return gcTemp;
             }
         }
 
@@ -107,14 +107,14 @@ public abstract class GameObject {
      */
     public void updateObj() {
         //recursive call
-        Iterator<GameObject> go_it = this.v_go_memberObjects.iterator();
-        GameObject go_temp = null;
-        while (go_it.hasNext()) {
-            go_temp = go_it.next();
-            go_temp.updateObj();
+        Iterator<GameObject> goIt = this.memberObjects.iterator();
+        GameObject goTemp = null;
+        while (goIt.hasNext()) {
+            goTemp = goIt.next();
+            goTemp.updateObj();
 
-            if (go_temp.b_delete) {
-                go_it.remove();
+            if (goTemp.delete) {
+                goIt.remove();
             }
         }
     }
@@ -123,6 +123,6 @@ public abstract class GameObject {
     this method, when called, will set the object to be deleted
      */
     protected void setForDelete() {
-        this.b_delete = true;
+        this.delete = true;
     }
 }
