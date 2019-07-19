@@ -20,25 +20,25 @@ handling everything from what happens to an object on collision
 to what happens to a player when their hp hits 0
  */
 public class LogicEngine {
-    ControlInterface ci_player;
-    Vector<GameScript> v_gs_collisionResponseRequests;
-    double d_acceleration;
-    double d_vel;
-    double d_distance;
-    boolean b_paused;
-    double d_timeSinceLastGen;
-    double d_timeSinceLastSecond;
+    ControlInterface player;
+    Vector<GameScript> collisionResponseRequests;
+    double acceleration;
+    double vel;
+    double distance;
+    boolean paused;
+    double timeSinceLastGen;
+    double timeSinceLastSecond;
 
     //cstr
     public LogicEngine() {
         //idk what to put
-        this.v_gs_collisionResponseRequests = new Vector<GameScript>();
-        this.d_acceleration = 0.05;
-        this.d_vel = -5.0;
-        this.d_distance = 0.0;
-        this.b_paused = false;
-        this.d_timeSinceLastGen = 0.0;
-        this.d_timeSinceLastSecond = 0.0;
+        this.collisionResponseRequests = new Vector<GameScript>();
+        this.acceleration = 0.05;
+        this.vel = -5.0;
+        this.distance = 0.0;
+        this.paused = false;
+        this.timeSinceLastGen = 0.0;
+        this.timeSinceLastSecond = 0.0;
     }
 
     /*
@@ -46,19 +46,19 @@ public class LogicEngine {
 
     also takes a vector of GameScripts to dump any log requests and whatnot
      */
-    public void startGame(GameObject go_scene, Vector<GameScript> v_gs_scripts) {
+    public void startGame(GameObject scene, Vector<GameScript> scripts) {
         //TODO write the actual game now
-        this.d_acceleration = 0.05;
-        this.d_vel = -10.0;
-        this.d_distance = 0.0;
-        this.b_paused = false;
+        this.acceleration = 0.05;
+        this.vel = -10.0;
+        this.distance = 0.0;
+        this.paused = false;
 
-        go_scene.addComponent(new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/backDrop.png").getImage(), new Rectangle(0, 0, 1280, 720), null, 2));
-        LandSharkPlayer lsp_player = new LandSharkPlayer();
-        this.ci_player = lsp_player;
-        go_scene.addGameObject(lsp_player);
-        go_scene.addGameObject(new LandSharkMap());
-        lsp_player.addGameObject(new SpiderEnemy(this.d_vel)); //TODO temp code
+        scene.addComponent(new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/backDrop.png").getImage(), new Rectangle(0, 0, 1280, 720), null, 2));
+        LandSharkPlayer lspPlayer = new LandSharkPlayer();
+        this.player = lspPlayer;
+        scene.addGameObject(lspPlayer);
+        scene.addGameObject(new LandSharkMap());
+        lspPlayer.addGameObject(new SpiderEnemy(this.vel)); //TODO temp code
     }
 
     /*
@@ -66,49 +66,49 @@ public class LogicEngine {
 
     most of the code for main updates to the game will be run from here
      */
-    public void runScript(GameScript gs_script, GameObject go_scene) {
-        if (gs_script.getData().endsWith("Player")) {
-            this.ci_player.inputResponse(gs_script.getData());
+    public void runScript(GameScript script, GameObject scene) {
+        if (script.getData().endsWith("Player")) {
+            this.player.inputResponse(script.getData());
         }
-        else if (gs_script.getData() == "Collision") { //todo maybe move somewhere else
-            PhysicsComponent pc_one = ((CollisionDetectedRequest)gs_script).getOne();
-            PhysicsComponent pc_two = ((CollisionDetectedRequest)gs_script).getTwo();
+        else if (script.getData() == "Collision") { //todo maybe move somewhere else
+            PhysicsComponent pcOne = ((CollisionDetectedRequest)script).getOne();
+            PhysicsComponent pcTwo = ((CollisionDetectedRequest)script).getTwo();
 
             int map = 0;
             int enemy = 0;
             int player = 0;
 
-            String str_tagOne = pc_one.getTag();
-            String str_tagTwo = pc_two.getTag();
-            if (str_tagOne.equals("Player")) {
+            String tagOne = pcOne.getTag();
+            String tagTwo = pcTwo.getTag();
+            if (tagOne.equals("Player")) {
                 player++;
             }
-            else if (str_tagOne.equals("Enemy")) {
+            else if (tagOne.equals("Enemy")) {
                 enemy++;
             }
-            else if (str_tagOne.equals("Map")) {
+            else if (tagOne.equals("Map")) {
                 map++;
             }
 
-            if (str_tagTwo.equals("Player")) {
+            if (tagTwo.equals("Player")) {
                 player++;
             }
-            else if (str_tagTwo.equals("Enemy")) {
+            else if (tagTwo.equals("Enemy")) {
                 enemy++;
             }
-            else if (str_tagTwo.equals("Map")) {
+            else if (tagTwo.equals("Map")) {
                 map++;
             }
 
             if ((enemy == 1 || player == 1) && map == 1) {
                 //queue for collisionResponse
-                this.v_gs_collisionResponseRequests.add(new CollisionResponseRequest(pc_one, pc_two));
+                this.collisionResponseRequests.add(new CollisionResponseRequest(pcOne, pcTwo));
                 if (player == 1 && map == 1) {
-                    ((LandSharkPlayer)this.ci_player).setTouchingGroundTrue();
+                    ((LandSharkPlayer)this.player).setTouchingGroundTrue();
                 }
             }
             else if (player == 1 && enemy == 1) { //kill player
-                this.runScript(new GameEventRequest("KillPlayer"), go_scene);
+                this.runScript(new GameEventRequest("KillPlayer"), scene);
             }
         }
     }
@@ -117,42 +117,42 @@ public class LogicEngine {
     this method is called once per frame
     updates all game logic related stuff
      */
-    public void logicUpdate(GameObject go_scene, double d_timeElapsed) {
-        this.v_gs_collisionResponseRequests.clear();
+    public void logicUpdate(GameObject scene, double timeElapsed) {
+        this.collisionResponseRequests.clear();
 
-        if (!this.b_paused) {
+        if (!this.paused) {
             //TODO may move enemy spawning code to another place
-            double d_randomNum = RandomNumberGenerator.randomBetween(0, 100);
-            d_randomNum *= Math.atan(2.0 * (this.d_timeSinceLastGen - 1 - 2.5 * this.d_vel));
-            if (d_randomNum > 90 && this.d_timeSinceLastSecond >= 1.0) {
-                ((LandSharkPlayer)this.ci_player).addGameObject(new SpiderEnemy(this.d_vel));
-                this.d_timeSinceLastGen = 0.0;
+            double randomNum = RandomNumberGenerator.randomBetween(0, 100);
+            randomNum *= Math.atan(2.0 * (this.timeSinceLastGen - 1 - 2.5 * this.vel));
+            if (randomNum > 90 && this.timeSinceLastSecond >= 1.0) {
+                ((LandSharkPlayer)this.player).addGameObject(new SpiderEnemy(this.vel));
+                this.timeSinceLastGen = 0.0;
             }
-            else if (this.d_timeSinceLastSecond >= 1.0) {
-                this.d_timeSinceLastSecond = 0.0;
+            else if (this.timeSinceLastSecond >= 1.0) {
+                this.timeSinceLastSecond = 0.0;
             }
             else {
-                this.d_timeSinceLastGen += d_timeElapsed;
-                this.d_timeSinceLastSecond += d_timeElapsed;
+                this.timeSinceLastGen += timeElapsed;
+                this.timeSinceLastSecond += timeElapsed;
             }
 
-            this.d_vel -= this.d_acceleration * d_timeElapsed;
-            this.d_distance -= this.d_vel * d_timeElapsed;
+            this.vel -= this.acceleration * timeElapsed;
+            this.distance -= this.vel * timeElapsed;
 
-            go_scene.updateObj();
+            scene.updateObj();
         }
 
-        if (!this.ci_player.isAlive()) {
-            this.b_paused = true;
+        if (!this.player.isAlive()) {
+            this.paused = true;
             //TODO call endgame
         }
     }
 
     /*
-    this method returns a reference to this.v_gs_collisionResponseRequest
+    this method returns a reference to this.collisionResponseRequest
      */
     public Vector<GameScript> getCollisionRequestQueue() {
         //debug code
-        return this.v_gs_collisionResponseRequests;
+        return this.collisionResponseRequests;
     }
 }
