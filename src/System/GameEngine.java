@@ -61,9 +61,9 @@ public class GameEngine {
         this.scriptQueue.add(new LogRequest("Game Engine Initializing...")); //starts the engine
 
         this.scriptQueue.add(new LogRequest("Creating Window Context...")); //opens the game window
-        String str_tempLog = this.renderer.openWindow();
-        if (!str_tempLog.equals("")) {
-            this.scriptQueue.add(new LogRequest(str_tempLog)); //log if there is error
+        String tempLog = this.renderer.openWindow();
+        if (!tempLog.equals("")) {
+            this.scriptQueue.add(new LogRequest(tempLog)); //log if there is error
         }
 
         this.scriptQueue.add(new LogRequest("Attempting to link keyboard handler to window context..."));
@@ -74,9 +74,9 @@ public class GameEngine {
         this.logicProcessor.startGame(this.sceneGraph, this.scriptQueue);
 
         //TODO temp test code
-        Vector<GameScore> v_gsc_scores = new Vector<GameScore>();
-        this.fileCommunicator.readGameScore(v_gsc_scores);
-        for (GameScore score : v_gsc_scores) {
+        Vector<GameScore> scores = new Vector<GameScore>();
+        this.fileCommunicator.readGameScore(scores);
+        for (GameScore score : scores) {
             System.out.println(score);
         }
 
@@ -120,15 +120,15 @@ public class GameEngine {
             this.logicProcessor.logicUpdate(sceneGraph, this.timer.getTimeElapsed());
             this.physEngine.doScenePhysics(this.sceneGraph, this.scriptQueue, this.timer.getTimeElapsed()); //do physics
 
-            for (GameScript gs_temp : this.scriptQueue) {
-                this.processScript(gs_temp);
+            for (GameScript gsTemp : this.scriptQueue) {
+                this.processScript(gsTemp);
             }
             this.scriptQueue.clear();
             this.scriptProcessor.processScriptsInQueue(this.scriptQueue);
 
             this.scriptQueue.addAll(this.logicProcessor.getCollisionRequestQueue()); //grab the stuff that needs to have collision responses computed
-            for (GameScript gs_temp : this.scriptQueue) {
-                this.processScript(gs_temp);
+            for (GameScript gsTemp : this.scriptQueue) {
+                this.processScript(gsTemp);
             }
             this.scriptQueue.clear();
 

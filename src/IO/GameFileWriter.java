@@ -15,45 +15,45 @@ BIG WARNING THIS CLASS WILL NOT CLOSE FILES BY ITSELF PLEASE MANAGE CORRECTLY AN
 
  */
 public class GameFileWriter implements GameFileHandler, GameWriteable {
-    private String str_filePath;
+    private String filePath;
     private File f;
-    private FileWriter fw_writer;
-    private BufferedWriter bw_writer;
-    private boolean b_isOpen = false; //whether the file is open or not
+    private FileWriter fwWriter;
+    private BufferedWriter bwWriter;
+    private boolean isOpen = false; //whether the file is open or not
 
     //cstr
-    public GameFileWriter(String str_path) {
-        this.str_filePath = str_path; //sets the filepath
+    public GameFileWriter(String path) {
+        this.filePath = path; //sets the filepath
     }
 
     /*
     IMPORTANT:This method is to be called before any other method can be called, may chain from cstr in future
     MODIFIES:this
     EFFECT:Opens a file without truncating it, for writing
-           Takes a boolean param b_truncFile which will determine if the file will be truncated before any writing
+           Takes a boolean param truncFile which will determine if the file will be truncated before any writing
            this method returns an empty string if every thing goes well, but will return an error msg if there is an error
      */
-    public String openFile(boolean b_truncFile) {
-        if (this.b_isOpen) {
-            return "The file system is attempting to open at " + this.str_filePath + " is opened already";
+    public String openFile(boolean truncFile) {
+        if (this.isOpen) {
+            return "The file system is attempting to open at " + this.filePath + " is opened already";
         }
 
         try {
-            this.f = new File(this.str_filePath); //opens the file
+            this.f = new File(this.filePath); //opens the file
 
             if (!this.f.exists()) {
                 this.f.createNewFile(); //creates new file in place if the file does not exist
             }
 
-            //truncates the file if b_truncFile is true
-            this.fw_writer = new FileWriter(this.f, !b_truncFile); //makes file writer
-            this.bw_writer = new BufferedWriter(this.fw_writer); //makes buffered writer
+            //truncates the file if truncFile is true
+            this.fwWriter = new FileWriter(this.f, !truncFile); //makes file writer
+            this.bwWriter = new BufferedWriter(this.fwWriter); //makes buffered writer
         }
         catch (IOException error) { //catch io exceptions
-            return "System encountered an error while trying to open a file at " + this.str_filePath;
+            return "System encountered an error while trying to open a file at " + this.filePath;
         }
 
-        this.b_isOpen = true; //file has been opened no problems encountered
+        this.isOpen = true; //file has been opened no problems encountered
         return ""; //return "" for no error encountered
     }
 
@@ -72,43 +72,43 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
      */
     @Override
     public String closeFile() {
-        if (!this.b_isOpen) { //file guard
-            return "The file system is attempting to close at " + this.str_filePath + " is not open...";
+        if (!this.isOpen) { //file guard
+            return "The file system is attempting to close at " + this.filePath + " is not open...";
         }
 
         try {
-            this.bw_writer.close(); //closes the buffered writer
+            this.bwWriter.close(); //closes the buffered writer
         }
         catch (IOException error) {
-            return "System encountered an error while trying to close a file at " + this.str_filePath; //passes error msg out
+            return "System encountered an error while trying to close a file at " + this.filePath; //passes error msg out
         }
 
-        this.b_isOpen = false; //file has been closed no problems encountered
+        this.isOpen = false; //file has been closed no problems encountered
         return ""; //no errors
     }
 
     /*
-    REQUIRES:A legible message to be written in str_msg
+    REQUIRES:A legible message to be written in msg
     MODIFIES:this
     EFFECT:Takes String message as an input and writes that msg to the file if it has been opened
            Takes a boolean var as an input and will create a newline based on that
            Please remember to call openFile beforehand
      */
     @Override
-    public String writeContentToFile(String str_msg, boolean b_newline) {
-        if (!this.b_isOpen) { //file guard
-            return "System encountered an error while trying to write msg \"" + str_msg + "\" to a file at " + this.str_filePath + " which was not opened";
+    public String writeContentToFile(String msg, boolean newline) {
+        if (!this.isOpen) { //file guard
+            return "System encountered an error while trying to write msg \"" + msg + "\" to a file at " + this.filePath + " which was not opened";
         }
 
         try {
-            if (b_newline) {
-                str_msg += "\n"; //adds a newline to the end of the msg
+            if (newline) {
+                msg += "\n"; //adds a newline to the end of the msg
             }
 
-            this.bw_writer.write(str_msg); //writes the msg to the file
+            this.bwWriter.write(msg); //writes the msg to the file
         }
         catch (IOException error) { //catch io exceptions
-            return "System encountered an error while trying to write msg " + str_msg + " to a file at " + this.str_filePath;
+            return "System encountered an error while trying to write msg " + msg + " to a file at " + this.filePath;
         }
 
         return ""; //no problems during execution
@@ -117,6 +117,6 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
     //this method returns whether or not the file has been opened for writing
     @Override
     public boolean isOpen() {
-        return this.b_isOpen;
+        return this.isOpen;
     }
 }

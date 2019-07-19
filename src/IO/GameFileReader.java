@@ -8,14 +8,14 @@ import java.util.Scanner;
 This class will handle all file reading related activities
  */
 public class GameFileReader implements GameFileHandler, GameReadable {
-    private String str_filePath;
+    private String filePath;
     private File f;
-    private Scanner sc_reader;
-    private boolean b_isOpen = false; //whether the file is open or not
+    private Scanner reader;
+    private boolean isOpen = false; //whether the file is open or not
 
     //cstr
-    public GameFileReader(String str_path) {
-        this.str_filePath = str_path;
+    public GameFileReader(String path) {
+        this.filePath = path;
     }
 
     /*
@@ -26,24 +26,24 @@ public class GameFileReader implements GameFileHandler, GameReadable {
      */
     @Override
     public String openFile() {
-        if (this.b_isOpen) {
-            return "The file system is attempting to open at " + this.str_filePath + " is opened already";
+        if (this.isOpen) {
+            return "The file system is attempting to open at " + this.filePath + " is opened already";
         }
 
         try {
-            this.f = new File(this.str_filePath); //opens the file
+            this.f = new File(this.filePath); //opens the file
 
             if (!this.f.exists()) {
                 this.f.createNewFile(); //creates new file in place if the file does not exist
             }
 
-            this.sc_reader = new Scanner(this.f);
+            this.reader = new Scanner(this.f);
         }
         catch (IOException error) { //catch io exceptions
-            return "System encountered an error while trying to open a file at " + this.str_filePath;
+            return "System encountered an error while trying to open a file at " + this.filePath;
         }
 
-        this.b_isOpen = true; //file has been opened no problems encountered
+        this.isOpen = true; //file has been opened no problems encountered
         return ""; //return "" for no error encountered
     }
 
@@ -56,18 +56,18 @@ public class GameFileReader implements GameFileHandler, GameReadable {
      */
     @Override
     public String closeFile() {
-        if (!this.b_isOpen) { //file guard
-            return "The file system is attempting to close at " + this.str_filePath + " is not open...";
+        if (!this.isOpen) { //file guard
+            return "The file system is attempting to close at " + this.filePath + " is not open...";
         }
 
         try {
-            this.sc_reader.close(); //closes the buffered writer
+            this.reader.close(); //closes the buffered writer
         }
         catch (Exception error) {
-            return "System encountered an error while trying to close a file at " + this.str_filePath; //passes error msg out
+            return "System encountered an error while trying to close a file at " + this.filePath; //passes error msg out
         }
 
-        this.b_isOpen = false; //file has been closed no problems encountered
+        this.isOpen = false; //file has been closed no problems encountered
         return ""; //no errors
     }
 
@@ -77,12 +77,12 @@ public class GameFileReader implements GameFileHandler, GameReadable {
     if file is not open, return -1
      */
     public int getNextInt() {
-        if (!this.b_isOpen) {
+        if (!this.isOpen) {
             return -1;
         }
 
-        if (this.sc_reader.hasNextInt()) {
-            return this.sc_reader.nextInt();
+        if (this.reader.hasNextInt()) {
+            return this.reader.nextInt();
         }
 
         return 0;
@@ -94,12 +94,12 @@ public class GameFileReader implements GameFileHandler, GameReadable {
      */
     @Override
     public String readLineFromFile() {
-        if (!this.b_isOpen) {
+        if (!this.isOpen) {
             return "";
         }
 
-        if (this.sc_reader.hasNextLine()) {
-            return this.sc_reader.nextLine();
+        if (this.reader.hasNextLine()) {
+            return this.reader.nextLine();
         }
 
         return "";
@@ -108,6 +108,6 @@ public class GameFileReader implements GameFileHandler, GameReadable {
     //this method returns whether or not the file has been opened for writing
     @Override
     public boolean isOpen() {
-        return this.b_isOpen;
+        return this.isOpen;
     }
 }
