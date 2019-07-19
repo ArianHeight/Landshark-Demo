@@ -24,30 +24,30 @@ This class will take care of all things to do with rendering
  */
 public class RenderEngine {
     //default values
-    private static final Dimension d_standardSize = new Dimension(1280, 720);
-    private static final int i_standardCloseBehaviour = JFrame.DISPOSE_ON_CLOSE;
-    private static final boolean b_standardResizableWindow = false;
-    private static final String str_standardContextName = "LandShark AI Simulation";
-    private static final Color c_black = new Color(0);
+    private static final Dimension standardSize = new Dimension(1280, 720);
+    private static final int standardCloseBehaviour = JFrame.DISPOSE_ON_CLOSE;
+    private static final boolean standardResizableWindow = false;
+    private static final String standardContextName = "LandShark AI Simulation";
+    private static final Color black = new Color(0);
 
     //actual member vars
-    private JFrame j_windowContext;
-    private Vector<GameComponent> v_gc_renderTargets;
-    private Vector<GameComponent> v_gc_animations;
-    private boolean b_windowOpen;
+    private JFrame windowContext;
+    private Vector<GameComponent> renderTargets;
+    private Vector<GameComponent> animations;
+    private boolean windowOpen;
 
     //default cstr
     public RenderEngine() {
         //setup
-        this.j_windowContext = new JFrame(str_standardContextName);
-        this.b_windowOpen = false;
+        this.windowContext = new JFrame(standardContextName);
+        this.windowOpen = false;
 
-        this.j_windowContext.setSize(d_standardSize);
-        this.j_windowContext.setResizable(b_standardResizableWindow);
-        this.j_windowContext.setDefaultCloseOperation(i_standardCloseBehaviour);
+        this.windowContext.setSize(standardSize);
+        this.windowContext.setResizable(standardResizableWindow);
+        this.windowContext.setDefaultCloseOperation(standardCloseBehaviour);
 
-        this.v_gc_renderTargets = new Vector<GameComponent>(); //for rendering
-        this.v_gc_animations = new Vector<GameComponent>(); //for rendering also
+        this.renderTargets = new Vector<GameComponent>(); //for rendering
+        this.animations = new Vector<GameComponent>(); //for rendering also
     }
 
     /*
@@ -57,14 +57,14 @@ public class RenderEngine {
     returns a String of "" if nothing goes wrong, or an error msg if an exception is caught
      */
     public String openWindow() {
-        if (this.b_windowOpen) { //window guard
+        if (this.windowOpen) { //window guard
             return "System tried to open a window when there is one already";
         }
 
         try {
-            this.j_windowContext.setVisible(true); //opens the window
-            this.j_windowContext.createBufferStrategy(2); //double buffering
-            this.b_windowOpen = true;
+            this.windowContext.setVisible(true); //opens the window
+            this.windowContext.createBufferStrategy(2); //double buffering
+            this.windowOpen = true;
         }
         catch (Exception error) {
             error.printStackTrace();
@@ -80,14 +80,14 @@ public class RenderEngine {
     DO NOT CALL IF THERE IS STILL SOMETHING THAT NEEDS TO BE RENDERED
      */
     public String closeWindow() {
-        if (!this.b_windowOpen) { //window guard
+        if (!this.windowOpen) { //window guard
             return "System tried to close a window that doesn't exist";
         }
 
         try {
-            this.j_windowContext.dispatchEvent(new WindowEvent(this.j_windowContext, WindowEvent.WINDOW_CLOSING)); //sends a closing event to JFrame
-            this.j_windowContext.dispose(); //destroy the window context
-            this.b_windowOpen = false;
+            this.windowContext.dispatchEvent(new WindowEvent(this.windowContext, WindowEvent.WINDOW_CLOSING)); //sends a closing event to JFrame
+            this.windowContext.dispose(); //destroy the window context
+            this.windowOpen = false;
         }
         catch (Exception error) {
             error.printStackTrace();
@@ -103,22 +103,22 @@ public class RenderEngine {
     POTENTIALLY UNCAUGHT EXCEPTIONS!
     that's why this method is private
      */
-    private void renderToWindow(VisualTextureComponent vtc_renderTarget, Graphics g_context) {
-        Rectangle r = vtc_renderTarget.getRenderPlane(); //temp holder for rendering plane
-        HitboxAABB hb = vtc_renderTarget.getWorldPosRef();
+    private void renderToWindow(VisualTextureComponent renderTarget, Graphics gContext) {
+        Rectangle r = renderTarget.getRenderPlane(); //temp holder for rendering plane
+        HitboxAABB hb = renderTarget.getWorldPosRef();
 
         if (hb != null) {
-            Dimension di_topLeft = worldSpaceToScreenSpace(hb.getLeft(), hb.getTop(), null);
-            Dimension di_bottomRight = worldSpaceToScreenSpace(hb.getRight(), hb.getBottom(), null);
-            r.setRect(di_topLeft.width, di_topLeft.height, di_bottomRight.width - di_topLeft.width, di_bottomRight.height - di_topLeft.height);
+            Dimension topLeft = worldSpaceToScreenSpace(hb.getLeft(), hb.getTop(), null);
+            Dimension bottomRight = worldSpaceToScreenSpace(hb.getRight(), hb.getBottom(), null);
+            r.setRect(topLeft.width, topLeft.height, bottomRight.width - topLeft.width, bottomRight.height - topLeft.height);
         }
 
-        if (vtc_renderTarget.getTexture() == null) { //no texture
-            g_context.setColor(c_black);
-            g_context.fillRect(r.x, r.y, r.width, r.height);
+        if (renderTarget.getTexture() == null) { //no texture
+            gContext.setColor(black);
+            gContext.fillRect(r.x, r.y, r.width, r.height);
         }
         else { //texture exists
-            g_context.drawImage(vtc_renderTarget.getTexture(), r.x, r.y, r.width, r.height, null); //draws image to screen
+            gContext.drawImage(renderTarget.getTexture(), r.x, r.y, r.width, r.height, null); //draws image to screen
         }
     }
 
@@ -126,59 +126,59 @@ public class RenderEngine {
     this method takes a GameObject and renders every attached GameObject to the window
     TODO maybe seperate this method into a few different methods
      */
-    public void renderSceneToWindow(GameObject go_scene, Vector<GameScript> v_gs_engineRequests, double d_timeElapsed) {
-        if (!this.b_windowOpen) { //window guard
-            //v_gs_engineRequests.add(new LogRequest("Renderer attempted to draw frame to a closed window"));
+    public void renderSceneToWindow(GameObject scene, Vector<GameScript> engineRequests, double timeElapsed) {
+        if (!this.windowOpen) { //window guard
+            //engineRequests.add(new LogRequest("Renderer attempted to draw frame to a closed window"));
             return;
         }
 
         try {
             //initializes some variables
-            BufferStrategy bs_buffer = this.j_windowContext.getBufferStrategy(); //get connected buffer
-            Graphics g_context = bs_buffer.getDrawGraphics();
+            BufferStrategy buffer = this.windowContext.getBufferStrategy(); //get connected buffer
+            Graphics gContext = buffer.getDrawGraphics();
 
             //grabs all the textures into a single vector
-            this.v_gc_renderTargets.clear(); //clear before compiling list
-            go_scene.compileComponentList(this.v_gc_renderTargets, GameComponent.gcType.VISUAL_TEXTURE);
+            this.renderTargets.clear(); //clear before compiling list
+            scene.compileComponentList(this.renderTargets, GameComponent.gcType.VISUAL_TEXTURE);
 
             //grabs all the animations into a single vector, and adds the current sprites to the texture vector
-            this.v_gc_animations.clear();
-            go_scene.compileComponentList(this.v_gc_animations, GameComponent.gcType.VISUAL_ANIM);
+            this.animations.clear();
+            scene.compileComponentList(this.animations, GameComponent.gcType.VISUAL_ANIM);
 
             //grabs the current sprite and puts it into the renderTargets
             //also updates the sprite timings
-            Iterator<GameComponent> gc_it = this.v_gc_animations.iterator();
-            while (gc_it.hasNext()) {
-                this.v_gc_renderTargets.add(((VisualAnimationComponent)gc_it.next()).getCurrentSprite(d_timeElapsed));
+            Iterator<GameComponent> gcIt = this.animations.iterator();
+            while (gcIt.hasNext()) {
+                this.renderTargets.add(((VisualAnimationComponent)gcIt.next()).getCurrentSprite(timeElapsed));
             }
 
             //sorts them by layer
-            Sorter.quicksortForVTC(this.v_gc_renderTargets, this.v_gc_renderTargets.size() / 2);
+            Sorter.quicksortForVTC(this.renderTargets, this.renderTargets.size() / 2);
 
             //iterates through textures and renders them one by one
-            for (int i = this.v_gc_renderTargets.size() - 1; i >= 0; i--) {
-                this.renderToWindow((VisualTextureComponent)this.v_gc_renderTargets.get(i), g_context);
+            for (int i = this.renderTargets.size() - 1; i >= 0; i--) {
+                this.renderToWindow((VisualTextureComponent)this.renderTargets.get(i), gContext);
             }
 
-            g_context.dispose();
-            bs_buffer.show(); //flush the buffer to screen
+            gContext.dispose();
+            buffer.show(); //flush the buffer to screen
         }
         catch (Exception error) {
             //error.printStackTrace();
-            v_gs_engineRequests.add(new LogRequest("Renderer encountered an error while attempting to draw frame"));
+            engineRequests.add(new LogRequest("Renderer encountered an error while attempting to draw frame"));
             this.closeWindow();
         }
     }
 
     //adds a KeyListener to window context
-    public void addKeyListenerToWindow(KeyListener kl_listener) {
-        this.j_windowContext.addKeyListener(kl_listener);
+    public void addKeyListenerToWindow(KeyListener listener) {
+        this.windowContext.addKeyListener(listener);
     }
 
     //takes a double x and y coord in world space and translates it to screen space
-    public static Dimension worldSpaceToScreenSpace (double d_x, double d_y, GameComponent gc_camera) {
-        if (gc_camera == null) {
-            return new Dimension((int)(d_x * 1280.0 / 21.0), (int)(720 - (d_y * 720.0 / 15.0)));
+    public static Dimension worldSpaceToScreenSpace (double x, double y, GameComponent camera) {
+        if (camera == null) {
+            return new Dimension((int)(x * 1280.0 / 21.0), (int)(720 - (y * 720.0 / 15.0)));
         }
 
         return new Dimension(0 , 1); //TODO add stuff for custom camera
