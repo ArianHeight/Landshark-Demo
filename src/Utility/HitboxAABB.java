@@ -7,84 +7,84 @@ A utility class used by Physics component and PhysicsEngine to do AABB collision
  */
 public class HitboxAABB {
     //member vars
-    private double d_left;
-    private double d_right;
-    private double d_top;
-    private double d_bottom;
+    private double left;
+    private double right;
+    private double top;
+    private double bottom;
 
     //cstr
-    public HitboxAABB(double d_left, double d_right, double d_top, double d_bot) {
+    public HitboxAABB(double left, double right, double top, double bot) {
         //init vars
-        this.d_left = d_left;
-        this.d_right = d_right;
-        this.d_top = d_top;
-        this.d_bottom = d_bot;
+        this.left = left;
+        this.right = right;
+        this.top = top;
+        this.bottom = bot;
     }
 
     //accessors
-    public double getLeft() { return this.d_left; }
-    public double getRight() { return this.d_right; }
-    public double getTop() { return this.d_top; }
-    public double getBottom() { return this.d_bottom; }
+    public double getLeft() { return this.left; }
+    public double getRight() { return this.right; }
+    public double getTop() { return this.top; }
+    public double getBottom() { return this.bottom; }
 
     //mutators
 
     //resets all vars to new data
-    public void setNew(double d_left, double d_right, double d_top, double d_bot) {
-        this.d_left = d_left;
-        this.d_right = d_right;
-        this.d_top = d_top;
-        this.d_bottom = d_bot;
+    public void setNew(double left, double right, double top, double bot) {
+        this.left = left;
+        this.right = right;
+        this.top = top;
+        this.bottom = bot;
     }
 
-    //moves the hitbox in the positive y direction by d_moveUp
-    public void moveY(double d_moveUp) {
-        this.d_top += d_moveUp;
-        this.d_bottom += d_moveUp;
+    //moves the hitbox in the positive y direction by moveUp
+    public void moveY(double moveUp) {
+        this.top += moveUp;
+        this.bottom += moveUp;
     }
 
-    //moves the hitbox in the positive x direction by d_moveRight
-    public void moveX(double d_moveRight) {
-        this.d_left += d_moveRight;
-        this.d_right += d_moveRight;
+    //moves the hitbox in the positive x direction by moveRight
+    public void moveX(double moveRight) {
+        this.left += moveRight;
+        this.right += moveRight;
     }
 
     //alignment methods which assume HitboxAABB input is not null
     //aligns the left side of the hitbox
-    public void alignLeftX(HitboxAABB hb_ref) {
-        double d_diff = hb_ref.getLeft() - this.d_left;
-        this.moveX(d_diff);
+    public void alignLeftX(HitboxAABB hbRef) {
+        double diff = hbRef.getLeft() - this.left;
+        this.moveX(diff);
     }
 
     //aligns the right side of the hitbox
-    public void alignRightX(HitboxAABB hb_ref) {
-        double d_diff = hb_ref.getRight() - this.d_right;
-        this.moveX(d_diff);
+    public void alignRightX(HitboxAABB hbRef) {
+        double diff = hbRef.getRight() - this.right;
+        this.moveX(diff);
     }
 
     //aligns the center of the hitbox on the x axis
-    public void alignCenterX(HitboxAABB hb_ref) {
-        double d_diff = (hb_ref.getRight() + hb_ref.getLeft()) / 2.0;
-        d_diff -= ((this.d_right + this.d_left) / 2.0);
-        this.moveX(d_diff);
+    public void alignCenterX(HitboxAABB hbRef) {
+        double diff = (hbRef.getRight() + hbRef.getLeft()) / 2.0;
+        diff -= ((this.right + this.left) / 2.0);
+        this.moveX(diff);
     }
 
     //aligns the top side of the hitbox
-    public void alignTopY(HitboxAABB hb_ref) {
-        double d_diff = hb_ref.getTop() - this.d_top;
-        this.moveY(d_diff);
+    public void alignTopY(HitboxAABB hbRef) {
+        double diff = hbRef.getTop() - this.top;
+        this.moveY(diff);
     }
 
     //aligns the bottom side of the hitbox
-    public void alignBottomY(HitboxAABB hb_ref) {
-        double d_diff = hb_ref.getBottom() - this.d_bottom;
-        this.moveY(d_diff);
+    public void alignBottomY(HitboxAABB hbRef) {
+        double diff = hbRef.getBottom() - this.bottom;
+        this.moveY(diff);
     }
 
     //aligns the center of the hitbox on the y axis
-    public void alignCenterY(HitboxAABB hb_ref) {
-        double d_diff = (hb_ref.getTop() + hb_ref.getBottom()) / 2.0;
-        d_diff -= ((this.d_top + this.d_bottom) / 2.0);
-        this.moveY(d_diff);
+    public void alignCenterY(HitboxAABB hbRef) {
+        double diff = (hbRef.getTop() + hbRef.getBottom()) / 2.0;
+        diff -= ((this.top + this.bottom) / 2.0);
+        this.moveY(diff);
     }
 }

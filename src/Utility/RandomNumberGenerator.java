@@ -12,7 +12,7 @@ public class RandomNumberGenerator {
         return false;
     }
 
-    public static int randomBetween(int i_start, int i_end) {
-        return (int) (i_start + Math.random() * (i_end - i_start));
+    public static int randomBetween(int start, int end) {
+        return (int) (start + Math.random() * (end - start));
     }
 }

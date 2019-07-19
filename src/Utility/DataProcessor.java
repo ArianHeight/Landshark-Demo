@@ -15,23 +15,23 @@ public class DataProcessor {
     /*
     this method processes the incoming string data into LogRequests which are added to the end of the output vector
      */
-    public static void processErrorData(Vector<GameScript> v_gs_output, Vector<String> v_str_data) {
-        Iterator<String> it = v_str_data.iterator(); //iterates through the data and adds each one as a new log request to the output
+    public static void processErrorData(Vector<GameScript> output, Vector<String> data) {
+        Iterator<String> it = data.iterator(); //iterates through the data and adds each one as a new log request to the output
         while (it.hasNext()) {
-            v_gs_output.add(new LogRequest("ERROR: " + it.next()));
+            output.add(new LogRequest("ERROR: " + it.next()));
         }
     }
 
     /*
     this method processes the incoming string data into ProcessRequests which are added to the end of the output vector
      */
-    public static void processStringData(Vector<GameScript> v_gs_output, Vector<String> v_str_data) {
-        Iterator<String> it = v_str_data.iterator(); //iterates through the data and adds each one as a new process request to the output
-        String str_temp = "";
+    public static void processStringData(Vector<GameScript> output, Vector<String> data) {
+        Iterator<String> it = data.iterator(); //iterates through the data and adds each one as a new process request to the output
+        String temp = "";
         while (it.hasNext()) {
-            str_temp = it.next();
-            if (str_temp.startsWith("/")) { //check if it's a command
-                v_gs_output.add(new ProcessRequest(str_temp.replaceFirst("/", ""))); //take out the / at the front
+            temp = it.next();
+            if (temp.startsWith("/")) { //check if it's a command
+                output.add(new ProcessRequest(temp.replaceFirst("/", ""))); //take out the / at the front
             }
         }
     }

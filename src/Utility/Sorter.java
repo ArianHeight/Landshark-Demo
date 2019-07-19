@@ -20,47 +20,47 @@ public class Sorter {
     REQUIRES:A list of VisualTextureComponents stored as GameComponents
     EFFECT:Sorts all of them into ascending order by comparing their layer values
      */
-    public static void quicksortForVTC(List<GameComponent> li_gc_in, int pivot) {
-        if (li_gc_in.size() <= 1) {
+    public static void quicksortForVTC(List<GameComponent> input, int pivot) {
+        if (input.size() <= 1) {
             return;
         }
 
-        int pivotVal = ((VisualTextureComponent)li_gc_in.get(pivot)).getLayer();
-        swap(li_gc_in, pivot, li_gc_in.size() - 1);
-        int i_left = 0;
-        int i_right = li_gc_in.size() - 2;
-        int i_found = 0;
+        int pivotVal = ((VisualTextureComponent)input.get(pivot)).getLayer();
+        swap(input, pivot, input.size() - 1);
+        int left = 0;
+        int right = input.size() - 2;
+        int found = 0;
 
-        while (i_left <= i_right) {
-            i_found = 0;
-            if (((VisualTextureComponent)li_gc_in.get(i_left)).getLayer() < pivotVal) {
-                i_left++;
+        while (left <= right) {
+            found = 0;
+            if (((VisualTextureComponent)input.get(left)).getLayer() < pivotVal) {
+                left++;
             }
             else {
-                i_found++;
+                found++;
             }
-            if (((VisualTextureComponent)li_gc_in.get(i_right)).getLayer() > pivotVal) {
-                i_right--;
+            if (((VisualTextureComponent)input.get(right)).getLayer() > pivotVal) {
+                right--;
             }
             else {
-                i_found++;
+                found++;
             }
 
-            if (i_found == 2) {
-                swap(li_gc_in, i_left, i_right);
-                i_left++;
-                i_right--;
+            if (found == 2) {
+                swap(input, left, right);
+                left++;
+                right--;
             }
         }
 
-        swap(li_gc_in, i_left, li_gc_in.size() - 1);
-        pivot = i_left;
+        swap(input, left, input.size() - 1);
+        pivot = left;
 
-        if (li_gc_in.size() <= 3) {
+        if (input.size() <= 3) {
             return;
         }
 
-        quicksortForVTC(li_gc_in.subList(0, pivot),  pivot / 2);
-        quicksortForVTC(li_gc_in.subList(pivot + 1, li_gc_in.size()), (li_gc_in.size() - pivot) / 2);
+        quicksortForVTC(input.subList(0, pivot),  pivot / 2);
+        quicksortForVTC(input.subList(pivot + 1, input.size()), (input.size() - pivot) / 2);
     }
 }
