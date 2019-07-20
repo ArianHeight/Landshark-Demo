@@ -101,6 +101,7 @@ public class GameEngine {
                 break;
             case GameScript.COLLISION_RESPONSE:
                 this.physEngine.doCollisionResponse(((CollisionResponseRequest)script).getOne(), ((CollisionResponseRequest)script).getTwo());
+                break;
             default:
                 return false;
         }

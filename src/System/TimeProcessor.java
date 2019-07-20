@@ -34,17 +34,17 @@ public class TimeProcessor {
     /*
     This method takes a String msg as an input and returns the same msg, but tagged with the local time at the beginnning
      */
-    public String tagMsg(String str_msg) {
+    public String tagMsg(String msg) {
         this.currentLocalTime = LocalTime.now(); //set time
-        return this.currentLocalTime.format(this.localTimeFormat) + " | " + str_msg; //tag msg
+        return this.currentLocalTime.format(this.localTimeFormat) + " | " + msg; //tag msg
     }
 
     /*
     this method takes a GameScript and tags the data contained
      */
-    public GameScript tagScript(GameScript gs_msg) {
-        gs_msg.setData(this.tagMsg(gs_msg.getData())); //tags the script
-        return gs_msg; //returns the obj
+    public GameScript tagScript(GameScript msg) {
+        msg.setData(this.tagMsg(msg.getData())); //tags the script
+        return msg; //returns the obj
     }
 
     /*

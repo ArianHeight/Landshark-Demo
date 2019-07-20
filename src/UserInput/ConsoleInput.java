@@ -42,14 +42,12 @@ public class ConsoleInput {
             if (console.ready()) {
                 currentLine = console.readLine(); //reads line from console
 
-                if (currentLine != null) //if user has input
-                {
+                if (currentLine != null) { //if user has input
                     output.add(currentLine);
                     returnVal = true; //user has inputted, return true
                 }
             }
-        }
-        catch (IOException error) {
+        } catch (IOException error) {
             errors.add("System encountered IO error whilst reading msg from console..."); //add error msg to output
             output.clear(); //clears output
 

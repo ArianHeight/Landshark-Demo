@@ -61,8 +61,7 @@ public class LandSharkPlayer extends Player {
 
         if (input.equals("JumpPlayer")) {
             this.jump();
-        }
-        else if (input.equals("CrouchPlayer")) {
+        } else if (input.equals("CrouchPlayer")) {
             this.crouch();
         }
     }
@@ -108,8 +107,7 @@ public class LandSharkPlayer extends Player {
 
         if (this.thisFrameOnGround) {
             this.touchingGround = true;
-        }
-        else {
+        } else {
             this.touchingGround = false;
         }
         this.thisFrameOnGround = false;
@@ -117,8 +115,7 @@ public class LandSharkPlayer extends Player {
         if (this.crouchCalled) {
             this.crouching = true;
             this.crouchCalled = false; //resets crouch state
-        }
-        else if (this.crouching) {
+        } else if (this.crouching) {
             this.memberComponents.get(DEFAULT_TEXTURE_INDEX).activate();
             this.memberComponents.get(WALKING_HITBOX_INDEX).activate();
             this.memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
