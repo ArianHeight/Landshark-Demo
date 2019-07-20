@@ -1,4 +1,4 @@
-package GameTest;
+package test;
 
 import IO.GameFileReader;
 import IO.GameFileWriter;

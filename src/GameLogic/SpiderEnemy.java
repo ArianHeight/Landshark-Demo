@@ -20,7 +20,7 @@ public class SpiderEnemy extends Actor {
 
     //cstr TODO CHANGE THE TEXTURE!!
     public SpiderEnemy(double d_vel) {
-        super(new PhysicsComponent(16.0, 3.0, 1.0, 1.0, 1.0, false),
+        super(new PhysicsComponent(16.0, 3.0, 1.5, 1.0, 1.0, false),
                 new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/spider1.png").getImage(), new Rectangle(0, 0, 64, 64)),
                 new HPComponent(1));
         this.setAllTags("Enemy");

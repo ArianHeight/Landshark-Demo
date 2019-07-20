@@ -17,10 +17,10 @@ public class Actor extends GameObject {
     //physics
     //texture
     //hp
-    public Actor(PhysicsComponent pc_physics, VisualTextureComponent vtc_texture, HPComponent hpc_health) {
-        this.addComponent(pc_physics); //add physics
-        this.addComponent(vtc_texture); //add texture
-        this.addComponent(hpc_health); //add hp
+    public Actor(PhysicsComponent physics, VisualTextureComponent texture, HPComponent health) {
+        this.addComponent(physics); //add physics
+        this.addComponent(texture); //add texture
+        this.addComponent(health); //add hp
     }
 
     //alt cstr
@@ -28,10 +28,10 @@ public class Actor extends GameObject {
     //physics
     //texture
     //hp
-    public Actor(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, boolean b_grav, Image im_texture, int i_hp) {
-        this.addComponent(new PhysicsComponent(d_topLeftX, d_topLeftY, d_width, d_height, d_mass, b_grav)); //physics
-        this.addComponent(new VisualTextureComponent(im_texture, new Rectangle(0, 0, 1, 1))); //texture
-        this.addComponent(new HPComponent(i_hp)); //hp
+    public Actor(double topLeftX, double topLeftY, double width, double height, double mass, boolean grav, Image texture, int hp) {
+        this.addComponent(new PhysicsComponent(topLeftX, topLeftY, width, height, mass, grav)); //physics
+        this.addComponent(new VisualTextureComponent(texture, new Rectangle(0, 0, 1, 1))); //texture
+        this.addComponent(new HPComponent(hp)); //hp
     }
 
     /*
@@ -41,15 +41,15 @@ public class Actor extends GameObject {
     returns 0 if the obj has 0 hp
     returns 1 if the obj has more than 0 hp
      */
-    public int takeDmg(int i_dmg) {
+    public int takeDmg(int dmg) {
         //grabs the hp
-        HPComponent hpc_health = this.findHPComponent();
+        HPComponent health = this.findHPComponent();
 
-        if (hpc_health == null) { //null guard
+        if (health == null) { //null guard
             return -1;
         }
 
-        boolean returnVal = hpc_health.takeDmg(i_dmg); //take dmg
+        boolean returnVal = health.takeDmg(dmg); //take dmg
         if (returnVal) { //obj is alive
             return 1;
         }
@@ -60,15 +60,15 @@ public class Actor extends GameObject {
     /*
     this method takes an int input and sets the hp to that value
      */
-    public void setHP(int i_newHP) {
+    public void setHP(int newHP) {
         //grabs the hp
-        HPComponent hpc_health = this.findHPComponent();
+        HPComponent health = this.findHPComponent();
 
-        if (hpc_health == null) { //null guard
+        if (health == null) { //null guard
             return; //no hp
         }
 
-        hpc_health.setHP(i_newHP); //sets the hp
+        health.setHP(newHP); //sets the hp
     }
 
     //protected method to find the HPComponent quickly

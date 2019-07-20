@@ -1,4 +1,4 @@
-package GameTest;
+package test;
 
 import Data.Structure.PhysicsComponent;
 import Physics.PhysicsEngine;

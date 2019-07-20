@@ -178,7 +178,7 @@ public class RenderEngine {
     //takes a double x and y coord in world space and translates it to screen space
     public static Dimension worldSpaceToScreenSpace (double x, double y, GameComponent camera) {
         if (camera == null) {
-            return new Dimension((int)(x * 1280.0 / 21.0), (int)(720 - (y * 720.0 / 15.0)));
+            return new Dimension((int)(x * 1280.0 / 21.33333333), (int)(720 - (y * 720.0 / 12.0)));
         }
 
         return new Dimension(0 , 1); //TODO add stuff for custom camera

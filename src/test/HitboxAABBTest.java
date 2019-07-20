@@ -1,4 +1,4 @@
-package GameTest;
+package test;
 
 import Utility.HitboxAABB;
 import org.junit.jupiter.api.BeforeEach;

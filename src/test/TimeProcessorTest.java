@@ -1,4 +1,4 @@
-package GameTest;
+package test;
 
 import Data.Communication.LogRequest;
 import System.TimeProcessor;

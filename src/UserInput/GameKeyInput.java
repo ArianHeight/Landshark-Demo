@@ -75,6 +75,16 @@ public class GameKeyInput extends KeyAdapter {
                 this.keysNotReleased.addAll(this.keysClicked);
                 this.keysClicked.clear(); //clears for next refresh
 
+                //iterates through keys not released and outputs appropriate game scripts
+                itInt = this.keysNotReleased.iterator();
+                while (itInt.hasNext()) {
+                    tempScript = KeyBindings.getHoldBindingsFor(itInt.next());
+
+                    if (tempScript != null) {
+                        output.add(tempScript);
+                    }
+                }
+
                 //remove all keys that have been released from keysNotReleased
                 this.keysNotReleased.removeAll(this.keysReleased);
                 this.keysReleased.clear(); //clear for next refresh

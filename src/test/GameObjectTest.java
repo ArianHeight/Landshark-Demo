@@ -1,4 +1,4 @@
-package GameTest;
+package test;
 
 import Data.GameObject;
 import Data.GameScene;
