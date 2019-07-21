@@ -1,6 +1,9 @@
 package IO;
 
 import Data.Communication.GameScript;
+import Data.Communication.LogRequest;
+import Data.GameExceptions.FileNotOpenException;
+import Data.GameExceptions.NoDataException;
 import GameLogic.GameScore;
 
 import java.util.Vector;
@@ -50,9 +53,19 @@ public class IOEngine {
 
     /*
     this method takes a Vector<GameScore> as an output, reads all high scores and stores them in the vector
+    pushes all warnings/errors out to the scriptOutput to be logged
      */
-    public void readGameScore(Vector<GameScore> scores) {
-        scores.add(new GameScore("Tester", this.scoreReader.getNextInt())); //TODO temp code
+    public void readGameScore(Vector<GameScore> scores, Vector<GameScript> scriptOutput) {
+        int intScore = 0;
+        try {
+            intScore = this.scoreReader.getNextInt();
+        } catch (NoDataException errorOne) {
+            scriptOutput.add(new LogRequest("Data could not be read from file at " + this.scoreReader.getFilePath()));
+        } catch (FileNotOpenException errorTwo) {
+            scriptOutput.add(new LogRequest("The file at " + this.scoreReader.getFilePath() + " is not open."));
+        } finally {
+            scores.add(new GameScore("Tester", intScore)); //TODO temp code
+        }
     }
 
     /*

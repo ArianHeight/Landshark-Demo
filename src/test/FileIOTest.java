@@ -1,5 +1,7 @@
 package test;
 
+import Data.GameExceptions.FileNotOpenException;
+import Data.GameExceptions.NoDataException;
 import IO.GameFileReader;
 import IO.GameFileWriter;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,14 +51,22 @@ public class FileIOTest {
         reader = new GameFileReader("./Game/System/Test/write.txt");
         assertTrue(reader.openFile().equals(""));
         //System.out.println(reader.readLineFromFile());
-        assertTrue(reader.readLineFromFile().equals("Hello World."));
+        try {
+            assertTrue(reader.readLineFromFile().equals("Hello World."));
+        } catch (Exception e) {
+            assertTrue(false);
+        }
         assertTrue(reader.closeFile().equals(""));
         assertTrue(writer.openFile(true).equals(""));
         assertTrue(writer.writeContentToFile("Hello", false).equals(""));
         assertTrue(writer.closeFile().equals(""));
         reader = new GameFileReader("./Game/System/Test/write.txt");
         assertTrue(reader.openFile().equals(""));
-        assertTrue(reader.readLineFromFile().equals("Hello"));
+        try {
+            assertTrue(reader.readLineFromFile().equals("Hello"));
+        } catch (Exception e) {
+            assertTrue(false);
+        }
         assertTrue(reader.closeFile().equals(""));
     }
 
@@ -67,15 +77,27 @@ public class FileIOTest {
         assertTrue(writer.closeFile().equals(""));
         reader = new GameFileReader("./Game/System/Test/write.txt");
         assertTrue(reader.openFile().equals(""));
-        assertTrue(reader.readLineFromFile().equals("Hello World."));
+        try {
+            assertTrue(reader.readLineFromFile().equals("Hello World."));
+        } catch (Exception e) {
+            assertTrue(false);
+        }
         assertTrue(reader.closeFile().equals(""));
         assertTrue(writer.openFile(false).equals(""));
         assertTrue(writer.writeContentToFile("Hello", false).equals(""));
         assertTrue(writer.closeFile().equals(""));
         reader = new GameFileReader("./Game/System/Test/write.txt");
         assertTrue(reader.openFile().equals(""));
-        assertTrue(reader.readLineFromFile().equals("Hello World."));
-        assertTrue(reader.readLineFromFile().equals("Hello"));
+        try {
+            assertTrue(reader.readLineFromFile().equals("Hello World."));
+            assertTrue(reader.readLineFromFile().equals("Hello"));
+            reader.readLineFromFile();
+            assertTrue(false);
+        } catch (NoDataException e) {
+            assertTrue(true);
+        } catch (Exception e1) {
+            assertTrue(false);
+        }
         assertTrue(reader.closeFile().equals(""));
     }
 
@@ -103,7 +125,26 @@ public class FileIOTest {
         reader = new GameFileReader("./Game/System/Test/write.txt");
         assertTrue(reader.openFile().equals(""));
         //System.out.println(reader.readLineFromFile());
-        assertTrue(reader.getNextInt() == 2130);
-        assertTrue(reader.closeFile().equals(""));
+        try {
+            assertTrue(reader.getNextInt() == 2130);
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+        try {
+            reader.getNextInt();
+            assertTrue(false);
+        } catch (NoDataException e) {
+            assertTrue(true);
+        } catch (Exception e1) {
+            assertTrue(false);
+        }
+         assertTrue(reader.closeFile().equals(""));
+        try {
+            reader.readLineFromFile();
+        } catch (FileNotOpenException e) {
+            assertTrue(true);
+        } catch (Exception e1) {
+            assertTrue(false);
+        }
     }
 }

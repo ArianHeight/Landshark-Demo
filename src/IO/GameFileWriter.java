@@ -119,4 +119,10 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
     public boolean isOpen() {
         return this.isOpen;
     }
+
+    //returns the file path saved b this writer
+    @Override
+    public String getFilePath() {
+        return this.filePath;
+    }
 }

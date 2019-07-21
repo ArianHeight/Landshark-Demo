@@ -1,5 +1,8 @@
 package IO;
 
+import Data.GameExceptions.FileNotOpenException;
+import Data.GameExceptions.NoDataException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -73,41 +76,48 @@ public class GameFileReader implements GameFileHandler, GameReadable {
 
     /*
     returns the next int in the file
-    if there is not next int, return 0
-    if file is not open, return -1
+    if there is not next int, throw a NoDataException
+    if file is not open, throw a FileNotOpenException
      */
-    public int getNextInt() {
+    public int getNextInt() throws FileNotOpenException, NoDataException {
         if (!this.isOpen) {
-            return -1;
+            throw new FileNotOpenException();
         }
 
-        if (this.reader.hasNextInt()) {
-            return this.reader.nextInt();
+        if (!this.reader.hasNextInt()) {
+            throw new NoDataException();
         }
 
-        return 0;
+        return this.reader.nextInt();
     }
 
     /*
     returns the next line if there is a next line
-    returns "" if there is none or if the file is not open
+    if there is no next line, throw a NoDataException
+    if file is not open, throw a FileNotOpenException
      */
     @Override
-    public String readLineFromFile() {
+    public String readLineFromFile() throws FileNotOpenException, NoDataException {
         if (!this.isOpen) {
-            return "";
+            throw new FileNotOpenException();
         }
 
-        if (this.reader.hasNextLine()) {
-            return this.reader.nextLine();
+        if (!this.reader.hasNextLine()) {
+            throw new NoDataException();
         }
 
-        return "";
+        return this.reader.nextLine();
     }
 
     //this method returns whether or not the file has been opened for writing
     @Override
     public boolean isOpen() {
         return this.isOpen;
+    }
+
+    //returns the file path saved b this writer
+    @Override
+    public String getFilePath() {
+        return this.filePath;
     }
 }

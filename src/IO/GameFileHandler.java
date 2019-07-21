@@ -13,4 +13,7 @@ public interface GameFileHandler {
 
     //returns true if the file is open, false otherwise
     public boolean isOpen();
+
+    //returns the file path
+    public String getFilePath();
 }

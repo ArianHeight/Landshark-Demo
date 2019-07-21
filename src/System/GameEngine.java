@@ -75,7 +75,7 @@ public class GameEngine {
 
         //TODO temp test code
         Vector<GameScore> scores = new Vector<GameScore>();
-        this.fileCommunicator.readGameScore(scores);
+        this.fileCommunicator.readGameScore(scores, this.scriptQueue);
         for (GameScore score : scores) {
             System.out.println(score);
         }
