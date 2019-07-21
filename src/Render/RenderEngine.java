@@ -4,6 +4,7 @@ import Data.Communication.GameScript;
 import Data.Communication.LogRequest;
 import Data.GameObject;
 import Data.Structure.GameComponent;
+import Data.Structure.TextComponent;
 import Data.Structure.VisualAnimationComponent;
 import Data.Structure.VisualTextureComponent;
 import Utility.HitboxAABB;
@@ -123,6 +124,18 @@ public class RenderEngine {
     }
 
     /*
+    Dangerously renders a single TextComponent to the screen
+
+    POTENTIALLY UNCAUGHT EXCEPTIONS!
+    that's why this method is private
+     */
+    private void renderTextToWindow(TextComponent renderTarget, Graphics gContext) {
+        gContext.setColor(renderTarget.getColor());
+        gContext.setFont(renderTarget.getFont());
+        gContext.drawString((String)renderTarget.getData(), renderTarget.getX(), renderTarget.getY());
+    }
+
+    /*
     this method takes a GameObject and renders every attached GameObject to the window
     TODO maybe seperate this method into a few different methods
      */
@@ -159,6 +172,16 @@ public class RenderEngine {
             for (int i = this.renderTargets.size() - 1; i >= 0; i--) {
                 this.renderToWindow((VisualTextureComponent)this.renderTargets.get(i), gContext);
             }
+
+            //reuse renderTargets, but this time for text
+            this.renderTargets.clear();
+            scene.compileComponentList(this.renderTargets, GameComponent.gcType.TEXT);
+            //iterates through all text and renders them to screen
+            gcIt = this.renderTargets.iterator();
+            while (gcIt.hasNext()) {
+                this.renderTextToWindow((TextComponent)gcIt.next(), gContext);
+            }
+
 
             gContext.dispose();
             buffer.show(); //flush the buffer to screen

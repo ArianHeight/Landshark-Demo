@@ -22,6 +22,9 @@ to what happens to a player when their hp hits 0
 public class LogicEngine {
     ControlInterface player;
     Vector<GameScript> collisionResponseRequests;
+    LandSharkText scoreDisplay;
+    int currentScore;
+
     double acceleration;
     double vel;
     double distance;
@@ -33,6 +36,7 @@ public class LogicEngine {
     public LogicEngine() {
         //idk what to put
         this.collisionResponseRequests = new Vector<GameScript>();
+        this.currentScore = 0;
         this.acceleration = 0.05;
         this.vel = -5.0;
         this.distance = 0.0;
@@ -59,6 +63,8 @@ public class LogicEngine {
         scene.addGameObject(lspPlayer);
         scene.addGameObject(new LandSharkMap());
         lspPlayer.addGameObject(new SpiderEnemy(this.vel)); //TODO temp code
+        this.scoreDisplay = new LandSharkText();
+        lspPlayer.addGameObject(this.scoreDisplay);
     }
 
     /*
@@ -134,6 +140,8 @@ public class LogicEngine {
 
             this.vel -= this.acceleration * timeElapsed;
             this.distance -= this.vel * timeElapsed;
+            this.currentScore = (int) this.distance;
+            this.scoreDisplay.setText("Score: " + this.currentScore);
 
             scene.updateObj();
         }

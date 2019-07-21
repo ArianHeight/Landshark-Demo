@@ -5,7 +5,8 @@ public abstract class GameComponent {
         VISUAL_TEXTURE,
         VISUAL_ANIM,
         PHYSICS,
-        HITPOINT
+        HITPOINT,
+        TEXT
     }
 
     private gcType gct_componentType;
