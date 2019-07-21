@@ -69,8 +69,7 @@ public class LogicEngine {
     public void runScript(GameScript script, GameObject scene) {
         if (script.getData().endsWith("Player")) {
             this.player.inputResponse(script.getData());
-        }
-        else if (script.getData() == "Collision") { //todo maybe move somewhere else
+        } else if (script.getData() == "Collision") { //todo maybe move somewhere else
             PhysicsComponent pcOne = ((CollisionDetectedRequest)script).getOne();
             PhysicsComponent pcTwo = ((CollisionDetectedRequest)script).getTwo();
 
@@ -82,21 +81,17 @@ public class LogicEngine {
             String tagTwo = pcTwo.getTag();
             if (tagOne.equals("Player")) {
                 player++;
-            }
-            else if (tagOne.equals("Enemy")) {
+            } else if (tagOne.equals("Enemy")) {
                 enemy++;
-            }
-            else if (tagOne.equals("Map")) {
+            } else if (tagOne.equals("Map")) {
                 map++;
             }
 
             if (tagTwo.equals("Player")) {
                 player++;
-            }
-            else if (tagTwo.equals("Enemy")) {
+            } else if (tagTwo.equals("Enemy")) {
                 enemy++;
-            }
-            else if (tagTwo.equals("Map")) {
+            } else if (tagTwo.equals("Map")) {
                 map++;
             }
 
@@ -106,8 +101,7 @@ public class LogicEngine {
                 if (player == 1 && map == 1) {
                     ((LandSharkPlayer)this.player).setTouchingGroundTrue();
                 }
-            }
-            else if (player == 1 && enemy == 1) { //kill player
+            } else if (player == 1 && enemy == 1) { //kill player
                 this.runScript(new GameEventRequest("KillPlayer"), scene);
             }
         }
@@ -125,13 +119,15 @@ public class LogicEngine {
             double randomNum = RandomNumberGenerator.randomBetween(0, 100);
             randomNum *= Math.atan(2.0 * (this.timeSinceLastGen - 1 - 2.5 * this.vel));
             if (randomNum > 90 && this.timeSinceLastSecond >= 1.0) {
-                ((LandSharkPlayer)this.player).addGameObject(new SpiderEnemy(this.vel));
+                if (RandomNumberGenerator.randomBool()) {
+                    ((LandSharkPlayer) this.player).addGameObject(new SpiderEnemy(this.vel));
+                } else {
+                    ((LandSharkPlayer) this.player).addGameObject(new DroneEnemy(this.vel));
+                }
                 this.timeSinceLastGen = 0.0;
-            }
-            else if (this.timeSinceLastSecond >= 1.0) {
+            } else if (this.timeSinceLastSecond >= 1.0) {
                 this.timeSinceLastSecond = 0.0;
-            }
-            else {
+            } else {
                 this.timeSinceLastGen += timeElapsed;
                 this.timeSinceLastSecond += timeElapsed;
             }
