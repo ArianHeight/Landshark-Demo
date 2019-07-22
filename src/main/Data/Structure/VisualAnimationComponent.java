@@ -11,12 +11,12 @@ A game component specifically used for storing a single Animation
 will do so in the form of a Vector of VisualTextureComponents
 Extends the GameComponent class
  */
-public class VisualAnimationComponent extends GameComponent{
-    private Vector<VisualTextureComponent> v_vtc_sprites;
+public class VisualAnimationComponent extends VisualComponent{
+    private Vector<Image> v_vtc_sprites;
     private double d_secondsBetweenFrame;
     private double d_secondsElapsed = 0.0; //time passed since last change
-    private Iterator<VisualTextureComponent> vtc_it;
-    private VisualTextureComponent vtc_currentSprite;
+    private Iterator<Image> vtc_it;
+    private Image vtc_currentSprite;
     private Rectangle r_renderPlane;
     private HitboxAABB hb_worldPosRef;
 
@@ -24,11 +24,12 @@ public class VisualAnimationComponent extends GameComponent{
     //d_framePause is the amount of seconds between each frame of the animation
     public VisualAnimationComponent(double d_framePause, Rectangle r_plane, HitboxAABB hb_hitbox) {
         super(gcType.VISUAL_ANIM);
-        this.v_vtc_sprites = new Vector<VisualTextureComponent>();
+        this.v_vtc_sprites = new Vector<Image>();
         this.d_secondsBetweenFrame = d_framePause;
         this.vtc_it = this.v_vtc_sprites.iterator();
         this.r_renderPlane = r_plane;
         this.hb_worldPosRef = hb_hitbox;
+        this.layer = 0;
     }
 
     //alt cstr
@@ -50,10 +51,8 @@ public class VisualAnimationComponent extends GameComponent{
     public void addSprite(Image im_data) {
         this.vtc_it = null; //sets iterator to null before changing the vector
 
-        //creates obj to be added
-        VisualTextureComponent vtc_temp = new VisualTextureComponent(im_data, this.r_renderPlane);
-        vtc_temp.setWorldPosRef(this.hb_worldPosRef);
-        this.v_vtc_sprites.add(vtc_temp);
+        //adds the image
+        this.v_vtc_sprites.add(im_data);
 
         this.vtc_it = this.v_vtc_sprites.iterator(); //remakes the iterator
     }
@@ -68,10 +67,11 @@ public class VisualAnimationComponent extends GameComponent{
     }
 
     /*
-    REQUIRES: this.d_secondsElapsed has to be updated by other means, usually the getCurrentSprite(double) method
-    A private method that will take care of all sprite updates
+    A public method that will take care of all sprite updates
      */
-    private void updateCurrentSprite() {
+    public void updateCurrentSprite(double d_timeElapsed) {
+        this.d_secondsElapsed += d_timeElapsed;
+
         if (this.vtc_it == null) { //null guard
             this.vtc_it = this.v_vtc_sprites.iterator(); //start the animation
         }
@@ -90,10 +90,18 @@ public class VisualAnimationComponent extends GameComponent{
     MODIFIES:this
     EFFECT:returns the current sprite the animation is on, and updates the current sprite if d_timeElapsed
            passes over the d_framePause time limit
+           If u just want the texture, use the getTexture method instead
      */
-    public VisualTextureComponent getCurrentSprite(double d_timeElapsed) {
-        this.updateCurrentSprite();
-        this.d_secondsElapsed += d_timeElapsed;
+    public Image getCurrentSprite(double d_timeElapsed) {
+        this.updateCurrentSprite(d_timeElapsed);
+        return this.vtc_currentSprite;
+    }
+
+    /*
+    returns the current sprite the animation is on without updating the animation
+     */
+    @Override
+    public Image getTexture() {
         return this.vtc_currentSprite;
     }
 }

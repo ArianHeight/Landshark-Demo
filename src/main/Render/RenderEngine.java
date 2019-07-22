@@ -3,10 +3,8 @@ package main.Render;
 import main.Data.Communication.GameScript;
 import main.Data.Communication.LogRequest;
 import main.Data.GameObject;
-import main.Data.Structure.GameComponent;
+import main.Data.Structure.*;
 import main.Data.Structure.TextComponent;
-import main.Data.Structure.VisualAnimationComponent;
-import main.Data.Structure.VisualTextureComponent;
 import main.Utility.HitboxAABB;
 import main.Utility.Sorter;
 
@@ -104,7 +102,7 @@ public class RenderEngine {
     POTENTIALLY UNCAUGHT EXCEPTIONS!
     that's why this method is private
      */
-    private void renderToWindow(VisualTextureComponent renderTarget, Graphics gContext) {
+    private void renderToWindow(VisualComponent renderTarget, Graphics gContext) {
         Rectangle r = renderTarget.getRenderPlane(); //temp holder for rendering plane
         HitboxAABB hb = renderTarget.getWorldPosRef();
 
@@ -162,15 +160,16 @@ public class RenderEngine {
             //also updates the sprite timings
             Iterator<GameComponent> gcIt = this.animations.iterator();
             while (gcIt.hasNext()) {
-                this.renderTargets.add(((VisualAnimationComponent)gcIt.next()).getCurrentSprite(timeElapsed));
+                ((VisualAnimationComponent)gcIt.next()).updateCurrentSprite(timeElapsed);
             }
+            this.renderTargets.addAll(this.animations);
 
             //sorts them by layer
-            Sorter.quicksortForVTC(this.renderTargets, this.renderTargets.size() / 2);
+            Sorter.quicksortForVC(this.renderTargets, this.renderTargets.size() / 2);
 
             //iterates through textures and renders them one by one
             for (int i = this.renderTargets.size() - 1; i >= 0; i--) {
-                this.renderToWindow((VisualTextureComponent)this.renderTargets.get(i), gContext);
+                this.renderToWindow((VisualComponent)this.renderTargets.get(i), gContext);
             }
 
             //reuse renderTargets, but this time for text

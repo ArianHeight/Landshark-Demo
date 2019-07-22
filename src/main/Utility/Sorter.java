@@ -1,7 +1,7 @@
 package main.Utility;
 
 import main.Data.Structure.GameComponent;
-import main.Data.Structure.VisualTextureComponent;
+import main.Data.Structure.VisualComponent;
 
 import java.util.List;
 
@@ -17,15 +17,15 @@ public class Sorter {
     }
 
     /*
-    REQUIRES:A list of VisualTextureComponents stored as GameComponents
+    REQUIRES:A list of VisualComponents stored as GameComponents
     EFFECT:Sorts all of them into ascending order by comparing their layer values
      */
-    public static void quicksortForVTC(List<GameComponent> input, int pivot) {
+    public static void quicksortForVC(List<GameComponent> input, int pivot) {
         if (input.size() <= 1) {
             return;
         }
 
-        int pivotVal = ((VisualTextureComponent)input.get(pivot)).getLayer();
+        int pivotVal = ((VisualComponent)input.get(pivot)).getLayer();
         swap(input, pivot, input.size() - 1);
         int left = 0;
         int right = input.size() - 2;
@@ -33,13 +33,13 @@ public class Sorter {
 
         while (left <= right) {
             found = 0;
-            if (((VisualTextureComponent)input.get(left)).getLayer() < pivotVal) {
+            if (((VisualComponent)input.get(left)).getLayer() < pivotVal) {
                 left++;
             }
             else {
                 found++;
             }
-            if (((VisualTextureComponent)input.get(right)).getLayer() > pivotVal) {
+            if (((VisualComponent)input.get(right)).getLayer() > pivotVal) {
                 right--;
             }
             else {
@@ -60,7 +60,7 @@ public class Sorter {
             return;
         }
 
-        quicksortForVTC(input.subList(0, pivot),  pivot / 2);
-        quicksortForVTC(input.subList(pivot + 1, input.size()), (input.size() - pivot) / 2);
+        quicksortForVC(input.subList(0, pivot),  pivot / 2);
+        quicksortForVC(input.subList(pivot + 1, input.size()), (input.size() - pivot) / 2);
     }
 }

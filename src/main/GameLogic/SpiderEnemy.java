@@ -18,7 +18,7 @@ public class SpiderEnemy extends Actor {
     private final static int DEFAULT_TEXTURE_INDEX = 1;
     private final static int HP_INDEX = 2;
 
-    //cstr TODO CHANGE THE TEXTURE!!
+    //cstr TODO TEST ANIMATIONS!!!
     public SpiderEnemy(double vel) {
         super(new PhysicsComponent(16.0, 3.75, 1.5, 1.0, 1.0, false),
                 new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/drone1.png").getImage(), new Rectangle(0, 0, 64, 64)),
