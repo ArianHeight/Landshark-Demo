@@ -23,8 +23,8 @@ public class DroneEnemy extends Actor{
 
     //cstr TODO CHANGE THE TEXTURE!!
     public DroneEnemy(double d_vel) {
-        super(new PhysicsComponent(16.0, 3.0, 1.5, 1.0, 1.0, false),
-                new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/spider1.png").getImage(), new Rectangle(0, 0, 64, 64)),
+        super(new PhysicsComponent(16.0, 3.75, 1.5, 1.0, 1.0, false),
+                new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/drone1.png").getImage(), new Rectangle(0, 0, 64, 64)),
                 new HPComponent(1));
         this.setAllTags("Enemy");
         ((VisualTextureComponent)this.memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef((HitboxAABB) (this.memberComponents.get(WALKING_HITBOX_INDEX).getData()));

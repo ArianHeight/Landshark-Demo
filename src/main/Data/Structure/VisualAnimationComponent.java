@@ -27,7 +27,7 @@ public class VisualAnimationComponent extends VisualComponent{
         this.it = this.sprites.iterator();
         this.renderPlane = plane;
         this.worldPos = hitbox;
-        this.layer = 0;
+        this.layer = 1;
     }
 
     //alt cstr
