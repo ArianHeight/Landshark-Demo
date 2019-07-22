@@ -1,8 +1,8 @@
 package test;
 
-import Data.Communication.*;
-import Data.Structure.PhysicsComponent;
-import Utility.HitboxAABB;
+import main.Data.Communication.*;
+import main.Data.Structure.PhysicsComponent;
+import main.Utility.HitboxAABB;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

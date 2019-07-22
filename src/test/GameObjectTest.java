@@ -1,11 +1,11 @@
 package test;
 
-import Data.GameObject;
-import Data.GameScene;
-import Data.Structure.GameComponent;
-import Data.Structure.PhysicsComponent;
-import Data.Structure.VisualTextureComponent;
-import Utility.HitboxAABB;
+import main.Data.GameObject;
+import main.Data.GameScene;
+import main.Data.Structure.GameComponent;
+import main.Data.Structure.PhysicsComponent;
+import main.Data.Structure.VisualTextureComponent;
+import main.Utility.HitboxAABB;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
