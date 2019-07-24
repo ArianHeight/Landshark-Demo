@@ -1,6 +1,6 @@
 package test;
 
-import main.Utility.HitboxAABB;
+import main.utility.HitboxAABB;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

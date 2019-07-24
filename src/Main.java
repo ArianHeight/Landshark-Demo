@@ -6,7 +6,7 @@ Main will definitely call GameEngine to start the game execution
 
  */
 
-import main.System.*;
+import main.system.*;
 
 public class Main {
     //entry method, args is cmd line arguments
@@ -17,7 +17,7 @@ public class Main {
         System.out.println(t.tagMsg("I say hi"));
 
         GameEngine e = new GameEngine();
-        e.startEngine("./Game/System/Save/game_active.sav");
+        e.startEngine("./Game/system/Save/game_active.sav");
 
         e.run();
 
