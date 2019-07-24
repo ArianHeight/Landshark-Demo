@@ -18,67 +18,67 @@ public class PhysicsEngineTest {
 
     @Test
     public void test1() { //test left
-        PhysicsComponent pc_one = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 2.0, true);
-        PhysicsComponent pc_two = new PhysicsComponent(new HitboxAABB(0.5, 1.5, 1.0, 0.0), -1.0, true);
-        pe.doCollisionResponse(pc_one, pc_two);
-        assertTrue(((HitboxAABB)pc_two.getData()).getLeft() == 0.5);
-        assertTrue(((HitboxAABB)pc_one.getData()).getRight() == 0.5);
+        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(0.5, 1.5, 1.0, 0.0), -1.0, true);
+        pe.doCollisionResponse(one, two);
+        assertTrue(((HitboxAABB)two.getData()).getLeft() == 0.5);
+        assertTrue(((HitboxAABB)one.getData()).getRight() == 0.5);
     }
 
     @Test
-    public void test1b () { //test AABB detection method
-        HitboxAABB hb_one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
-        HitboxAABB hb_two = new HitboxAABB(0.5, 1.5, 1.0, 0.0);
-        assertTrue(pe.doCollisionDetection(hb_one, hb_two));
-        assertTrue(pe.doCollisionDetection(hb_two, hb_one));
-        hb_one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
-        hb_two = new HitboxAABB(0.0, 1.0, 0.00001, -0.9999);
-        assertTrue(pe.doCollisionDetection(hb_one, hb_two));
-        assertTrue(pe.doCollisionDetection(hb_two, hb_one));
-        hb_one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
-        hb_two = new HitboxAABB(0.5, 1.5, 1.5, 0.5);
-        assertTrue(pe.doCollisionDetection(hb_one, hb_two));
-        assertTrue(pe.doCollisionDetection(hb_two, hb_one));
-        hb_one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
-        hb_two = new HitboxAABB(-1.01, -0.01, 1.0, 0.0);
-        assertTrue(!pe.doCollisionDetection(hb_one, hb_two));
-        assertTrue(!pe.doCollisionDetection(hb_two, hb_one));
+    public void test1b() { //test AABB detection method
+        HitboxAABB one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
+        HitboxAABB two = new HitboxAABB(0.5, 1.5, 1.0, 0.0);
+        assertTrue(pe.doCollisionDetection(one, two));
+        assertTrue(pe.doCollisionDetection(two, one));
+        one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
+        two = new HitboxAABB(0.0, 1.0, 0.00001, -0.9999);
+        assertTrue(pe.doCollisionDetection(one, two));
+        assertTrue(pe.doCollisionDetection(two, one));
+        one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
+        two = new HitboxAABB(0.5, 1.5, 1.5, 0.5);
+        assertTrue(pe.doCollisionDetection(one, two));
+        assertTrue(pe.doCollisionDetection(two, one));
+        one = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
+        two = new HitboxAABB(-1.01, -0.01, 1.0, 0.0);
+        assertTrue(!pe.doCollisionDetection(one, two));
+        assertTrue(!pe.doCollisionDetection(two, one));
     }
 
     @Test
     public void test2() { //test right
-        PhysicsComponent pc_one = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 2.0, true);
-        PhysicsComponent pc_two = new PhysicsComponent(new HitboxAABB(-0.5, 0.5, 1.0, 0.0), -1.0, true);
-        pe.doCollisionResponse(pc_one, pc_two);
-        assertTrue(((HitboxAABB)pc_two.getData()).getRight() == 0.5);
-        assertTrue(((HitboxAABB)pc_one.getData()).getLeft() == 0.5);
+        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(-0.5, 0.5, 1.0, 0.0), -1.0, true);
+        pe.doCollisionResponse(one, two);
+        assertTrue(((HitboxAABB)two.getData()).getRight() == 0.5);
+        assertTrue(((HitboxAABB)one.getData()).getLeft() == 0.5);
     }
 
     @Test
     public void test3() { //test up
-        PhysicsComponent pc_one = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 2.0, true);
-        PhysicsComponent pc_two = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 0.5, -0.5), -1.0, true);
-        pe.doCollisionResponse(pc_one, pc_two);
-        assertTrue(((HitboxAABB)pc_two.getData()).getTop() == 0.5);
-        assertTrue(((HitboxAABB)pc_one.getData()).getBottom() == 0.5);
+        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 0.5, -0.5), -1.0, true);
+        pe.doCollisionResponse(one, two);
+        assertTrue(((HitboxAABB)two.getData()).getTop() == 0.5);
+        assertTrue(((HitboxAABB)one.getData()).getBottom() == 0.5);
     }
 
     @Test
     public void test4() { //test down
-        PhysicsComponent pc_one = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 2.0, true);
-        PhysicsComponent pc_two = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.5, 0.5), -1.0, true);
-        pe.doCollisionResponse(pc_one, pc_two);
-        assertTrue(((HitboxAABB)pc_two.getData()).getBottom() == 0.5);
-        assertTrue(((HitboxAABB)pc_one.getData()).getTop() == 0.5);
+        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.5, 0.5), -1.0, true);
+        pe.doCollisionResponse(one, two);
+        assertTrue(((HitboxAABB)two.getData()).getBottom() == 0.5);
+        assertTrue(((HitboxAABB)one.getData()).getTop() == 0.5);
     }
 
     @Test
     public void test5() {
-        PhysicsComponent pc_one = new PhysicsComponent(new HitboxAABB(0.0, 4.0, 1.0, 0.0), -2.0, true);
-        PhysicsComponent pc_two = new PhysicsComponent(new HitboxAABB(1.0, 3.0, 1.5, 0.5), 1.0, true);
-        pe.doCollisionResponse(pc_one, pc_two);
-        assertTrue(((HitboxAABB)pc_two.getData()).getBottom() == 1.0);
-        assertTrue(((HitboxAABB)pc_one.getData()).getTop() == 1.0);
+        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 4.0, 1.0, 0.0), -2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(1.0, 3.0, 1.5, 0.5), 1.0, true);
+        pe.doCollisionResponse(one, two);
+        assertTrue(((HitboxAABB)two.getData()).getBottom() == 1.0);
+        assertTrue(((HitboxAABB)one.getData()).getTop() == 1.0);
     }
 
     @Test

@@ -22,10 +22,25 @@ public class HitboxAABB {
     }
 
     //accessors
-    public double getLeft() { return this.left; }
-    public double getRight() { return this.right; }
-    public double getTop() { return this.top; }
-    public double getBottom() { return this.bottom; }
+    //gets the x value of the left side of the hitbox
+    public double getLeft() {
+        return this.left;
+    }
+
+    //gets the x value of the right side of the hitbox
+    public double getRight() {
+        return this.right;
+    }
+
+    //gets the y value of the top side of the hitbox
+    public double getTop() {
+        return this.top;
+    }
+
+    //gets the y value of the bottom side of the hitbox
+    public double getBottom() {
+        return this.bottom;
+    }
 
     //mutators
 

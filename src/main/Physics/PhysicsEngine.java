@@ -101,8 +101,7 @@ public class PhysicsEngine {
             HitboxAABB hb = (HitboxAABB) subject.getData();
             hb.moveX(subject.getVelX() * timeElapsed);
             hb.moveY(subject.getVelY() * timeElapsed);
-        }
-        else {
+        } else {
             subject.setVelY(0.0);
             subject.setVelX(0.0);
         }
@@ -118,7 +117,7 @@ public class PhysicsEngine {
         //testing whether the objs can be moved
         int test = 0;
         if (pcOne.canBeMoved()) {
-            test ++;
+            test++;
         }
         if (pcTwo.canBeMoved()) {
             test += 2;
@@ -148,29 +147,28 @@ public class PhysicsEngine {
         double deltaUp = hbTwo.getTop() - hbOne.getBottom(); //pos if overlapping
 
         //stores the movements that hbOne will have to undergo
-        double xMove = -deltaLeft;
-        double yMove = -deltaDown;
+        double xmove = -deltaLeft;
+        double ymove = -deltaDown;
 
-        if (Math.abs(deltaRight) < Math.abs(xMove) ) {
-            xMove = deltaRight;
+        if (Math.abs(deltaRight) < Math.abs(xmove)) {
+            xmove = deltaRight;
         }
-        if (Math.abs(deltaUp) < Math.abs(yMove)) {
-            yMove = deltaUp;
+        if (Math.abs(deltaUp) < Math.abs(ymove)) {
+            ymove = deltaUp;
         }
 
         //picks the direction with the least movement required and moves the hitboxes according to their masses
-        if (Math.abs(xMove) < Math.abs(yMove)) {
-            hbOne.moveX(xMove * favorOnePercentage);
-            hbTwo.moveX(-xMove * (1.0 - favorOnePercentage));
-            if (Math.abs(xMove) == 0.0) {
+        if (Math.abs(xmove) < Math.abs(ymove)) {
+            hbOne.moveX(xmove * favorOnePercentage);
+            hbTwo.moveX(-xmove * (1.0 - favorOnePercentage));
+            if (Math.abs(xmove) == 0.0) {
                 pcOne.setVelX(0.0);
                 pcTwo.setVelX(0.0);
             }
-        }
-        else {
-            hbOne.moveY(yMove * favorOnePercentage);
-            hbTwo.moveY(-yMove * (1.0 - favorOnePercentage));
-            if (Math.abs(yMove) == 0.0) {
+        } else {
+            hbOne.moveY(ymove * favorOnePercentage);
+            hbTwo.moveY(-ymove * (1.0 - favorOnePercentage));
+            if (Math.abs(ymove) == 0.0) {
                 pcOne.setVelY(0.0);
                 pcTwo.setVelY(0.0);
             }

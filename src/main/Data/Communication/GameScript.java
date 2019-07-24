@@ -15,13 +15,13 @@ public abstract class GameScript {
     public final static int GAME_EVENT = 4;
     public final static int COLLISION_RESPONSE = 5;
 
-    private int i_cmd; //the type of script, for example LOG_DATA would be processed as a request to log the information
-    private String str_data; //contains potentially extra information about the script
+    private int cmd; //the type of script, for example LOG_DATA would be processed as a request to log the information
+    private String data; //contains potentially extra information about the script
 
-    //cstr, creates a gamescript with i_type for type and str_info for data
-    protected GameScript(int i_type, String str_info) {
-        this.i_cmd = i_type;
-        this.str_data = str_info;
+    //cstr, creates a gamescript with type for type and info for data
+    protected GameScript(int type, String info) {
+        this.cmd = type;
+        this.data = info;
     }
 
     /*
@@ -30,7 +30,7 @@ public abstract class GameScript {
     EFFECT:Accesses cmd type of the script
      */
     public int getCmd() {
-        return this.i_cmd;
+        return this.cmd;
     }
 
     /*
@@ -39,7 +39,7 @@ public abstract class GameScript {
     EFFECT:Accesses extra information contained in the script
      */
     public String getData() {
-        return this.str_data;
+        return this.data;
     }
 
     /*
@@ -47,16 +47,16 @@ public abstract class GameScript {
     MODIFIES:this
     EFFECT:Sets a new script type based on the input
      */
-    private void setCmd(int i_newCmd) {
-        this.i_cmd = i_newCmd;
+    private void setCmd(int newCmd) {
+        this.cmd = newCmd;
     }
 
     /*
     REQUIRES:String input
     MODIFIES:this
-    EFFECT:Sets the data contained to str_newData
+    EFFECT:Sets the data contained to newData
      */
-    public void setData(String str_newData) {
-        this.str_data = str_newData;
+    public void setData(String newData) {
+        this.data = newData;
     }
 }

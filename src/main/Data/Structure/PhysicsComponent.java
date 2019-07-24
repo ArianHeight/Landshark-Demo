@@ -9,41 +9,41 @@ represents a "physical" hitbox that the physics engine can work with
 TODO add gravity stuff
  */
 public class PhysicsComponent extends GameComponent{
-    private HitboxAABB hb_hitbox;
-    private boolean b_updated = false; //true if updated by PhysicsEngine
-    private double d_mass = 1.0; //negative mass indicates that the object hitbox is not able to be moved
-    private boolean b_gravity = true; //true if gravity-related calculations are done
-    private double d_velX = 0.0;
-    private double d_velY = 0.0;
-    private double d_terminalVelX = 32.0; //abs terminal x velocity
-    private double d_terminalVelY = 32.0; //abs terminal y vel
+    private HitboxAABB hitBox;
+    private boolean updated = false; //true if updated by PhysicsEngine
+    private double mass = 1.0; //negative mass indicates that the object hitbox is not able to be moved
+    private boolean gravity = true; //true if gravity-related calculations are done
+    private double velX = 0.0;
+    private double velY = 0.0;
+    private double terminalVelX = 32.0; //abs terminal x velocity
+    private double terminalVelY = 32.0; //abs terminal y vel
 
     //cstr
-    public PhysicsComponent(double d_topLeftX, double d_topLeftY, double d_width, double d_height) {
+    public PhysicsComponent(double topLeftX, double topLeftY, double width, double height) {
         super(gcType.PHYSICS); //creates the physics type
-        this.hb_hitbox = new HitboxAABB(d_topLeftX, d_topLeftX + d_width, d_topLeftY, d_topLeftY - d_height); //makes hitbox
+        this.hitBox = new HitboxAABB(topLeftX, topLeftX + width, topLeftY, topLeftY - height); //makes hitbox
     }
 
     //alt cstr
-    public PhysicsComponent(double d_topLeftX, double d_topLeftY, double d_width, double d_height, double d_mass, boolean b_grav) {
+    public PhysicsComponent(double topLeftX, double topLeftY, double width, double height, double mass, boolean grav) {
         super(gcType.PHYSICS); //creates the physics type
-        this.hb_hitbox = new HitboxAABB(d_topLeftX, d_topLeftX + d_width, d_topLeftY, d_topLeftY - d_height); //makes hitbox
-        this.d_mass = d_mass;
-        this.b_gravity = b_grav;
+        this.hitBox = new HitboxAABB(topLeftX, topLeftX + width, topLeftY, topLeftY - height); //makes hitbox
+        this.mass = mass;
+        this.gravity = grav;
     }
 
     //alt cstr
-    public PhysicsComponent(HitboxAABB hb_hitbox) {
+    public PhysicsComponent(HitboxAABB hitBox) {
         super(gcType.PHYSICS);
-        this.hb_hitbox = hb_hitbox;
+        this.hitBox = hitBox;
     }
 
     //alt cstr
-    public PhysicsComponent(HitboxAABB hb_hitbox, double d_mass, boolean b_grav) {
+    public PhysicsComponent(HitboxAABB hitBox, double mass, boolean grav) {
         super(gcType.PHYSICS);
-        this.hb_hitbox = hb_hitbox;
-        this.d_mass = d_mass;
-        this.b_gravity = b_grav;
+        this.hitBox = hitBox;
+        this.mass = mass;
+        this.gravity = grav;
     }
 
     /*
@@ -53,56 +53,80 @@ public class PhysicsComponent extends GameComponent{
      */
     @Override
     public Object getData() {
-        return this.hb_hitbox;
+        return this.hitBox;
     }
 
-    //mutator to set b_updated to false
-    public void resetUpdated() { this.b_updated = false; }
+    //mutator to set updated to false
+    public void resetUpdated() {
+        this.updated = false;
+    }
 
     //mutator for PhysicsEngine to set updated
-    public void setUpdated() { this.b_updated = true; }
+    public void setUpdated() {
+        this.updated = true;
+    }
 
-    //accessor for b_updated
-    public boolean updatedByEngine() { return this.b_updated; }
+    //accessor for updated
+    public boolean updatedByEngine() {
+        return this.updated;
+    }
 
     //returns whether or not the object can be moved
-    public boolean canBeMoved() { return (this.d_mass >= 0); }
+    public boolean canBeMoved() {
+        return (this.mass >= 0);
+    }
 
     //returns the mass of the object
-    public double getMass() { return this.d_mass; }
+    public double getMass() {
+        return this.mass;
+    }
 
     //returns whether the object is affected by gravity
-    public boolean affectedByGravity() { return this.b_gravity; }
+    public boolean affectedByGravity() {
+        return this.gravity;
+    }
 
-    //returns the velocities of the object
-    public double getVelX() { return this.d_velX; }
-    public double getVelY() { return this.d_velY; }
+    //returns the x velocity of the object
+    public double getVelX() {
+        return this.velX;
+    }
 
-    //clamps velocity values to be between positive and negative of the abs terminal velocity
-    private void clampVelX() { this.d_velX = Math.min(Math.max(-this.d_terminalVelX, this.d_velX), this.d_terminalVelX); }
-    private void clampVelY() { this.d_velY = Math.min(Math.max(-this.d_terminalVelY, this.d_velY), this.d_terminalVelY); }
+    //returns the y velocity of the object
+    public double getVelY() {
+        return this.velY;
+    }
+
+    //clamps x velocity values to be between positive and negative of the abs terminal velocity
+    private void clampVelX() {
+        this.velX = Math.min(Math.max(-this.terminalVelX, this.velX), this.terminalVelX);
+    }
+
+    //clamps y velocity to be between positive and negative of the abs terminal vel
+    private void clampVelY() {
+        this.velY = Math.min(Math.max(-this.terminalVelY, this.velY), this.terminalVelY);
+    }
 
     //takes a double and sets the velocities to that value
     //also calls clampVelX() or clampVelY()
-    public void setVelX(double d_val) {
-        this.d_velX = d_val;
+    public void setVelX(double val) {
+        this.velX = val;
         this.clampVelX();
     }
 
-    public void setVelY(double d_val) {
-        this.d_velY = d_val;
+    public void setVelY(double val) {
+        this.velY = val;
         this.clampVelY();
     }
 
     //takes a double and adds that value to the velocities
     //also calls clampVelX() or clampVelY()
-    public void addVelX(double d_val) {
-        this.d_velX += d_val;
+    public void addVelX(double val) {
+        this.velX += val;
         this.clampVelX();
     }
 
-    public void addVelY(double d_val) {
-        this.d_velY += d_val;
+    public void addVelY(double val) {
+        this.velY += val;
         this.clampVelY();
     }
 }

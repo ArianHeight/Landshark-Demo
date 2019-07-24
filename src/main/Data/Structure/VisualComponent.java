@@ -26,13 +26,27 @@ public abstract class VisualComponent extends GameComponent {
     public abstract Image getTexture();
 
     //accessor, return a reference to the render plane
-    public Rectangle getRenderPlane() { return this.renderPlane; }
+    public Rectangle getRenderPlane() {
+        return this.renderPlane;
+    }
+
     //sets the internal reference to a HitboxAABB obj
-    public void setWorldPosRef(HitboxAABB ref) { this.worldPos = ref; }
+    public void setWorldPosRef(HitboxAABB ref) {
+        this.worldPos = ref;
+    }
+
     //gets the worldPos
-    public HitboxAABB getWorldPosRef() { return this.worldPos; }
+    public HitboxAABB getWorldPosRef() {
+        return this.worldPos;
+    }
+
     //sets the layer value which determines render order
-    public void setLayerVal(int val) { this.layer = val; }
+    public void setLayerVal(int val) {
+        this.layer = val;
+    }
+
     //gets the layer value
-    public int getLayer() { return this.layer; }
+    public int getLayer() {
+        return this.layer;
+    }
 }

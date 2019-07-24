@@ -9,7 +9,7 @@ public interface ControlInterface {
     REQUIRES:a valid String input as implemented in each class
     EFFECT:takes a String input and executes some action based on which the input is
      */
-    public void inputResponse(String str_input);
+    public void inputResponse(String input);
 
     /*
     REQUIRES:none

@@ -64,8 +64,7 @@ public class RenderEngine {
             this.windowContext.setVisible(true); //opens the window
             this.windowContext.createBufferStrategy(2); //double buffering
             this.windowOpen = true;
-        }
-        catch (Exception error) {
+        } catch (Exception error) {
             error.printStackTrace();
             return "Rendering Engine encountered an error while trying to open a window"; //something went wrong
         }
@@ -87,8 +86,7 @@ public class RenderEngine {
             this.windowContext.dispatchEvent(new WindowEvent(this.windowContext, WindowEvent.WINDOW_CLOSING)); //sends a closing event to JFrame
             this.windowContext.dispose(); //destroy the window context
             this.windowOpen = false;
-        }
-        catch (Exception error) {
+        } catch (Exception error) {
             error.printStackTrace();
             return "Rendering Engine encountered an error while trying to close a window"; //something went wrong
         }
@@ -102,7 +100,7 @@ public class RenderEngine {
     POTENTIALLY UNCAUGHT EXCEPTIONS!
     that's why this method is private
      */
-    private void renderToWindow(VisualComponent renderTarget, Graphics gContext) {
+    private void renderToWindow(VisualComponent renderTarget, Graphics grContext) {
         Rectangle r = renderTarget.getRenderPlane(); //temp holder for rendering plane
         HitboxAABB hb = renderTarget.getWorldPosRef();
 
@@ -113,11 +111,10 @@ public class RenderEngine {
         }
 
         if (renderTarget.getTexture() == null) { //no texture
-            gContext.setColor(black);
-            gContext.fillRect(r.x, r.y, r.width, r.height);
-        }
-        else { //texture exists
-            gContext.drawImage(renderTarget.getTexture(), r.x, r.y, r.width, r.height, null); //draws image to screen
+            grContext.setColor(black);
+            grContext.fillRect(r.x, r.y, r.width, r.height);
+        } else { //texture exists
+            grContext.drawImage(renderTarget.getTexture(), r.x, r.y, r.width, r.height, null); //draws image to screen
         }
     }
 
@@ -127,10 +124,10 @@ public class RenderEngine {
     POTENTIALLY UNCAUGHT EXCEPTIONS!
     that's why this method is private
      */
-    private void renderTextToWindow(TextComponent renderTarget, Graphics gContext) {
-        gContext.setColor(renderTarget.getColor());
-        gContext.setFont(renderTarget.getFont());
-        gContext.drawString((String)renderTarget.getData(), renderTarget.getX(), renderTarget.getY());
+    private void renderTextToWindow(TextComponent renderTarget, Graphics grContext) {
+        grContext.setColor(renderTarget.getColor());
+        grContext.setFont(renderTarget.getFont());
+        grContext.drawString((String)renderTarget.getData(), renderTarget.getX(), renderTarget.getY());
     }
 
     /*
@@ -146,7 +143,7 @@ public class RenderEngine {
         try {
             //initializes some variables
             BufferStrategy buffer = this.windowContext.getBufferStrategy(); //get connected buffer
-            Graphics gContext = buffer.getDrawGraphics();
+            Graphics grContext = buffer.getDrawGraphics();
 
             //grabs all the textures into a single vector
             this.renderTargets.clear(); //clear before compiling list
@@ -169,7 +166,7 @@ public class RenderEngine {
 
             //iterates through textures and renders them one by one
             for (int i = this.renderTargets.size() - 1; i >= 0; i--) {
-                this.renderToWindow((VisualComponent)this.renderTargets.get(i), gContext);
+                this.renderToWindow((VisualComponent)this.renderTargets.get(i), grContext);
             }
 
             //reuse renderTargets, but this time for text
@@ -178,14 +175,13 @@ public class RenderEngine {
             //iterates through all text and renders them to screen
             gcIt = this.renderTargets.iterator();
             while (gcIt.hasNext()) {
-                this.renderTextToWindow((TextComponent)gcIt.next(), gContext);
+                this.renderTextToWindow((TextComponent)gcIt.next(), grContext);
             }
 
 
-            gContext.dispose();
+            grContext.dispose();
             buffer.show(); //flush the buffer to screen
-        }
-        catch (Exception error) {
+        } catch (Exception error) {
             //error.printStackTrace();
             engineRequests.add(new LogRequest("Renderer encountered an error while attempting to draw frame"));
             this.closeWindow();
@@ -198,11 +194,11 @@ public class RenderEngine {
     }
 
     //takes a double x and y coord in world space and translates it to screen space
-    public static Dimension worldSpaceToScreenSpace (double x, double y, GameComponent camera) {
+    public static Dimension worldSpaceToScreenSpace(double x, double y, GameComponent camera) {
         if (camera == null) {
             return new Dimension((int)(x * 1280.0 / 21.33333333), (int)(720 - (y * 720.0 / 12.0)));
         }
 
-        return new Dimension(0 , 1); //TODO add stuff for custom camera
+        return new Dimension(0, 1); //TODO add stuff for custom camera
     }
 }
