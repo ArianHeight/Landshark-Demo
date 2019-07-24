@@ -1,4 +1,4 @@
-package main.gameLogic;
+package main.game0logic;
 
 /*
 

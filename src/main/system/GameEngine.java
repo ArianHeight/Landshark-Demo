@@ -5,12 +5,12 @@ import main.data.communication.GameScript;
 import main.data.communication.LogRequest;
 import main.data.GameObject;
 import main.data.GameScene;
-import main.gameLogic.GameScore;
-import main.gameLogic.LogicEngine;
+import main.game0logic.GameScore;
+import main.game0logic.LogicEngine;
 import main.io.IOEngine;
 import main.physics.PhysicsEngine;
 import main.render.RenderEngine;
-import main.userInput.InputEngine;
+import main.user0input.InputEngine;
 
 import java.util.Vector;
 

@@ -1,4 +1,4 @@
-package main.gameLogic;
+package main.game0logic;
 
 import main.data.Player;
 import main.data.structure.HPComponent;
@@ -10,12 +10,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LandSharkPlayer extends Player {
-    private final static int WALKING_HITBOX_INDEX = 0;
-    private final static int DEFAULT_TEXTURE_INDEX = 1;
-    private final static int HP_INDEX = 2;
-    private final static int CROUCHING_HITBOX_INDEX = 3;
-    private final static int CROUCHING_TEXTURE_INDEX = 4;
-    private final static double JUMP_VELOCITY = 12.0;
+    private static final int WALKING_HITBOX_INDEX = 0;
+    private static final int DEFAULT_TEXTURE_INDEX = 1;
+    private static final int HP_INDEX = 2;
+    private static final int CROUCHING_HITBOX_INDEX = 3;
+    private static final int CROUCHING_TEXTURE_INDEX = 4;
+    private static final double JUMP_VELOCITY = 12.0;
 
     private boolean crouchCalled; //whether or not crouch() has been called
     private boolean crouching; //whether or not player is crouching

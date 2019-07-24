@@ -111,7 +111,7 @@ public class PhysicsEngine {
     this method takes two PhysicsComponents and does collision response on them
     takes two references to PhysicsComponents, so this method modifies them directly
 
-    public so it can be called from the main.gameLogic package
+    public so it can be called from the main.game0logic package
      */
     public static void doCollisionResponse(PhysicsComponent pcOne, PhysicsComponent pcTwo) {
         //testing whether the objs can be moved

@@ -2,9 +2,9 @@ package main.io;
 
 import main.data.communication.GameScript;
 import main.data.communication.LogRequest;
-import main.data.gameExceptions.FileNotOpenException;
-import main.data.gameExceptions.NoDataException;
-import main.gameLogic.GameScore;
+import main.data.game0exceptions.FileNotOpenException;
+import main.data.game0exceptions.NoDataException;
+import main.game0logic.GameScore;
 
 import java.util.Vector;
 

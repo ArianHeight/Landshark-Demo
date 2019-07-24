@@ -1,7 +1,7 @@
 package test;
 
-import main.data.gameExceptions.FileNotOpenException;
-import main.data.gameExceptions.NoDataException;
+import main.data.game0exceptions.FileNotOpenException;
+import main.data.game0exceptions.NoDataException;
 import main.io.GameFileReader;
 import main.io.GameFileWriter;
 import org.junit.jupiter.api.BeforeEach;

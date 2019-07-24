@@ -1,4 +1,4 @@
-package main.gameLogic;
+package main.game0logic;
 
 import main.data.communication.GameEventRequest;
 import main.data.communication.GameScript;

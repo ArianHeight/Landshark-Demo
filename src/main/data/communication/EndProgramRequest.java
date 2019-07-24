@@ -6,7 +6,7 @@ Extends the GameScript class
 A request specifically made to end the program
 
  */
-public class EndProgramRequest extends GameScript{
+public class EndProgramRequest extends GameScript {
     //cstr
     public EndProgramRequest() {
         super(END_PROGRAM, "");
@@ -14,5 +14,7 @@ public class EndProgramRequest extends GameScript{
 
     //locking the setData() to do nothing because there is no data to set
     @Override
-    public void setData(String str_newData) { }
+    public void setData(String newData) {
+        //do nothing
+    }
 }

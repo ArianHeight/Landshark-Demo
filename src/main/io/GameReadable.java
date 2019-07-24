@@ -1,7 +1,7 @@
 package main.io;
 
-import main.data.gameExceptions.FileNotOpenException;
-import main.data.gameExceptions.NoDataException;
+import main.data.game0exceptions.FileNotOpenException;
+import main.data.game0exceptions.NoDataException;
 
 /*
 this class will have methods that allow a class to read data from files

@@ -1,7 +1,7 @@
 package main.io;
 
-import main.data.gameExceptions.FileNotOpenException;
-import main.data.gameExceptions.NoDataException;
+import main.data.game0exceptions.FileNotOpenException;
+import main.data.game0exceptions.NoDataException;
 
 import java.io.File;
 import java.io.IOException;

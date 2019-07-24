@@ -1,7 +1,7 @@
-package main.userInput;
+package main.user0input;
 
 import main.data.communication.GameScript;
-import main.gameLogic.KeyBindings;
+import main.game0logic.KeyBindings;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
