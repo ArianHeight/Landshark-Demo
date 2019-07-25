@@ -17,16 +17,16 @@ a map will have
  */
 public class GameMap extends GameObject {
     //cstr
-    public GameMap(PhysicsComponent pc_hitbox, VisualTextureComponent vtc_texture) {
-        this.addComponent(pc_hitbox); //add physics
-        this.addComponent(vtc_texture); //add texture
+    public GameMap(PhysicsComponent pc, VisualTextureComponent vtc) {
+        this.addComponent(pc); //add physics
+        this.addComponent(vtc); //add texture
         this.setAllTags("Map");
     }
 
     //alt cstr
-    public GameMap(HitboxAABB hb_hitbox, Image im_data) {
-        this.addComponent(new PhysicsComponent(hb_hitbox, -1.0, false)); //add physics
-        this.addComponent(new VisualTextureComponent(im_data, new Rectangle(0, 0, 1, 1))); //add textures
+    public GameMap(HitboxAABB hitbox, Image data) {
+        this.addComponent(new PhysicsComponent(hitbox, -1.0, false)); //add physics
+        this.addComponent(new VisualTextureComponent(data, new Rectangle(0, 0, 1, 1))); //add textures
         this.setAllTags("Map");
     }
 }

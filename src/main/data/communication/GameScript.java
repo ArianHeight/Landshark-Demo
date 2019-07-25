@@ -8,12 +8,12 @@ essentially a data packet
  */
 public abstract class GameScript {
     //const name fields used for typing the script
-    public final static int LOG_DATA = 0;
-    public final static int COUT_DATA = 1;
-    public final static int PROCESS_DATA = 2;
-    public final static int END_PROGRAM = 3;
-    public final static int GAME_EVENT = 4;
-    public final static int COLLISION_RESPONSE = 5;
+    public static final int LOG_DATA = 0;
+    public static final int COUT_DATA = 1;
+    public static final int PROCESS_DATA = 2;
+    public static final int END_PROGRAM = 3;
+    public static final int GAME_EVENT = 4;
+    public static final int COLLISION_RESPONSE = 5;
 
     private int cmd; //the type of script, for example LOG_DATA would be processed as a request to log the information
     private String data; //contains potentially extra information about the script
