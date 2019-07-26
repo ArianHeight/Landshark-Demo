@@ -102,4 +102,21 @@ public class VisualAnimationComponent extends VisualComponent{
     public Image getTexture() {
         return this.currentSprite;
     }
+
+    /*
+    makes a copy of this animation using new worldPosRef, a new drawing rectangle and a new layer value
+     */
+    public VisualAnimationComponent makeCpy(Rectangle plane, HitboxAABB hitbox, int layerVal) {
+        //makes copy
+        VisualAnimationComponent returnVal = new VisualAnimationComponent(this.secondsBetweenFrame, plane, hitbox);
+        returnVal.setLayerVal(layerVal);
+
+        //populate it with the same textures
+        Iterator<Image> it = this.sprites.iterator();
+        while (it.hasNext()) {
+            returnVal.addSprite(it.next());
+        }
+
+        return returnVal;
+    }
 }
