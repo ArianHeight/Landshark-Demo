@@ -1,9 +1,7 @@
 package main.game0logic;
 
 import main.data.Player;
-import main.data.structure.HPComponent;
-import main.data.structure.PhysicsComponent;
-import main.data.structure.VisualTextureComponent;
+import main.data.structure.*;
 import main.utility.HitboxAABB;
 
 import javax.swing.*;
@@ -29,7 +27,8 @@ public class LandSharkPlayer extends Player {
     //TODO make an interface for ANIMATION AND TEXTURE to implement
     public LandSharkPlayer() {
         super(new PhysicsComponent(2.0, 3.0, 2.0, 1.0, 1.0, true),
-                new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage(), new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0), 0),
+                //new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage(), new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0), 0),
+                new VisualAnimationComponent(0.2, new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0)),
                 new HPComponent(1));
         this.addComponent(new PhysicsComponent(2.0, 2.5, 2.0,0.5, 1.0, true)); //crouch hitbox
         this.memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
@@ -38,6 +37,16 @@ public class LandSharkPlayer extends Player {
                                                      new HitboxAABB(0.0, 3.0, 0.75, 0.0), 0));
         this.memberComponents.get(CROUCHING_TEXTURE_INDEX).deactivate();
         this.setAllTags("Player");
+        VisualAnimationComponent animation = (VisualAnimationComponent) this.findFirstActiveComponentInObj(GameComponent.gcType.VISUAL_ANIM);
+        animation.setLayerVal(0);
+        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage());
+        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark2.png").getImage());
+        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark3.png").getImage());
+        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark2.png").getImage());
+        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage());
+        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark6.png").getImage());
+        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark7.png").getImage());
+        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark6.png").getImage());
 
         this.crouching = false;
         this.crouchCalled = false;
@@ -100,7 +109,7 @@ public class LandSharkPlayer extends Player {
     @Override
     public void updateObj() {
         //TODO temp code will change with crouch
-        HitboxAABB target = ((VisualTextureComponent)this.memberComponents.get(this.activeAnimation)).getWorldPosRef();
+        HitboxAABB target = ((VisualComponent)this.memberComponents.get(this.activeAnimation)).getWorldPosRef();
         HitboxAABB source = (HitboxAABB)this.memberComponents.get(this.activeHitbox).getData();
         target.alignBottomY(source);
         target.alignRightX(source);

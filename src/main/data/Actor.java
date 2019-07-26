@@ -1,9 +1,6 @@
 package main.data;
 
-import main.data.structure.GameComponent;
-import main.data.structure.HPComponent;
-import main.data.structure.PhysicsComponent;
-import main.data.structure.VisualTextureComponent;
+import main.data.structure.*;
 
 import java.awt.*;
 
@@ -17,9 +14,9 @@ public class Actor extends GameObject {
     //physics
     //texture
     //hp
-    public Actor(PhysicsComponent physics, VisualTextureComponent texture, HPComponent health) {
+    public Actor(PhysicsComponent physics, VisualComponent visuals, HPComponent health) {
         this.addComponent(physics); //add physics
-        this.addComponent(texture); //add texture
+        this.addComponent(visuals); //add texture
         this.addComponent(health); //add hp
     }
 

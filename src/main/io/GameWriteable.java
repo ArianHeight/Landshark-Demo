@@ -7,5 +7,5 @@ public interface GameWriteable {
 
     //write the string to the file, with a newline if the boolean is true
     //returns an error msg if there is an exception, or ""
-    public String writeContentToFile(String str_msg, boolean b_newline);
+    public String writeContentToFile(String msg, boolean newline);
 }

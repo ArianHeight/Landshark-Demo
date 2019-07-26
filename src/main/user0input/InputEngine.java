@@ -13,7 +13,7 @@ import java.util.Vector;
 TODO insert description of what class does here
 
  */
-public class InputEngine implements Observer{
+public class InputEngine implements Observer {
     //member vars
     private ConsoleWatch cwListener;
     private Vector<GameScript> scripts;
@@ -48,7 +48,7 @@ public class InputEngine implements Observer{
     public void update(Observable o, Object arg) {
         if (o == this.cwListener) {
             //only for updates from cwListener
-            switch((int) arg) {
+            switch ((int) arg) {
                 case(GameScript.LOG_DATA): //gets error data and puts it in queue
                     DataProcessor.processErrorData(this.scripts, this.cwListener.getErrors());
                     break;

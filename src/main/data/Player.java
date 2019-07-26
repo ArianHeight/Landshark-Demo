@@ -2,7 +2,7 @@ package main.data;
 
 import main.data.structure.HPComponent;
 import main.data.structure.PhysicsComponent;
-import main.data.structure.VisualTextureComponent;
+import main.data.structure.VisualComponent;
 
 import java.awt.*;
 
@@ -13,8 +13,8 @@ implements the ControlInterface interface
  */
 public class Player extends Actor implements ControlInterface {
     //cstr
-    public Player(PhysicsComponent phys, VisualTextureComponent texture, HPComponent health) {
-        super(phys, texture, health);
+    public Player(PhysicsComponent phys, VisualComponent visuals, HPComponent health) {
+        super(phys, visuals, health);
         this.setAllTags("Player");
     }
 
