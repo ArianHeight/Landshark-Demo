@@ -12,7 +12,7 @@ This class will handle all file reading related activities
  */
 public class GameFileReader implements GameFileHandler, GameReadable {
     private String filePath;
-    private File f;
+    private File file;
     private Scanner reader;
     private boolean isOpen = false; //whether the file is open or not
 
@@ -34,15 +34,14 @@ public class GameFileReader implements GameFileHandler, GameReadable {
         }
 
         try {
-            this.f = new File(this.filePath); //opens the file
+            this.file = new File(this.filePath); //opens the file
 
-            if (!this.f.exists()) {
-                this.f.createNewFile(); //creates new file in place if the file does not exist
+            if (!this.file.exists()) {
+                this.file.createNewFile(); //creates new file in place if the file does not exist
             }
 
-            this.reader = new Scanner(this.f);
-        }
-        catch (IOException error) { //catch io exceptions
+            this.reader = new Scanner(this.file);
+        } catch (IOException error) { //catch io exceptions
             return "system encountered an error while trying to open a file at " + this.filePath;
         }
 
@@ -55,7 +54,8 @@ public class GameFileReader implements GameFileHandler, GameReadable {
     REQUIRES:The file has been opened(this.OpenFile() has been called once and this method has not)
     MODIFIES:this
     EFFECT:Closes a file that was open for reading
-           this method returns an empty string if every thing goes well, but will return an error msg if there is an exception thrown
+           this method returns an empty string if every thing goes well,
+           but will return an error msg if there is an exception thrown
      */
     @Override
     public String closeFile() {
@@ -65,9 +65,9 @@ public class GameFileReader implements GameFileHandler, GameReadable {
 
         try {
             this.reader.close(); //closes the buffered writer
-        }
-        catch (Exception error) {
-            return "system encountered an error while trying to close a file at " + this.filePath; //passes error msg out
+        } catch (Exception error) {
+            //passes error msg out
+            return "system encountered an error while trying to close a file at " + this.filePath;
         }
 
         this.isOpen = false; //file has been closed no problems encountered
@@ -89,6 +89,23 @@ public class GameFileReader implements GameFileHandler, GameReadable {
         }
 
         return this.reader.nextInt();
+    }
+
+    /*
+    returns the next double in the file
+    if there is not next double, throw a NoDataException
+    if file is not open, throw a FileNotOpenException
+     */
+    public double getNextDouble() throws FileNotOpenException, NoDataException {
+        if (!this.isOpen) {
+            throw new FileNotOpenException();
+        }
+
+        if (!this.reader.hasNextDouble()) {
+            throw new NoDataException();
+        }
+
+        return this.reader.nextDouble();
     }
 
     /*

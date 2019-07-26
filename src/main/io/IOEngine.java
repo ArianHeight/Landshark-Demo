@@ -3,25 +3,30 @@ package main.io;
 import main.data.communication.GameScript;
 import main.data.communication.LogRequest;
 import main.data.game0exceptions.FileNotOpenException;
+import main.data.game0exceptions.ImageDidNotLoadException;
 import main.data.game0exceptions.NoDataException;
 import main.game0logic.GameScore;
 
+import java.awt.*;
 import java.util.Vector;
 
 /*
 
 This class will handle all Outputs to console and file main.io
-TODO do the file input part XD
 
  */
 public class IOEngine {
     private GameFileWriter logWriter; //responsible for writing game logs
     private GameFileReader scoreReader; //responsible for reading high scores
+    private ImageManager textureMngr; //responsible for managing all Images
+    private AnimationManager animationMngr; //responsible for managing all animations
 
     //cstr
     public IOEngine() {
         this.logWriter = new GameFileWriter("./Game/system/Logs/game_active.log");
         this.scoreReader = new GameFileReader("./Game/system/data/scores.sav");
+        this.textureMngr = new ImageManager();
+        this.animationMngr = new AnimationManager(this.textureMngr);
         System.out.println(this.logWriter.openFile(true)); //resets the file and opens it
         System.out.println(this.scoreReader.openFile()); //opens the file for reading
     }
@@ -66,6 +71,22 @@ public class IOEngine {
             scriptOutput.add(new LogRequest("The file at " + this.scoreReader.getFilePath() + " is not open."));
         }
     }
+
+    /*
+    this method takes a filePath to the Image and loads it, returning the Image itself
+    second param is the error script output
+     */
+    public Image loadTexture(String filePath, Vector<GameScript> scriptOutput) {
+        try {
+            return this.textureMngr.loadImage(filePath);
+        } catch (ImageDidNotLoadException error) {
+            scriptOutput.add(new LogRequest("Could not load image at: " + filePath));
+        }
+
+        return null;
+    }
+
+
 
     /*
     call this when game engine closes!

@@ -10,7 +10,7 @@ import java.util.HashMap;
 this class is in charge of loading every single image
  */
 public class ImageManager {
-    HashMap<String, Image> loadedImages;
+    private HashMap<String, Image> loadedImages;
 
     //catr
     public ImageManager() {
