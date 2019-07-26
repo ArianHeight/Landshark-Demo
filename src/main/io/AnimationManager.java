@@ -82,4 +82,20 @@ public class AnimationManager {
 
         return animation.makeCpy(plane, hitbox, layerVal);
     }
+
+    //accessor to logs
+    public Vector<String> getLogs() {
+        return this.logs;
+    }
+
+    //accessor to errors
+    public Vector<String> getErrors() {
+        return this.errors;
+    }
+
+    //clears all logs and errors
+    public void clearLogsAndErrors() {
+        this.logs.clear();
+        this.errors.clear();
+    }
 }
