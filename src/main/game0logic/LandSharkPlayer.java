@@ -14,6 +14,7 @@ public class LandSharkPlayer extends Player {
     private static final int CROUCHING_HITBOX_INDEX = 3;
     private static final int CROUCHING_TEXTURE_INDEX = 4;
     private static final double JUMP_VELOCITY = 12.0;
+    private static VisualAnimationComponent standardAnimation = null;
 
     private boolean crouchCalled; //whether or not crouch() has been called
     private boolean crouching; //whether or not player is crouching
@@ -23,12 +24,11 @@ public class LandSharkPlayer extends Player {
     private int activeHitbox;
     private int activeAnimation;
 
-    //cstr TODO some stuff w/ file loading and such
-    //TODO make an interface for ANIMATION AND TEXTURE to implement
+    //cstr
     public LandSharkPlayer() {
         super(new PhysicsComponent(2.0, 3.0, 2.0, 1.0, 1.0, true),
-                //new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage(), new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0), 0),
-                new VisualAnimationComponent(0.2, new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0)),
+                standardAnimation.makeCpy(new Rectangle(), new HitboxAABB(0.0, 3.0, 1.5, 0.0), 0),
+                //new VisualAnimationComponent(0.2, new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0)),
                 new HPComponent(1));
         this.addComponent(new PhysicsComponent(2.0, 2.5, 2.0,0.5, 1.0, true)); //crouch hitbox
         this.memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
@@ -37,16 +37,6 @@ public class LandSharkPlayer extends Player {
                                                      new HitboxAABB(0.0, 3.0, 0.75, 0.0), 0));
         this.memberComponents.get(CROUCHING_TEXTURE_INDEX).deactivate();
         this.setAllTags("Player");
-        VisualAnimationComponent animation = (VisualAnimationComponent) this.findFirstActiveComponentInObj(GameComponent.gcType.VISUAL_ANIM);
-        animation.setLayerVal(0);
-        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage());
-        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark2.png").getImage());
-        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark3.png").getImage());
-        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark2.png").getImage());
-        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark1.png").getImage());
-        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark6.png").getImage());
-        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark7.png").getImage());
-        animation.addSprite(new ImageIcon("./Game/Assets/Textures/shark6.png").getImage());
 
         this.crouching = false;
         this.crouchCalled = false;
@@ -73,6 +63,13 @@ public class LandSharkPlayer extends Player {
         } else if (input.equals("CrouchPlayer")) {
             this.crouch();
         }
+    }
+
+    /*
+    this method sets the default animations
+     */
+    public static void setDefaultAnimation(VisualAnimationComponent anim) {
+        standardAnimation = anim;
     }
 
     //makes the player jump in the air if touching the ground

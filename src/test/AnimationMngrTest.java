@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class AnimationMngrTest {
     AnimationManager subject;
 
@@ -18,9 +20,36 @@ public class AnimationMngrTest {
 
     @Test
     public void test1() { //test successful load
-        VisualAnimationComponent animation = subject.makeAnimation("./Game/Assets/Animations/walkingShark.anim",
+        Rectangle r = new Rectangle(4, 5, 5, 5);
+        HitboxAABB hb = new HitboxAABB(-1.0, 0.0, -1.0, -2.0);
+        VisualAnimationComponent animation = subject.makeAnimation("./Game/Assets/Animations/walkingShark.anim", r , hb, 5);
+        assertTrue(subject.getErrors().size() == 0);
+        assertTrue(animation.getWorldPosRef() == hb);
+        assertTrue(animation.getRenderPlane() == r);
+        assertTrue(animation.getLayer() == 5);
+    }
+
+    @Test
+    public void test2() { //test wrong file loc
+        VisualAnimationComponent animation = subject.makeAnimation("./Game/System/Test/some.anim",
                 new Rectangle(4, 5, 5, 5),
                 new HitboxAABB(-1.0, 0.0, -1.0, -2.0), 5);
-        //assertTrue();
+        assertTrue(subject.getErrors().size() > 0);
+    }
+
+    @Test
+    public void test3() { //tests incorrect format #1
+        VisualAnimationComponent animation = subject.makeAnimation("./Game/System/Test/brokenDouble.anim",
+                new Rectangle(4, 5, 5, 5),
+                new HitboxAABB(-1.0, 0.0, -1.0, -2.0), 5);
+        assertTrue(subject.getErrors().size() > 0);
+    }
+
+    @Test
+    public void test4() { //test incorrect format #2
+        VisualAnimationComponent animation = subject.makeAnimation("./Game/System/Test/brokenPaths.anim",
+                new Rectangle(4, 5, 5, 5),
+                new HitboxAABB(-1.0, 0.0, -1.0, -2.0), 5);
+        assertTrue(subject.getErrors().size() > 0);
     }
 }

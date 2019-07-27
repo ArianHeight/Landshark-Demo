@@ -8,6 +8,7 @@ import main.data.ControlInterface;
 import main.data.GameObject;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualTextureComponent;
+import main.io.IOEngine;
 import main.utility.RandomNumberGenerator;
 
 import javax.swing.*;
@@ -50,12 +51,16 @@ public class LogicEngine {
 
     also takes a vector of GameScripts to dump any log requests and whatnot
      */
-    public void startGame(GameObject scene, Vector<GameScript> scripts) {
+    public void startGame(GameObject scene, Vector<GameScript> scripts, IOEngine fileEngine) {
         //TODO write the actual game now
         this.acceleration = 0.05;
         this.vel = -10.0;
         this.distance = 0.0;
         this.paused = false;
+
+        SpiderEnemy.setDefaultAnimation(fileEngine.loadAnimation("./Game/Assets/Animations/walkingSpider.anim", scripts));
+        DroneEnemy.setDefaultAnimation(fileEngine.loadAnimation("./Game/Assets/Animations/walkingDrone.anim", scripts));
+        LandSharkPlayer.setDefaultAnimation(fileEngine.loadAnimation("./Game/Assets/Animations/walkingShark.anim", scripts));
 
         scene.addComponent(new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/backDrop.png").getImage(), new Rectangle(0, 0, 1280, 720), null, 2));
         LandSharkPlayer lspPlayer = new LandSharkPlayer();

@@ -54,12 +54,18 @@ public class AnimationManager {
             this.errors.add(msg);
         }
 
+        boolean passedDouble = false;
         try {
             double framePause = this.animationReader.getNextDouble();
+            passedDouble = true;
             animation = new VisualAnimationComponent(framePause, new Rectangle(),
                     new HitboxAABB(0.0, 1.0, 1.0, 0.0));
+            String temp;
             while (true) {
-                animation.addSprite(this.internalTextures.loadImage(this.animationReader.readLineFromFile()));
+                temp = this.animationReader.readLineFromFile();
+                if (!temp.equals("")) {
+                    animation.addSprite(this.internalTextures.loadImage(temp));
+                }
             }
         } catch (FileNotOpenException error) {
             this.errors.add("Could not read animation file at: " + filePath);
@@ -67,7 +73,14 @@ public class AnimationManager {
                     new HitboxAABB(0.0, 1.0, 1.0, 0.0));
             animation.addSprite(null);
         } catch (NoDataException errorTwo) {
-            animation.setLayerVal(0);
+            if (passedDouble) {
+                animation.setLayerVal(0);
+            } else {
+                this.errors.add("File at: " + filePath + " is possibly broken and could not be read...");
+                animation = new VisualAnimationComponent(1, new Rectangle(),
+                        new HitboxAABB(0.0, 1.0, 1.0, 0.0));
+                animation.addSprite(null);
+            }
         } catch (ImageDidNotLoadException errorThree) {
             this.errors.add("Could not read image file at: " + filePath);
             animation = new VisualAnimationComponent(1, new Rectangle(),

@@ -71,7 +71,7 @@ public class GameEngine {
         this.scriptQueue.add(new LogRequest("Link established..."));
 
         //TODO flesh out this part
-        this.logicProcessor.startGame(this.sceneGraph, this.scriptQueue);
+        this.logicProcessor.startGame(this.sceneGraph, this.scriptQueue, this.fileCommunicator);
 
         //TODO temp test code
         Vector<GameScore> scores = new Vector<GameScore>();

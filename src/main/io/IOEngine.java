@@ -5,7 +5,9 @@ import main.data.communication.LogRequest;
 import main.data.game0exceptions.FileNotOpenException;
 import main.data.game0exceptions.ImageDidNotLoadException;
 import main.data.game0exceptions.NoDataException;
+import main.data.structure.VisualAnimationComponent;
 import main.game0logic.GameScore;
+import main.utility.HitboxAABB;
 
 import java.awt.*;
 import java.util.Vector;
@@ -86,7 +88,22 @@ public class IOEngine {
         return null;
     }
 
+    /*
+    this method takes a filePath to an Animation and loads it, returning a copy of the vac
+    the second param is the error script output
+     */
+    public VisualAnimationComponent loadAnimation(String filePath, Vector<GameScript> scriptOutput) {
+        HitboxAABB defaultHb = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
+        VisualAnimationComponent returnVal = this.animationMngr.makeAnimation(filePath, new Rectangle(), defaultHb, 0);
 
+        Vector<String> errors = this.animationMngr.getErrors();
+        for (String str : errors) {
+            scriptOutput.add(new LogRequest(str));
+        }
+        this.animationMngr.clearLogsAndErrors();
+
+        return returnVal;
+    }
 
     /*
     call this when game engine closes!
