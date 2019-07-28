@@ -40,7 +40,8 @@ public class PhysicsEngine {
     public void doScenePhysics(GameObject scene, Vector<GameScript> scripts, double timeElapsed) {
         //clears storage vector for storing new data
         this.physicsComponents.clear();
-        scene.compileComponentList(this.physicsComponents, GameComponent.gcType.PHYSICS); //grabs all active physicscomponents
+        //grabs all active physicscomponents
+        scene.compileComponentList(this.physicsComponents, GameComponent.gcType.PHYSICS);
 
         //gravity and position
         Iterator<GameComponent> gcIt = this.physicsComponents.iterator();
@@ -51,12 +52,19 @@ public class PhysicsEngine {
             doPositionCalculations(pcOne, timeElapsed);
         }
 
-        //TODO maybe find a better way
+        this.doAllCollisionDetection(scripts);
+    }
+
+    //private method to do collision detection with each obj against every other obj in this.physicsComponent
+    private void doAllCollisionDetection(Vector<GameScript> scripts) {
         //collision detection
         int sizeOfVector = this.physicsComponents.size();
+        PhysicsComponent pcOne;
         PhysicsComponent pcTwo;
+
         for (int i = 0; i < sizeOfVector; i++) {
             pcOne = (PhysicsComponent) (this.physicsComponents.get(i));
+
             for (int j = i + 1; j < sizeOfVector; j++) {
                 pcTwo = (PhysicsComponent) (this.physicsComponents.get(j));
                 if (doCollisionDetection((HitboxAABB) (pcTwo.getData()), (HitboxAABB) (pcOne.getData()))) {
@@ -84,7 +92,8 @@ public class PhysicsEngine {
     this method takes a PhysicsComponent, 2 doubles for acceleration, and a double for timeElapsed
     calculates gravity stuff
      */
-    public static void doGravityCalculations(PhysicsComponent subject, double accelX, double accelY, double timeElapsed) {
+    public static void doGravityCalculations(PhysicsComponent subject, double accelX,
+                                             double accelY, double timeElapsed) {
         if (subject.affectedByGravity()) {
             //update gravity
             subject.addVelX(accelX * timeElapsed);
@@ -114,28 +123,11 @@ public class PhysicsEngine {
     public so it can be called from the main.game0logic package
      */
     public static void doCollisionResponse(PhysicsComponent pcOne, PhysicsComponent pcTwo) {
-        //testing whether the objs can be moved
-        int test = 0;
-        if (pcOne.canBeMoved()) {
-            test++;
-        }
-        if (pcTwo.canBeMoved()) {
-            test += 2;
-        }
+        //how much movement will be enacted on pcOne(pcOne's weight / total weight)
+        double favorOnePercentage = determineMovePercentage(pcOne, pcTwo);
 
-        double favorOnePercentage = 0.0; //how much movement will be enacted on pcOne(pcOne's weight / total weight)
-        switch (test) {
-            case 0: //neither can be moved
-                return;
-            case 1: //only pcOne can be moved
-                favorOnePercentage = 1.0;
-                break;
-            case 2: //only pcTwo can be moved
-                favorOnePercentage = 0.0;
-                break;
-            case 3:
-            default: //both can be moved
-                favorOnePercentage = pcTwo.getMass() / (pcOne.getMass() + pcTwo.getMass()); //potential divide by zero error
+        if (favorOnePercentage < 0.0) { //both can't be moved
+            return;
         }
 
         //all pcTwo coords - pcOne coords
@@ -147,21 +139,33 @@ public class PhysicsEngine {
         double deltaUp = hbTwo.getTop() - hbOne.getBottom(); //pos if overlapping
 
         //stores the movements that hbOne will have to undergo
-        double xmove = -deltaLeft;
-        double ymove = -deltaDown;
+        double xmove = getMinAbsValue(deltaRight, -deltaLeft);
+        double ymove = getMinAbsValue(deltaUp, -deltaDown);
 
-        if (Math.abs(deltaRight) < Math.abs(xmove)) {
-            xmove = deltaRight;
-        }
-        if (Math.abs(deltaUp) < Math.abs(ymove)) {
-            ymove = deltaUp;
+        moveHitboxes(xmove, ymove, favorOnePercentage, hbOne, hbTwo, pcOne, pcTwo);
+
+        //flags for update in the two components
+        pcOne.setUpdated();
+        pcTwo.setUpdated();
+    }
+
+    private static double getMinAbsValue(double one, double two) {
+        if (Math.abs(one) < Math.abs(two)) {
+            return one;
         }
 
+        return two;
+    }
+
+    //a private method used by collision response to actually move the hitboxes
+    private static void moveHitboxes(double xmove, double ymove, double favorOnePercentage,
+                                     HitboxAABB hbOne, HitboxAABB hbTwo,
+                                     PhysicsComponent pcOne, PhysicsComponent pcTwo) {
         //picks the direction with the least movement required and moves the hitboxes according to their masses
         if (Math.abs(xmove) < Math.abs(ymove)) {
             hbOne.moveX(xmove * favorOnePercentage);
             hbTwo.moveX(-xmove * (1.0 - favorOnePercentage));
-            if (Math.abs(xmove) == 0.0) {
+            if (Math.abs(xmove) == 0.0) { //sets velocity to 0 if touching a wall on that side
                 pcOne.setVelX(0.0);
                 pcTwo.setVelX(0.0);
             }
@@ -173,9 +177,30 @@ public class PhysicsEngine {
                 pcTwo.setVelY(0.0);
             }
         }
+    }
 
-        //flags for update in the two components
-        pcOne.setUpdated();
-        pcTwo.setUpdated();
+    //a private method used by the collision response method to determine how much each component moves as a percentage
+    //returns a negative number if neither components can be moved
+    private static double determineMovePercentage(PhysicsComponent pcOne, PhysicsComponent pcTwo) {
+        //testing whether the objs can be moved
+        int test = 0;
+        if (pcOne.canBeMoved()) {
+            test++;
+        }
+        if (pcTwo.canBeMoved()) {
+            test += 2;
+        }
+
+        switch (test) {
+            case 0: //neither can be moved
+                return -1.0;
+            case 1: //only pcOne can be moved
+                return 1.0;
+            case 2: //only pcTwo can be moved
+                return 0.0;
+            case 3:
+            default: //both can be moved
+                return (pcTwo.getMass() / (pcOne.getMass() + pcTwo.getMass())); //potential divide by zero error
+        }
     }
 }

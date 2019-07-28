@@ -33,12 +33,12 @@ public class ScriptProcessor {
     clears queue after processing
      */
     public void processScriptsInQueue(Vector<GameScript> outputVector) {
-        Iterator<GameScript> gs_it = this.processQueue.iterator();
-        GameScript gs_temp = null;
-        while (gs_it.hasNext()) {
-            gs_temp = gs_it.next();
+        Iterator<GameScript> it = this.processQueue.iterator();
+        GameScript tempScript = null;
+        while (it.hasNext()) {
+            tempScript = it.next();
 
-            if (gs_temp.getData().equals("end")) {
+            if (tempScript.getData().equals("end")) {
                 outputVector.add(new EndProgramRequest());
             }
         }

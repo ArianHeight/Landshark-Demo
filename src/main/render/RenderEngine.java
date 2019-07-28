@@ -83,7 +83,8 @@ public class RenderEngine {
         }
 
         try {
-            this.windowContext.dispatchEvent(new WindowEvent(this.windowContext, WindowEvent.WINDOW_CLOSING)); //sends a closing event to JFrame
+            //sends a closing event to JFrame
+            this.windowContext.dispatchEvent(new WindowEvent(this.windowContext, WindowEvent.WINDOW_CLOSING));
             this.windowContext.dispose(); //destroy the window context
             this.windowOpen = false;
         } catch (Exception error) {
@@ -107,7 +108,8 @@ public class RenderEngine {
         if (hb != null) {
             Dimension topLeft = worldSpaceToScreenSpace(hb.getLeft(), hb.getTop(), null);
             Dimension bottomRight = worldSpaceToScreenSpace(hb.getRight(), hb.getBottom(), null);
-            r.setRect(topLeft.width, topLeft.height, bottomRight.width - topLeft.width, bottomRight.height - topLeft.height);
+            r.setRect(topLeft.width, topLeft.height,
+                      bottomRight.width - topLeft.width, bottomRight.height - topLeft.height);
         }
 
         if (renderTarget.getTexture() == null) { //no texture
@@ -149,35 +151,9 @@ public class RenderEngine {
             this.renderTargets.clear(); //clear before compiling list
             scene.compileComponentList(this.renderTargets, GameComponent.gcType.VISUAL_TEXTURE);
 
-            //grabs all the animations into a single vector, and adds the current sprites to the texture vector
-            this.animations.clear();
-            scene.compileComponentList(this.animations, GameComponent.gcType.VISUAL_ANIM);
-
-            //grabs the current sprite and puts it into the renderTargets
-            //also updates the sprite timings
-            Iterator<GameComponent> gcIt = this.animations.iterator();
-            while (gcIt.hasNext()) {
-                ((VisualAnimationComponent)gcIt.next()).updateCurrentSprite(timeElapsed);
-            }
-            this.renderTargets.addAll(this.animations);
-
-            //sorts them by layer
-            Sorter.quicksortForVC(this.renderTargets, this.renderTargets.size() / 2);
-
-            //iterates through textures and renders them one by one
-            for (int i = this.renderTargets.size() - 1; i >= 0; i--) {
-                this.renderToWindow((VisualComponent)this.renderTargets.get(i), grContext);
-            }
-
-            //reuse renderTargets, but this time for text
-            this.renderTargets.clear();
-            scene.compileComponentList(this.renderTargets, GameComponent.gcType.TEXT);
-            //iterates through all text and renders them to screen
-            gcIt = this.renderTargets.iterator();
-            while (gcIt.hasNext()) {
-                this.renderTextToWindow((TextComponent)gcIt.next(), grContext);
-            }
-
+            this.updateAnimationSprites(scene, timeElapsed);
+            this.renderAllVisualComponents(grContext);
+            this.renderAllText(scene, grContext);
 
             grContext.dispose();
             buffer.show(); //flush the buffer to screen
@@ -185,6 +161,49 @@ public class RenderEngine {
             //error.printStackTrace();
             engineRequests.add(new LogRequest("Renderer encountered an error while attempting to draw frame"));
             this.closeWindow();
+        }
+    }
+
+    //updates the sprites for every animation
+    //call this before compiling the final render list
+    private void updateAnimationSprites(GameObject scene, double timeElapsed) {
+        //grabs all the animations into a single vector, and adds the current sprites to the texture vector
+        this.animations.clear();
+        scene.compileComponentList(this.animations, GameComponent.gcType.VISUAL_ANIM);
+
+        //grabs the current sprite and puts it into the renderTargets
+        //also updates the sprite timings
+        Iterator<GameComponent> gcIt = this.animations.iterator();
+        while (gcIt.hasNext()) {
+            ((VisualAnimationComponent)gcIt.next()).updateCurrentSprite(timeElapsed);
+        }
+
+        this.renderTargets.addAll(this.animations);
+    }
+
+    //renders all components in renderTarget
+    //call this after compiling final render list
+    private void renderAllVisualComponents(Graphics grContext) {
+        //sorts them by layer value
+        Sorter.quicksortForVC(this.renderTargets, this.renderTargets.size() / 2);
+
+        //iterates through textures and renders them one by one
+        for (int i = this.renderTargets.size() - 1; i >= 0; i--) {
+            this.renderToWindow((VisualComponent)this.renderTargets.get(i), grContext);
+        }
+    }
+
+    //renders all text components in renderTarget
+    //call this after rendering textures
+    private void renderAllText(GameObject scene, Graphics grContext) {
+        //reuse renderTargets, but this time for text
+        this.renderTargets.clear();
+        scene.compileComponentList(this.renderTargets, GameComponent.gcType.TEXT);
+
+        //iterates through all text and renders them to screen
+        Iterator<GameComponent> gcIt = this.renderTargets.iterator();
+        while (gcIt.hasNext()) {
+            this.renderTextToWindow((TextComponent)gcIt.next(), grContext);
         }
     }
 

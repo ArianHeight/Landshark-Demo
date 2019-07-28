@@ -55,6 +55,8 @@ public class InputEngine implements Observer {
                 case(GameScript.PROCESS_DATA): //gets process requests and puts it in queue
                     DataProcessor.processStringData(this.scripts, this.cwListener.getInputs());
                     break;
+                default:
+                    return;
             }
         }
     }

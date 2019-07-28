@@ -16,7 +16,7 @@ BIG WARNING THIS CLASS WILL NOT CLOSE FILES BY ITSELF PLEASE MANAGE CORRECTLY AN
  */
 public class GameFileWriter implements GameFileHandler, GameWriteable {
     private String filePath;
-    private File f;
+    private File file;
     private FileWriter fwWriter;
     private BufferedWriter bwWriter;
     private boolean isOpen = false; //whether the file is open or not
@@ -31,7 +31,8 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
     MODIFIES:this
     EFFECT:Opens a file without truncating it, for writing
            Takes a boolean param truncFile which will determine if the file will be truncated before any writing
-           this method returns an empty string if every thing goes well, but will return an error msg if there is an error
+           this method returns an empty string if every thing goes well,
+           but will return an error msg if there is an error
      */
     public String openFile(boolean truncFile) {
         if (this.isOpen) {
@@ -39,17 +40,16 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
         }
 
         try {
-            this.f = new File(this.filePath); //opens the file
+            this.file = new File(this.filePath); //opens the file
 
-            if (!this.f.exists()) {
-                this.f.createNewFile(); //creates new file in place if the file does not exist
+            if (!this.file.exists()) {
+                this.file.createNewFile(); //creates new file in place if the file does not exist
             }
 
             //truncates the file if truncFile is true
-            this.fwWriter = new FileWriter(this.f, !truncFile); //makes file writer
+            this.fwWriter = new FileWriter(this.file, !truncFile); //makes file writer
             this.bwWriter = new BufferedWriter(this.fwWriter); //makes buffered writer
-        }
-        catch (IOException error) { //catch io exceptions
+        } catch (IOException error) { //catch io exceptions
             return "system encountered an error while trying to open a file at " + this.filePath;
         }
 
@@ -68,7 +68,8 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
     REQUIRES:The file has been opened(this.OpenFile(boolean) has been called once and this method has not)
     MODIFIES:this
     EFFECT:Closes a file that was open for writing
-           this method returns an empty string if every thing goes well, but will return an error msg if there is an exception thrown
+           this method returns an empty string if every thing goes well,
+           but will return an error msg if there is an exception thrown
      */
     @Override
     public String closeFile() {
@@ -78,9 +79,9 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
 
         try {
             this.bwWriter.close(); //closes the buffered writer
-        }
-        catch (IOException error) {
-            return "system encountered an error while trying to close a file at " + this.filePath; //passes error msg out
+        } catch (IOException error) {
+            //passes error msg out
+            return "system encountered an error while trying to close a file at " + this.filePath;
         }
 
         this.isOpen = false; //file has been closed no problems encountered
@@ -97,7 +98,8 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
     @Override
     public String writeContentToFile(String msg, boolean newline) {
         if (!this.isOpen) { //file guard
-            return "system encountered an error while trying to write msg \"" + msg + "\" to a file at " + this.filePath + " which was not opened";
+            return ("system encountered an error while trying to write msg \"" + msg
+                    + "\" to a file at " + this.filePath + " which was not opened");
         }
 
         try {
@@ -106,8 +108,7 @@ public class GameFileWriter implements GameFileHandler, GameWriteable {
             }
 
             this.bwWriter.write(msg); //writes the msg to the file
-        }
-        catch (IOException error) { //catch io exceptions
+        } catch (IOException error) { //catch io exceptions
             return "system encountered an error while trying to write msg " + msg + " to a file at " + this.filePath;
         }
 

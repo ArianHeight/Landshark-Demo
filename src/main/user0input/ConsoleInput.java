@@ -14,13 +14,17 @@ The Console class handles console inputs and everything related to that
  */
 public class ConsoleInput {
     //member vars
-    private static String currentLine = null; //a variable used to hold the current line in the console(null if no input detected)
-    private static InputStreamReader reader = new InputStreamReader(System.in); //input stream reader for main.system.in
-    private static BufferedReader console = new BufferedReader(reader); //console reader reading from main.system.in
+    //a variable used to hold the current line in the console(null if no input detected)
+    private static String currentLine = null;
+    //input stream reader for main.system.in
+    private static InputStreamReader reader = new InputStreamReader(System.in);
+    //console reader reading from main.system.in
+    private static BufferedReader console = new BufferedReader(reader);
 
     /*
-    This method takes an ArrayList<String> reference output as a parameter, that ArrayList will be the output for the method
-    this also takes another ArrayList<String> ref errors as a parameter, all errors encountered will be pushed through here
+    This method takes an ArrayList<String> reference output as a parameter, that ArrayList will be the output for the
+    method. this also takes another ArrayList<String> ref errors as a parameter, all errors encountered will be pushed
+    through here
     returns true if a user has typed something into the console or if an error has been encountered, false otherwise
 
     this method gets one line of user input from the console and pushes it to output
@@ -31,8 +35,6 @@ public class ConsoleInput {
         //gets al output ready for processing
         output.clear();
         errors.clear();
-        output.ensureCapacity(1);
-        errors.ensureCapacity(1);
 
         //create returnVal
         boolean returnVal = false;
@@ -47,8 +49,8 @@ public class ConsoleInput {
                     returnVal = true; //user has inputted, return true
                 }
             }
-        } catch (IOException error) {
-            errors.add("main.system encountered main.io error whilst reading msg from console..."); //add error msg to output
+        } catch (IOException error) { //add error msg to output
+            errors.add("main.system encountered main.io error whilst reading msg from console...");
             output.clear(); //clears output
 
             return true; //early return for error encountered

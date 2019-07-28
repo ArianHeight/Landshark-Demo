@@ -99,8 +99,19 @@ public class GameEngine {
             case GameScript.END_PROGRAM:
                 this.gameloop = false; //end program here
                 break;
+            default:
+                return this.processScriptOne(script);
+        }
+
+        return true;
+    }
+
+    //follow up for the processScript method to pass checkstyle
+    private boolean processScriptOne(GameScript script) {
+        switch (script.getCmd()) {
             case GameScript.COLLISION_RESPONSE:
-                this.physEngine.doCollisionResponse(((CollisionResponseRequest)script).getOne(), ((CollisionResponseRequest)script).getTwo());
+                this.physEngine.doCollisionResponse(((CollisionResponseRequest)script).getOne(),
+                        ((CollisionResponseRequest)script).getTwo());
                 break;
             default:
                 return false;
@@ -127,14 +138,15 @@ public class GameEngine {
             this.scriptQueue.clear();
             this.scriptProcessor.processScriptsInQueue(this.scriptQueue);
 
-            this.scriptQueue.addAll(this.logicProcessor.getCollisionRequestQueue()); //grab the stuff that needs to have collision responses computed
+            //grab the stuff that needs to have collision responses computed
+            this.scriptQueue.addAll(this.logicProcessor.getCollisionRequestQueue());
             for (GameScript gsTemp : this.scriptQueue) {
                 this.processScript(gsTemp);
             }
             this.scriptQueue.clear();
 
-            //TODO update position from physics component
-            this.renderer.renderSceneToWindow(this.sceneGraph, this.scriptQueue, this.timer.getTimeElapsed()); //draws to window
+            //draws to window
+            this.renderer.renderSceneToWindow(this.sceneGraph, this.scriptQueue, this.timer.getTimeElapsed());
         }
 
         this.renderer.closeWindow(); //exit code
