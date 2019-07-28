@@ -25,7 +25,8 @@ public class Actor extends GameObject {
     //physics
     //texture
     //hp
-    public Actor(double topLeftX, double topLeftY, double width, double height, double mass, boolean grav, Image texture, int hp) {
+    public Actor(double topLeftX, double topLeftY, double width, double height,
+                 double mass, boolean grav, Image texture, int hp) {
         this.addComponent(new PhysicsComponent(topLeftX, topLeftY, width, height, mass, grav)); //physics
         this.addComponent(new VisualTextureComponent(texture, new Rectangle(0, 0, 1, 1))); //texture
         this.addComponent(new HPComponent(hp)); //hp

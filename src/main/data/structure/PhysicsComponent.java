@@ -8,7 +8,7 @@ Extends GameComponent
 represents a "physical" hitbox that the physics engine can work with
 TODO add gravity stuff
  */
-public class PhysicsComponent extends GameComponent{
+public class PhysicsComponent extends GameComponent {
     private HitboxAABB hitBox;
     private boolean updated = false; //true if updated by PhysicsEngine
     private double mass = 1.0; //negative mass indicates that the object hitbox is not able to be moved

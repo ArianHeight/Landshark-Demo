@@ -19,7 +19,8 @@ public class Player extends Actor implements ControlInterface {
     }
 
     //alt cstr
-    public Player(double topLeftX, double topLeftY, double width, double height, double mass, boolean grav, Image texture, int hp) {
+    public Player(double topLeftX, double topLeftY, double width, double height,
+                  double mass, boolean grav, Image texture, int hp) {
         super(topLeftX, topLeftY, width, height, mass, grav, texture, hp);
         this.setAllTags("Player");
     }

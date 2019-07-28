@@ -35,14 +35,12 @@ public class Sorter {
             found = 0;
             if (((VisualComponent)input.get(left)).getLayer() < pivotVal) {
                 left++;
-            }
-            else {
+            } else {
                 found++;
             }
             if (((VisualComponent)input.get(right)).getLayer() > pivotVal) {
                 right--;
-            }
-            else {
+            } else {
                 found++;
             }
 

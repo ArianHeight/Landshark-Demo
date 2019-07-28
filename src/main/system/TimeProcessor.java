@@ -32,7 +32,8 @@ public class TimeProcessor {
     }
 
     /*
-    This method takes a String msg as an input and returns the same msg, but tagged with the local time at the beginnning
+    This method takes a String msg as an input and returns the same msg,
+    but tagged with the local time at the beginnning
      */
     public String tagMsg(String msg) {
         this.currentLocalTime = LocalTime.now(); //set time

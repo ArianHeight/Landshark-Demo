@@ -13,9 +13,12 @@ this class will handle everything to do with in game keyboard inputs
  */
 public class GameKeyInput extends KeyAdapter {
     //vectors need to be synchronized in a tick() method
-    private Vector<Integer> keysClicked; //if the key has been clicked since last refresh
-    private Vector<Integer> keysNotReleased; //holds the keys that were clicked in the last/this refresh, but not released
-    private Vector<Integer> keysReleased; //holds the keys that were released in this refresh
+    //if the key has been clicked since last refresh
+    private Vector<Integer> keysClicked;
+    //holds the keys that were clicked in the last/this refresh, but not released
+    private Vector<Integer> keysNotReleased;
+    //holds the keys that were released in this refresh
+    private Vector<Integer> keysReleased;
 
     //cstr
     public GameKeyInput() {
@@ -51,7 +54,7 @@ public class GameKeyInput extends KeyAdapter {
     /*
     this method takes a Vector<GameScript> as an input and will dump translated key events into that vector
      */
-    public synchronized void refresh(Vector<GameScript> output) {
+    public void refresh(Vector<GameScript> output) {
         //synchronise both vectors to be thread safe
         synchronized (this.keysClicked) {
             synchronized (this.keysReleased) {
@@ -61,33 +64,47 @@ public class GameKeyInput extends KeyAdapter {
                 this.keysClicked.removeAll(this.keysNotReleased);
 
                 //iterates through the clicked keys and outputs appropriate GameScripts
-                GameScript tempScript = null;
-                Iterator<Integer> itInt = this.keysClicked.iterator();
-                while (itInt.hasNext()) {
-                    tempScript = KeyBindings.getClickBindingFor(itInt.next());
-
-                    if (tempScript != null) { //if there is a script present
-                        output.add(tempScript); //add the GameScript to the output
-                    }
-                }
+                this.getClickBindings(output);
 
                 //moves the clicked keys over to keysNotReleased
                 this.keysNotReleased.addAll(this.keysClicked);
                 this.keysClicked.clear(); //clears for next refresh
 
                 //iterates through keys not released and outputs appropriate game scripts
-                itInt = this.keysNotReleased.iterator();
-                while (itInt.hasNext()) {
-                    tempScript = KeyBindings.getHoldBindingsFor(itInt.next());
-
-                    if (tempScript != null) {
-                        output.add(tempScript);
-                    }
-                }
+                this.getHoldBindings(output);
 
                 //remove all keys that have been released from keysNotReleased
                 this.keysNotReleased.removeAll(this.keysReleased);
                 this.keysReleased.clear(); //clear for next refresh
+            }
+        }
+    }
+
+    //private method used to grab all click bindings and send them to output
+    private void getClickBindings(Vector<GameScript> output) {
+        GameScript tempScript = null;
+        Iterator<Integer> itInt = this.keysClicked.iterator();
+
+        while (itInt.hasNext()) {
+            tempScript = KeyBindings.getClickBindingFor(itInt.next());
+
+            if (tempScript != null) { //if there is a script present
+                output.add(tempScript); //add the GameScript to the output
+            }
+        }
+    }
+
+    //private method used to grab all held bindings and send them to output
+    private void getHoldBindings(Vector<GameScript> output) {
+        GameScript tempScript = null;
+        Iterator<Integer> itInt = this.keysClicked.iterator();
+
+        itInt = this.keysNotReleased.iterator();
+        while (itInt.hasNext()) {
+            tempScript = KeyBindings.getHoldBindingsFor(itInt.next());
+
+            if (tempScript != null) {
+                output.add(tempScript);
             }
         }
     }

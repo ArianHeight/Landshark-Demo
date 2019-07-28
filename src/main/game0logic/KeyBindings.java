@@ -28,5 +28,11 @@ public class KeyBindings {
     public static GameScript getClickBindingFor(Integer input) {
         return clickBindings.get(input);
     }
-    public static GameScript getHoldBindingsFor(Integer input) { return holdBindings.get(input); }
+
+    /*
+    runs HashMap.get() on the input
+     */
+    public static GameScript getHoldBindingsFor(Integer input) {
+        return holdBindings.get(input);
+    }
 }

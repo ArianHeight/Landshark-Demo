@@ -20,12 +20,13 @@ public class AnimationMngrTest {
 
     @Test
     public void test1() { //test successful load
-        Rectangle r = new Rectangle(4, 5, 5, 5);
+        Rectangle rect = new Rectangle(4, 5, 5, 5);
         HitboxAABB hb = new HitboxAABB(-1.0, 0.0, -1.0, -2.0);
-        VisualAnimationComponent animation = subject.makeAnimation("./Game/Assets/Animations/walkingShark.anim", r , hb, 5);
+        VisualAnimationComponent animation = subject.makeAnimation(
+                "./Game/Assets/Animations/walkingShark.anim", rect, hb, 5);
         assertTrue(subject.getErrors().size() == 0);
         assertTrue(animation.getWorldPosRef() == hb);
-        assertTrue(animation.getRenderPlane() == r);
+        assertTrue(animation.getRenderPlane() == rect);
         assertTrue(animation.getLayer() == 5);
     }
 

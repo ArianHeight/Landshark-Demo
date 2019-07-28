@@ -41,5 +41,7 @@ public class VisualTextureComponent extends VisualComponent {
     }
 
     //accessor, return a reference to the Image obj
-    public Image getTexture() { return this.data; }
+    public Image getTexture() {
+        return this.data;
+    }
 }
