@@ -10,30 +10,30 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TimeProcessorTest {
-    TimeProcessor te_subject;
+    TimeProcessor subject;
 
     @BeforeEach
     public void before() {
-        te_subject = new TimeProcessor();
+        subject = new TimeProcessor();
     }
 
     @Test
     public void test1() { //testing tagginng
-        assertTrue(te_subject.tagMsg("meep").endsWith("meep"));
-        assertTrue(te_subject.tagScript(new LogRequest("meep")).getData().endsWith("meep"));
+        assertTrue(subject.tagMsg("meep").endsWith("meep"));
+        assertTrue(subject.tagScript(new LogRequest("meep")).getData().endsWith("meep"));
     }
 
     @Test
     public void test2() {
-        te_subject.tick();
-        assertTrue(te_subject.getTimeElapsed() >= 0.0);
+        subject.tick();
+        assertTrue(subject.getTimeElapsed() >= 0.0);
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
             assertTrue(false);
         }
-        te_subject.tick();
-        assertTrue(te_subject.getTimeElapsed() >= 1.0);
+        subject.tick();
+        assertTrue(subject.getTimeElapsed() >= 1.0);
     }
 }

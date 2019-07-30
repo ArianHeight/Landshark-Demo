@@ -2,7 +2,7 @@ package test;
 
 import main.data.*;
 import main.data.structure.GameComponent;
-import main.data.structure.HPComponent;
+import main.data.structure.HpComponent;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualTextureComponent;
 import main.utility.HitboxAabb;
@@ -52,7 +52,7 @@ public class GameObjectChildrenTests {
         HitboxAabb hb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
         PhysicsComponent pc = new PhysicsComponent(hb, 2.0, false);
         VisualTextureComponent vtc = new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1), hb, 1);
-        HPComponent hp = new HPComponent(5);
+        HpComponent hp = new HpComponent(5);
         subject = new Actor(pc, vtc, hp);
         assertTrue(subject != null);
         assertTrue(subject.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS) == pc);
@@ -87,7 +87,7 @@ public class GameObjectChildrenTests {
         HitboxAabb hb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
         PhysicsComponent pc = new PhysicsComponent(hb, 2.0, false);
         VisualTextureComponent vtc = new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1), hb, 1);
-        HPComponent hp = new HPComponent(5);
+        HpComponent hp = new HpComponent(5);
         subject = new Player(pc, vtc, hp);
         assertTrue(subject.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS) == pc);
         assertTrue(subject.findFirstActiveComponentInObj(GameComponent.GcType.VISUAL_TEXTURE) == vtc);
@@ -108,7 +108,8 @@ public class GameObjectChildrenTests {
         assertTrue(hb.getBottom() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(subject.findFirstActiveComponentInObj(GameComponent.GcType.HITPOINT).getData().equals(5));
-        assertTrue(((VisualTextureComponent)subject.findFirstActiveComponentInObj(GameComponent.GcType.VISUAL_TEXTURE)).getTexture() == null);
+        assertTrue(((VisualTextureComponent)subject.findFirstActiveComponentInObj(
+                GameComponent.GcType.VISUAL_TEXTURE)).getTexture() == null);
 
     }
 }

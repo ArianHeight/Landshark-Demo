@@ -1,7 +1,7 @@
 package test;
 
 import main.data.structure.GameComponent;
-import main.data.structure.HPComponent;
+import main.data.structure.HpComponent;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualTextureComponent;
 import main.utility.HitboxAabb;
@@ -14,7 +14,7 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameComponentTest {
-    GameComponent gc_subject;
+    GameComponent subject;
     HitboxAabb hb;
 
     @BeforeEach
@@ -24,38 +24,38 @@ public class GameComponentTest {
 
     @Test
     public void test1() {
-        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0);
-        assertTrue(gc_subject.isActive());
-        gc_subject.deactivate();
-        assertTrue(!gc_subject.isActive());
-        gc_subject.activate();
-        assertTrue(gc_subject.isActive());
-        assertTrue(gc_subject.getType() == GameComponent.GcType.PHYSICS);
-        gc_subject.setTag("1");
-        assertTrue(gc_subject.getTag().equals("1"));
+        subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0);
+        assertTrue(subject.isActive());
+        subject.deactivate();
+        assertTrue(!subject.isActive());
+        subject.activate();
+        assertTrue(subject.isActive());
+        assertTrue(subject.getType() == GameComponent.GcType.PHYSICS);
+        subject.setTag("1");
+        assertTrue(subject.getTag().equals("1"));
     }
 
     @Test
     public void test1b() {
-        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0);
-        assertTrue(((PhysicsComponent)gc_subject).canBeMoved());
-        assertTrue(!((PhysicsComponent)gc_subject).updatedByEngine());
-        assertTrue(((PhysicsComponent)gc_subject).getMass() == 1.0);
-        ((PhysicsComponent)gc_subject).setUpdated();
-        assertTrue(((PhysicsComponent)gc_subject).updatedByEngine());
-        ((PhysicsComponent)gc_subject).resetUpdated();
-        assertTrue(!((PhysicsComponent)gc_subject).updatedByEngine());
+        subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0);
+        assertTrue(((PhysicsComponent)subject).canBeMoved());
+        assertTrue(!((PhysicsComponent)subject).updatedByEngine());
+        assertTrue(((PhysicsComponent)subject).getMass() == 1.0);
+        ((PhysicsComponent)subject).setUpdated();
+        assertTrue(((PhysicsComponent)subject).updatedByEngine());
+        ((PhysicsComponent)subject).resetUpdated();
+        assertTrue(!((PhysicsComponent)subject).updatedByEngine());
     }
 
     @Test
     public void test1c() {
         Image im = new ImageIcon("./Game/Assets/Textures/zombieKnight.png").getImage();
         Rectangle r = new Rectangle(0, 0, 1, 1);
-        gc_subject = new VisualTextureComponent(im, r);
-        assertTrue(gc_subject.getType() == GameComponent.GcType.VISUAL_TEXTURE);
-        assertTrue(((VisualTextureComponent) gc_subject).getTexture() == im);
-        assertTrue((Image)(gc_subject.getData()) == im);
-        assertTrue(((VisualTextureComponent) gc_subject).getRenderPlane() == r);
+        subject = new VisualTextureComponent(im, r);
+        assertTrue(subject.getType() == GameComponent.GcType.VISUAL_TEXTURE);
+        assertTrue(((VisualTextureComponent) subject).getTexture() == im);
+        assertTrue((Image)(subject.getData()) == im);
+        assertTrue(((VisualTextureComponent) subject).getRenderPlane() == r);
     }
 
     @Test
@@ -63,122 +63,122 @@ public class GameComponentTest {
         Image im = new ImageIcon("./Game/Assets/Textures/zombieKnight.png").getImage();
         Rectangle r = new Rectangle(0, 0, 1, 1);
         HitboxAabb hb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
-        gc_subject = new VisualTextureComponent(im, r, hb, 1);
-        assertTrue(gc_subject.getType() == GameComponent.GcType.VISUAL_TEXTURE);
-        assertTrue(((VisualTextureComponent) gc_subject).getTexture() == im);
-        assertTrue((Image)(gc_subject.getData()) == im);
-        assertTrue(((VisualTextureComponent) gc_subject).getRenderPlane() == r);
-        assertTrue(((VisualTextureComponent) gc_subject).getWorldPosRef() == hb);
-        assertTrue(((VisualTextureComponent) gc_subject).getLayer() == 1);
-        ((VisualTextureComponent) gc_subject).setLayerVal(2);
-        assertTrue(((VisualTextureComponent) gc_subject).getLayer() == 2);
+        subject = new VisualTextureComponent(im, r, hb, 1);
+        assertTrue(subject.getType() == GameComponent.GcType.VISUAL_TEXTURE);
+        assertTrue(((VisualTextureComponent) subject).getTexture() == im);
+        assertTrue((Image)(subject.getData()) == im);
+        assertTrue(((VisualTextureComponent) subject).getRenderPlane() == r);
+        assertTrue(((VisualTextureComponent) subject).getWorldPosRef() == hb);
+        assertTrue(((VisualTextureComponent) subject).getLayer() == 1);
+        ((VisualTextureComponent) subject).setLayerVal(2);
+        assertTrue(((VisualTextureComponent) subject).getLayer() == 2);
     }
 
     @Test
     public void test1e() {
-        gc_subject = new HPComponent(10);
-        assertTrue(gc_subject.getType() == GameComponent.GcType.HITPOINT);
-        assertTrue(((HPComponent)gc_subject).isAlive());
-        assertTrue(!((HPComponent)gc_subject).takeDmg(10));
-        ((HPComponent)gc_subject).setHP(5);
-        assertTrue(((HPComponent)gc_subject).isAlive());
-        assertTrue(((Integer)gc_subject.getData()).equals(5));
+        subject = new HpComponent(10);
+        assertTrue(subject.getType() == GameComponent.GcType.HITPOINT);
+        assertTrue(((HpComponent)subject).isAlive());
+        assertTrue(!((HpComponent)subject).takeDmg(10));
+        ((HpComponent)subject).setHP(5);
+        assertTrue(((HpComponent)subject).isAlive());
+        assertTrue(((Integer)subject.getData()).equals(5));
     }
 
     @Test
     public void test2() {
-        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0);
-        hb = (HitboxAabb) gc_subject.getData();
+        subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0);
+        hb = (HitboxAabb) subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
         assertTrue(hb.getBottom() == 0.0);
-        assertTrue(((PhysicsComponent)gc_subject).canBeMoved());
-        assertTrue(!((PhysicsComponent)gc_subject).updatedByEngine());
-        assertTrue(((PhysicsComponent)gc_subject).getMass() == 1.0);
-        assertTrue(((PhysicsComponent)gc_subject).affectedByGravity());
+        assertTrue(((PhysicsComponent)subject).canBeMoved());
+        assertTrue(!((PhysicsComponent)subject).updatedByEngine());
+        assertTrue(((PhysicsComponent)subject).getMass() == 1.0);
+        assertTrue(((PhysicsComponent)subject).affectedByGravity());
     }
 
     @Test
     public void test3() {
-        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, 2.0, false);
-        hb = (HitboxAabb) gc_subject.getData();
+        subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, 2.0, false);
+        hb = (HitboxAabb) subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
         assertTrue(hb.getBottom() == 0.0);
-        assertTrue(((PhysicsComponent)gc_subject).canBeMoved());
-        assertTrue(!((PhysicsComponent)gc_subject).updatedByEngine());
-        assertTrue(((PhysicsComponent)gc_subject).getMass() == 2.0);
-        assertTrue(!((PhysicsComponent)gc_subject).affectedByGravity());
+        assertTrue(((PhysicsComponent)subject).canBeMoved());
+        assertTrue(!((PhysicsComponent)subject).updatedByEngine());
+        assertTrue(((PhysicsComponent)subject).getMass() == 2.0);
+        assertTrue(!((PhysicsComponent)subject).affectedByGravity());
     }
 
     @Test
     public void test4() {
-        gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, -2.0, true);
-        hb = (HitboxAabb) gc_subject.getData();
+        subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, -2.0, true);
+        hb = (HitboxAabb) subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
         assertTrue(hb.getBottom() == 0.0);
-        assertTrue(!((PhysicsComponent)gc_subject).canBeMoved());
-        assertTrue(!((PhysicsComponent)gc_subject).updatedByEngine());
-        assertTrue(((PhysicsComponent)gc_subject).getMass() == -2.0);
-        assertTrue(((PhysicsComponent)gc_subject).affectedByGravity());
+        assertTrue(!((PhysicsComponent)subject).canBeMoved());
+        assertTrue(!((PhysicsComponent)subject).updatedByEngine());
+        assertTrue(((PhysicsComponent)subject).getMass() == -2.0);
+        assertTrue(((PhysicsComponent)subject).affectedByGravity());
     }
 
     @Test
     public void test5() {
-        gc_subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0));
-        hb = (HitboxAabb) gc_subject.getData();
+        subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0));
+        hb = (HitboxAabb) subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
         assertTrue(hb.getBottom() == 0.0);
-        assertTrue(((PhysicsComponent)gc_subject).canBeMoved());
-        assertTrue(!((PhysicsComponent)gc_subject).updatedByEngine());
-        assertTrue(((PhysicsComponent)gc_subject).getMass() == 1.0);
-        assertTrue(((PhysicsComponent)gc_subject).affectedByGravity());
+        assertTrue(((PhysicsComponent)subject).canBeMoved());
+        assertTrue(!((PhysicsComponent)subject).updatedByEngine());
+        assertTrue(((PhysicsComponent)subject).getMass() == 1.0);
+        assertTrue(((PhysicsComponent)subject).affectedByGravity());
     }
 
     @Test
     public void test6() {
-        gc_subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), -1.0, false);
-        hb = (HitboxAabb) gc_subject.getData();
+        subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), -1.0, false);
+        hb = (HitboxAabb) subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
         assertTrue(hb.getBottom() == 0.0);
-        assertTrue(!((PhysicsComponent)gc_subject).canBeMoved());
-        assertTrue(!((PhysicsComponent)gc_subject).updatedByEngine());
-        assertTrue(((PhysicsComponent)gc_subject).getMass() == -1.0);
-        assertTrue(!((PhysicsComponent)gc_subject).affectedByGravity());
+        assertTrue(!((PhysicsComponent)subject).canBeMoved());
+        assertTrue(!((PhysicsComponent)subject).updatedByEngine());
+        assertTrue(((PhysicsComponent)subject).getMass() == -1.0);
+        assertTrue(!((PhysicsComponent)subject).affectedByGravity());
     }
 
     @Test
     public void test7() {
-        gc_subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), 50.0, true);
-        hb = (HitboxAabb) gc_subject.getData();
+        subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), 50.0, true);
+        hb = (HitboxAabb) subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
         assertTrue(hb.getBottom() == 0.0);
-        assertTrue(((PhysicsComponent)gc_subject).canBeMoved());
-        assertTrue(!((PhysicsComponent)gc_subject).updatedByEngine());
-        assertTrue(((PhysicsComponent)gc_subject).getMass() == 50.0);
-        assertTrue(((PhysicsComponent)gc_subject).affectedByGravity());
+        assertTrue(((PhysicsComponent)subject).canBeMoved());
+        assertTrue(!((PhysicsComponent)subject).updatedByEngine());
+        assertTrue(((PhysicsComponent)subject).getMass() == 50.0);
+        assertTrue(((PhysicsComponent)subject).affectedByGravity());
     }
 
     @Test
     public void test8() {
-        gc_subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), 50.0, true);
-        ((PhysicsComponent)gc_subject).setVelX(1.0);
-        ((PhysicsComponent)gc_subject).setVelY(2.0);
-        assertTrue(((PhysicsComponent)gc_subject).getVelX() == 1.0);
-        assertTrue(((PhysicsComponent)gc_subject).getVelY() == 2.0);
-        ((PhysicsComponent)gc_subject).addVelX(3.0);
-        ((PhysicsComponent)gc_subject).addVelY(4.0);
-        assertTrue(((PhysicsComponent)gc_subject).getVelX() == 4.0);
-        assertTrue(((PhysicsComponent)gc_subject).getVelY() == 6.0);
+        subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), 50.0, true);
+        ((PhysicsComponent)subject).setVelX(1.0);
+        ((PhysicsComponent)subject).setVelY(2.0);
+        assertTrue(((PhysicsComponent)subject).getVelX() == 1.0);
+        assertTrue(((PhysicsComponent)subject).getVelY() == 2.0);
+        ((PhysicsComponent)subject).addVelX(3.0);
+        ((PhysicsComponent)subject).addVelY(4.0);
+        assertTrue(((PhysicsComponent)subject).getVelX() == 4.0);
+        assertTrue(((PhysicsComponent)subject).getVelY() == 6.0);
     }
 }

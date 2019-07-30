@@ -1,7 +1,7 @@
 package main.game0logic;
 
 import main.data.Actor;
-import main.data.structure.HPComponent;
+import main.data.structure.HpComponent;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualAnimationComponent;
 import main.data.structure.VisualComponent;
@@ -23,7 +23,7 @@ public class SpiderEnemy extends Actor {
     public SpiderEnemy(double vel) {
         super(new PhysicsComponent(16.0, 3.0, 1.5, 1.0, 1.0, false),
                 standardAnimation.makeCpy(new Rectangle(), null, 1),
-                new HPComponent(1));
+                new HpComponent(1));
         this.setAllTags("Enemy");
         ((VisualComponent)this.memberComponents.get(DEFAULT_ANIMATION_INDEX)).setWorldPosRef(
                 (HitboxAabb) (this.memberComponents.get(WALKING_HITBOX_INDEX).getData()));
@@ -46,7 +46,7 @@ public class SpiderEnemy extends Actor {
             this.setHP(0);
         }
 
-        if (!this.findHPComponent().isAlive()) {
+        if (!this.findHpComponent().isAlive()) {
             this.setForDelete();
         }
 

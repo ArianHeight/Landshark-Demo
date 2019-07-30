@@ -57,6 +57,10 @@ public class FileIoTest {
             assertTrue(false);
         }
         assertTrue(reader.closeFile().equals(""));
+        this.test3secondPart();
+    }
+
+    private void test3secondPart() {
         assertTrue(writer.openFile(true).equals(""));
         assertTrue(writer.writeContentToFile("Hello", false).equals(""));
         assertTrue(writer.closeFile().equals(""));
@@ -83,6 +87,10 @@ public class FileIoTest {
             assertTrue(false);
         }
         assertTrue(reader.closeFile().equals(""));
+        this.test3secondPart();
+    }
+
+    private void test3bSecondPart() {
         assertTrue(writer.openFile(false).equals(""));
         assertTrue(writer.writeContentToFile("Hello", false).equals(""));
         assertTrue(writer.closeFile().equals(""));
@@ -130,6 +138,10 @@ public class FileIoTest {
         } catch (Exception e) {
             assertTrue(false);
         }
+        this.test3secondPart();
+    }
+
+    private void test6secondPart() {
         try {
             reader.getNextInt();
             assertTrue(false);

@@ -4,14 +4,14 @@ package main.data.structure;
 this class extends the GameComponent class
 this component holds information about the hp of the object
  */
-public class HPComponent extends GameComponent {
-    private Integer i_hp;
+public class HpComponent extends GameComponent {
+    private Integer hp;
 
     //cstr
-    public HPComponent(int i_hitpoint) {
+    public HpComponent(int hitpoint) {
         super(GcType.HITPOINT);
 
-        this.i_hp = i_hitpoint;
+        this.hp = hitpoint;
     }
 
     /*
@@ -19,22 +19,22 @@ public class HPComponent extends GameComponent {
      */
     @Override
     public Object getData() {
-        return this.i_hp;
+        return this.hp;
     }
 
     /*
     returns whether the hp value is greater than 0
      */
     public boolean isAlive() {
-        return this.i_hp > 0;
+        return this.hp > 0;
     }
 
     /*
     take dmg to health
     returns whether the obj is still alive after the dmg is taken
      */
-    public boolean takeDmg(int i_dmg) {
-        this.i_hp -= i_dmg;
+    public boolean takeDmg(int dmg) {
+        this.hp -= dmg;
         return this.isAlive();
     }
 
@@ -42,7 +42,7 @@ public class HPComponent extends GameComponent {
     takes an int input
     sets the health value to that int value
      */
-    public void setHP(int i_newValue) {
-        this.i_hp = i_newValue;
+    public void setHP(int newValue) {
+        this.hp = newValue;
     }
 }

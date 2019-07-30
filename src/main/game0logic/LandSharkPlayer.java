@@ -29,10 +29,12 @@ public class LandSharkPlayer extends Player {
         super(new PhysicsComponent(2.0, 3.0, 2.0, 1.0, 1.0, true),
                 standardAnimation.makeCpy(new Rectangle(), new HitboxAabb(0.0, 3.0, 1.5, 0.0), 0),
                 //new VisualAnimationComponent(0.2, new Rectangle(0, 0, 64, 64), new HitboxAabb(0.0, 3.0, 1.5, 0.0)),
-                new HPComponent(1));
-        this.addComponent(new PhysicsComponent(2.0, 2.5, 2.0,0.5, 1.0, true)); //crouch hitbox
+                new HpComponent(1));
+        //crouch hitbox
+        this.addComponent(new PhysicsComponent(2.0, 2.5, 2.0,0.5, 1.0, true));
         this.memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
-        this.addComponent(new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/crouchShark1.png").getImage(),
+        this.addComponent(
+                new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/crouchShark1.png").getImage(),
                                                      new Rectangle(),
                                                      new HitboxAabb(0.0, 3.0, 0.75, 0.0), 0));
         this.memberComponents.get(CROUCHING_TEXTURE_INDEX).deactivate();
@@ -105,19 +107,38 @@ public class LandSharkPlayer extends Player {
      */
     @Override
     public void updateObj() {
-        //TODO temp code will change with crouch
+        this.updateVisualHitbox();
+        this.updateGroundStatus();
+        this.updateCrouchStatus();
+
+        if (!this.findHpComponent().isAlive()) {
+            this.setForDelete();
+        }
+
+        super.updateObj();
+    }
+
+    //updates and aligns the visual rendering hitbox(first active) to be with the physical hitbox in worldspace
+    private void updateVisualHitbox() {
         HitboxAabb target = ((VisualComponent)this.memberComponents.get(this.activeAnimation)).getWorldPosRef();
         HitboxAabb source = (HitboxAabb)this.memberComponents.get(this.activeHitbox).getData();
         target.alignBottomY(source);
         target.alignRightX(source);
+    }
 
+    //updates whether or not this player is touching the ground
+    private void updateGroundStatus() {
         if (this.thisFrameOnGround) {
             this.touchingGround = true;
         } else {
             this.touchingGround = false;
         }
         this.thisFrameOnGround = false;
+    }
 
+    //Activate and de-activates the components depending on the crouch state
+    //updates the crouch state as well
+    private void updateCrouchStatus() {
         if (this.crouchCalled) {
             this.crouching = true;
             this.crouchCalled = false; //resets crouch state
@@ -131,11 +152,5 @@ public class LandSharkPlayer extends Player {
             this.activeAnimation = DEFAULT_TEXTURE_INDEX;
             this.crouching = false; //resets crouching
         }
-
-        if (!this.findHPComponent().isAlive()) {
-            this.setForDelete();
-        }
-
-        super.updateObj();
     }
 }

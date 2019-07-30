@@ -1,6 +1,6 @@
 package main.data;
 
-import main.data.structure.HPComponent;
+import main.data.structure.HpComponent;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualComponent;
 
@@ -13,7 +13,7 @@ implements the ControlInterface interface
  */
 public class Player extends Actor implements ControlInterface {
     //cstr
-    public Player(PhysicsComponent phys, VisualComponent visuals, HPComponent health) {
+    public Player(PhysicsComponent phys, VisualComponent visuals, HpComponent health) {
         super(phys, visuals, health);
         this.setAllTags("Player");
     }
@@ -30,7 +30,7 @@ public class Player extends Actor implements ControlInterface {
      */
     @Override
     public boolean isAlive() {
-        return this.findHPComponent().isAlive();
+        return this.findHpComponent().isAlive();
     }
 
     /*

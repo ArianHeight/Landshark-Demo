@@ -14,7 +14,7 @@ public class Actor extends GameObject {
     //physics
     //texture
     //hp
-    public Actor(PhysicsComponent physics, VisualComponent visuals, HPComponent health) {
+    public Actor(PhysicsComponent physics, VisualComponent visuals, HpComponent health) {
         this.addComponent(physics); //add physics
         this.addComponent(visuals); //add texture
         this.addComponent(health); //add hp
@@ -29,11 +29,11 @@ public class Actor extends GameObject {
                  double mass, boolean grav, Image texture, int hp) {
         this.addComponent(new PhysicsComponent(topLeftX, topLeftY, width, height, mass, grav)); //physics
         this.addComponent(new VisualTextureComponent(texture, new Rectangle(0, 0, 1, 1))); //texture
-        this.addComponent(new HPComponent(hp)); //hp
+        this.addComponent(new HpComponent(hp)); //hp
     }
 
     /*
-    this method takes hp off of the HPComponent
+    this method takes hp off of the HpComponent
 
     returns -1 if there is no hp
     returns 0 if the obj has 0 hp
@@ -41,7 +41,7 @@ public class Actor extends GameObject {
      */
     public int takeDmg(int dmg) {
         //grabs the hp
-        HPComponent health = this.findHPComponent();
+        HpComponent health = this.findHpComponent();
 
         if (health == null) { //null guard
             return -1;
@@ -60,7 +60,7 @@ public class Actor extends GameObject {
      */
     public void setHP(int newHP) {
         //grabs the hp
-        HPComponent health = this.findHPComponent();
+        HpComponent health = this.findHpComponent();
 
         if (health == null) { //null guard
             return; //no hp
@@ -69,8 +69,8 @@ public class Actor extends GameObject {
         health.setHP(newHP); //sets the hp
     }
 
-    //protected method to find the HPComponent quickly
-    protected HPComponent findHPComponent() {
-        return (HPComponent) this.findFirstActiveComponentInObj(GameComponent.GcType.HITPOINT);
+    //protected method to find the HpComponent quickly
+    protected HpComponent findHpComponent() {
+        return (HpComponent) this.findFirstActiveComponentInObj(GameComponent.GcType.HITPOINT);
     }
 }
