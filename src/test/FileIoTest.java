@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FileIOTest {
+public class FileIoTest {
     GameFileReader reader;
     GameFileWriter writer;
 
@@ -138,7 +138,7 @@ public class FileIOTest {
         } catch (Exception e1) {
             assertTrue(false);
         }
-         assertTrue(reader.closeFile().equals(""));
+        assertTrue(reader.closeFile().equals(""));
         try {
             reader.readLineFromFile();
         } catch (FileNotOpenException e) {

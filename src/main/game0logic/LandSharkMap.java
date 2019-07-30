@@ -3,7 +3,7 @@ package main.game0logic;
 import main.data.GameMap;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualTextureComponent;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import java.awt.*;
 
@@ -17,10 +17,10 @@ public class LandSharkMap extends GameMap {
 
     //cstr
     public LandSharkMap() {
-        super(new PhysicsComponent(new HitboxAABB(-5.0, 35.0, 2.0, -5.0),
+        super(new PhysicsComponent(new HitboxAabb(-5.0, 35.0, 2.0, -5.0),
                                    -1.0, false),
                 new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1)));
         ((VisualTextureComponent)this.memberComponents.get(DEFAULT_TEXTURE_INDEX)).setWorldPosRef(
-                (HitboxAABB) (this.memberComponents.get(HITBOX_INDEX).getData()));
+                (HitboxAabb) (this.memberComponents.get(HITBOX_INDEX).getData()));
     }
 }

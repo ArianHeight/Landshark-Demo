@@ -1,10 +1,12 @@
 package main.game0logic;
 
 import main.data.Actor;
-import main.data.structure.*;
-import main.utility.HitboxAABB;
+import main.data.structure.HPComponent;
+import main.data.structure.PhysicsComponent;
+import main.data.structure.VisualAnimationComponent;
+import main.data.structure.VisualComponent;
+import main.utility.HitboxAabb;
 
-import javax.swing.*;
 import java.awt.*;
 
 /*
@@ -26,7 +28,8 @@ public class DroneEnemy extends Actor {
                 standardAnimation.makeCpy(new Rectangle(), null, 1),
                 new HPComponent(1));
         this.setAllTags("Enemy");
-        ((VisualComponent)this.memberComponents.get(DEFAULT_ANIMATION_INDEX)).setWorldPosRef((HitboxAABB) (this.memberComponents.get(WALKING_HITBOX_INDEX).getData()));
+        ((VisualComponent)this.memberComponents.get(DEFAULT_ANIMATION_INDEX)).setWorldPosRef(
+                (HitboxAabb) (this.memberComponents.get(WALKING_HITBOX_INDEX).getData()));
         ((PhysicsComponent)this.memberComponents.get(WALKING_HITBOX_INDEX)).setVelX(vel);
     }
 
@@ -42,7 +45,7 @@ public class DroneEnemy extends Actor {
     */
     @Override
     public void updateObj() {
-        if (((HitboxAABB)this.memberComponents.get(WALKING_HITBOX_INDEX).getData()).getRight() <= -1.0) {
+        if (((HitboxAabb)this.memberComponents.get(WALKING_HITBOX_INDEX).getData()).getRight() <= -1.0) {
             this.setHP(0);
         }
 

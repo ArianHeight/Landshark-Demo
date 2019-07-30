@@ -4,7 +4,7 @@ import main.data.structure.GameComponent;
 import main.data.structure.HPComponent;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualTextureComponent;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameComponentTest {
     GameComponent gc_subject;
-    HitboxAABB hb;
+    HitboxAabb hb;
 
     @BeforeEach
     public void before() {
@@ -30,7 +30,7 @@ public class GameComponentTest {
         assertTrue(!gc_subject.isActive());
         gc_subject.activate();
         assertTrue(gc_subject.isActive());
-        assertTrue(gc_subject.getType() == GameComponent.gcType.PHYSICS);
+        assertTrue(gc_subject.getType() == GameComponent.GcType.PHYSICS);
         gc_subject.setTag("1");
         assertTrue(gc_subject.getTag().equals("1"));
     }
@@ -52,7 +52,7 @@ public class GameComponentTest {
         Image im = new ImageIcon("./Game/Assets/Textures/zombieKnight.png").getImage();
         Rectangle r = new Rectangle(0, 0, 1, 1);
         gc_subject = new VisualTextureComponent(im, r);
-        assertTrue(gc_subject.getType() == GameComponent.gcType.VISUAL_TEXTURE);
+        assertTrue(gc_subject.getType() == GameComponent.GcType.VISUAL_TEXTURE);
         assertTrue(((VisualTextureComponent) gc_subject).getTexture() == im);
         assertTrue((Image)(gc_subject.getData()) == im);
         assertTrue(((VisualTextureComponent) gc_subject).getRenderPlane() == r);
@@ -62,9 +62,9 @@ public class GameComponentTest {
     public void test1d() {
         Image im = new ImageIcon("./Game/Assets/Textures/zombieKnight.png").getImage();
         Rectangle r = new Rectangle(0, 0, 1, 1);
-        HitboxAABB hb = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
+        HitboxAabb hb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
         gc_subject = new VisualTextureComponent(im, r, hb, 1);
-        assertTrue(gc_subject.getType() == GameComponent.gcType.VISUAL_TEXTURE);
+        assertTrue(gc_subject.getType() == GameComponent.GcType.VISUAL_TEXTURE);
         assertTrue(((VisualTextureComponent) gc_subject).getTexture() == im);
         assertTrue((Image)(gc_subject.getData()) == im);
         assertTrue(((VisualTextureComponent) gc_subject).getRenderPlane() == r);
@@ -77,7 +77,7 @@ public class GameComponentTest {
     @Test
     public void test1e() {
         gc_subject = new HPComponent(10);
-        assertTrue(gc_subject.getType() == GameComponent.gcType.HITPOINT);
+        assertTrue(gc_subject.getType() == GameComponent.GcType.HITPOINT);
         assertTrue(((HPComponent)gc_subject).isAlive());
         assertTrue(!((HPComponent)gc_subject).takeDmg(10));
         ((HPComponent)gc_subject).setHP(5);
@@ -88,7 +88,7 @@ public class GameComponentTest {
     @Test
     public void test2() {
         gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0);
-        hb = (HitboxAABB) gc_subject.getData();
+        hb = (HitboxAabb) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
@@ -102,7 +102,7 @@ public class GameComponentTest {
     @Test
     public void test3() {
         gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, 2.0, false);
-        hb = (HitboxAABB) gc_subject.getData();
+        hb = (HitboxAabb) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
@@ -116,7 +116,7 @@ public class GameComponentTest {
     @Test
     public void test4() {
         gc_subject = new PhysicsComponent(0.0, 1.0, 1.0, 1.0, -2.0, true);
-        hb = (HitboxAABB) gc_subject.getData();
+        hb = (HitboxAabb) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
@@ -129,8 +129,8 @@ public class GameComponentTest {
 
     @Test
     public void test5() {
-        gc_subject = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0));
-        hb = (HitboxAABB) gc_subject.getData();
+        gc_subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0));
+        hb = (HitboxAabb) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
@@ -143,8 +143,8 @@ public class GameComponentTest {
 
     @Test
     public void test6() {
-        gc_subject = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), -1.0, false);
-        hb = (HitboxAABB) gc_subject.getData();
+        gc_subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), -1.0, false);
+        hb = (HitboxAabb) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
@@ -157,8 +157,8 @@ public class GameComponentTest {
 
     @Test
     public void test7() {
-        gc_subject = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 50.0, true);
-        hb = (HitboxAABB) gc_subject.getData();
+        gc_subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), 50.0, true);
+        hb = (HitboxAabb) gc_subject.getData();
         assertTrue(hb.getLeft() == 0.0);
         assertTrue(hb.getRight() == 1.0);
         assertTrue(hb.getTop() == 1.0);
@@ -171,7 +171,7 @@ public class GameComponentTest {
 
     @Test
     public void test8() {
-        gc_subject = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0), 50.0, true);
+        gc_subject = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), 50.0, true);
         ((PhysicsComponent)gc_subject).setVelX(1.0);
         ((PhysicsComponent)gc_subject).setVelY(2.0);
         assertTrue(((PhysicsComponent)gc_subject).getVelX() == 1.0);

@@ -15,7 +15,7 @@ public class TextComponent extends GameComponent {
 
     //cstr
     public TextComponent(String text, Font font, int x, int y, Color color) {
-        super(gcType.TEXT);
+        super(GcType.TEXT);
         this.text = text;
         this.font = font;
         this.screenPosX = x;

@@ -9,7 +9,7 @@ public class HPComponent extends GameComponent {
 
     //cstr
     public HPComponent(int i_hitpoint) {
-        super(gcType.HITPOINT);
+        super(GcType.HITPOINT);
 
         this.i_hp = i_hitpoint;
     }

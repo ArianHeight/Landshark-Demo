@@ -9,7 +9,7 @@ import java.io.IOException;
 /*
 
 this class is responsible for writing to a single file
-to be called from IOEngine class whenever a request for logging or saving comes in
+to be called from IoEngine class whenever a request for logging or saving comes in
 
 BIG WARNING THIS CLASS WILL NOT CLOSE FILES BY ITSELF PLEASE MANAGE CORRECTLY AND CALL close()!
 

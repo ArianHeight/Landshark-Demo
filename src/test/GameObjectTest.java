@@ -5,7 +5,7 @@ import main.data.GameScene;
 import main.data.structure.GameComponent;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualTextureComponent;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,9 +26,9 @@ public class GameObjectTest {
 
     @BeforeEach
     public void before() {
-        gc1 = new PhysicsComponent(new HitboxAABB(0.0, 1.0, 1.0, 0.0));
+        gc1 = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0));
         gc2 = new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1));
-        gc3 = new PhysicsComponent(new HitboxAABB(1.2, 2.2, 2.2, 1.2));
+        gc3 = new PhysicsComponent(new HitboxAabb(1.2, 2.2, 2.2, 1.2));
         obj1 = new GameScene();
         obj2 = new GameScene();
         obj3 = new GameScene();
@@ -44,41 +44,41 @@ public class GameObjectTest {
 
     @Test
     public void test1() {
-        obj1.compileComponentList(someVector, GameComponent.gcType.PHYSICS);
+        obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
         assertTrue(someVector.size() == 2);
     }
 
     @Test
     public void test2() {
         gc1.deactivate();
-        obj1.compileComponentList(someVector, GameComponent.gcType.PHYSICS);
+        obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
         assertTrue(someVector.size() == 1);
     }
 
     @Test
     public void test3() {
-        obj1.compileComponentList(someVector, GameComponent.gcType.VISUAL_TEXTURE);
+        obj1.compileComponentList(someVector, GameComponent.GcType.VISUAL_TEXTURE);
         assertTrue(someVector.size() == 2);
     }
 
     @Test
     public void test4() {
         gc2.deactivate();
-        obj1.compileComponentList(someVector, GameComponent.gcType.VISUAL_TEXTURE);
+        obj1.compileComponentList(someVector, GameComponent.GcType.VISUAL_TEXTURE);
         assertTrue(someVector.size() == 0);
     }
 
     @Test
     public void test5() {
-        obj4.compileComponentList(someVector, GameComponent.gcType.VISUAL_TEXTURE);
+        obj4.compileComponentList(someVector, GameComponent.GcType.VISUAL_TEXTURE);
         assertTrue(someVector.size() == 0);
     }
 
     @Test
     public void test6() {
-        assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.gcType.PHYSICS) == gc1);
+        assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS) == gc1);
         gc1.deactivate();
-        assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.gcType.PHYSICS) == null);
+        assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS) == null);
     }
 
     @Test

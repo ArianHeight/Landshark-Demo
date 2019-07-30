@@ -54,7 +54,7 @@ public abstract class GameObject {
            from this Object and all of its children into
            does not clear the vector output
      */
-    public void compileComponentList(Vector<GameComponent> output, GameComponent.gcType type) {
+    public void compileComponentList(Vector<GameComponent> output, GameComponent.GcType type) {
         //variable to store individual GameComponents
         GameComponent gcTemp = null;
 
@@ -79,7 +79,7 @@ public abstract class GameObject {
     EFFECT:takes a game component type and returns the first active component of that type of this object
            returns null if nothing is found
      */
-    public GameComponent findFirstActiveComponentInObj(GameComponent.gcType type) {
+    public GameComponent findFirstActiveComponentInObj(GameComponent.GcType type) {
         //variable to store individual GameComponents
         GameComponent gcTemp = null;
 

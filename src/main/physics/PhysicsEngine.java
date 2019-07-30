@@ -5,7 +5,7 @@ import main.data.communication.GameScript;
 import main.data.GameObject;
 import main.data.structure.GameComponent;
 import main.data.structure.PhysicsComponent;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import java.util.Iterator;
 import java.util.Vector;
@@ -41,7 +41,7 @@ public class PhysicsEngine {
         //clears storage vector for storing new data
         this.physicsComponents.clear();
         //grabs all active physicscomponents
-        scene.compileComponentList(this.physicsComponents, GameComponent.gcType.PHYSICS);
+        scene.compileComponentList(this.physicsComponents, GameComponent.GcType.PHYSICS);
 
         //gravity and position
         Iterator<GameComponent> gcIt = this.physicsComponents.iterator();
@@ -67,7 +67,7 @@ public class PhysicsEngine {
 
             for (int j = i + 1; j < sizeOfVector; j++) {
                 pcTwo = (PhysicsComponent) (this.physicsComponents.get(j));
-                if (doCollisionDetection((HitboxAABB) (pcTwo.getData()), (HitboxAABB) (pcOne.getData()))) {
+                if (doCollisionDetection((HitboxAabb) (pcTwo.getData()), (HitboxAabb) (pcOne.getData()))) {
                     scripts.add(new CollisionDetectedRequest(pcOne, pcTwo));
                 }
             }
@@ -77,7 +77,7 @@ public class PhysicsEngine {
     /*
     this method takes two hitboxes and checks if they are colliding
      */
-    public static boolean doCollisionDetection(HitboxAABB hbOne, HitboxAABB hbTwo) {
+    public static boolean doCollisionDetection(HitboxAabb hbOne, HitboxAabb hbTwo) {
         //AABB collision detection
         if (hbOne.getLeft() <= hbTwo.getRight() && hbOne.getRight() >= hbTwo.getLeft()) {
             if (hbOne.getTop() >= hbTwo.getBottom() && hbOne.getBottom() <= hbTwo.getTop()) {
@@ -107,7 +107,7 @@ public class PhysicsEngine {
      */
     public static void doPositionCalculations(PhysicsComponent subject, double timeElapsed) {
         if (subject.canBeMoved()) {
-            HitboxAABB hb = (HitboxAABB) subject.getData();
+            HitboxAabb hb = (HitboxAabb) subject.getData();
             hb.moveX(subject.getVelX() * timeElapsed);
             hb.moveY(subject.getVelY() * timeElapsed);
         } else {
@@ -131,8 +131,8 @@ public class PhysicsEngine {
         }
 
         //all pcTwo coords - pcOne coords
-        HitboxAABB hbOne = (HitboxAABB) pcOne.getData();
-        HitboxAABB hbTwo = (HitboxAABB) pcTwo.getData();
+        HitboxAabb hbOne = (HitboxAabb) pcOne.getData();
+        HitboxAabb hbTwo = (HitboxAabb) pcTwo.getData();
         double deltaRight = hbTwo.getRight() - hbOne.getLeft(); //positive if overlapping
         double deltaLeft = hbOne.getRight() - hbTwo.getLeft(); //pos if overlapping
         double deltaDown = hbOne.getTop() - hbTwo.getBottom(); //pos if overlapping
@@ -159,7 +159,7 @@ public class PhysicsEngine {
 
     //a private method used by collision response to actually move the hitboxes
     private static void moveHitboxes(double xmove, double ymove, double favorOnePercentage,
-                                     HitboxAABB hbOne, HitboxAABB hbTwo,
+                                     HitboxAabb hbOne, HitboxAabb hbTwo,
                                      PhysicsComponent pcOne, PhysicsComponent pcTwo) {
         //picks the direction with the least movement required and moves the hitboxes according to their masses
         if (Math.abs(xmove) < Math.abs(ymove)) {

@@ -5,7 +5,7 @@ package main.utility;
 A utility class used by main.physics component and PhysicsEngine to do AABB collision detection
 
  */
-public class HitboxAABB {
+public class HitboxAabb {
     //member vars
     private double left;
     private double right;
@@ -13,7 +13,7 @@ public class HitboxAABB {
     private double bottom;
 
     //cstr
-    public HitboxAABB(double left, double right, double top, double bot) {
+    public HitboxAabb(double left, double right, double top, double bot) {
         //init vars
         this.left = left;
         this.right = right;
@@ -64,40 +64,40 @@ public class HitboxAABB {
         this.right += moveRight;
     }
 
-    //alignment methods which assume HitboxAABB input is not null
+    //alignment methods which assume HitboxAabb input is not null
     //aligns the left side of the hitbox
-    public void alignLeftX(HitboxAABB hbRef) {
+    public void alignLeftX(HitboxAabb hbRef) {
         double diff = hbRef.getLeft() - this.left;
         this.moveX(diff);
     }
 
     //aligns the right side of the hitbox
-    public void alignRightX(HitboxAABB hbRef) {
+    public void alignRightX(HitboxAabb hbRef) {
         double diff = hbRef.getRight() - this.right;
         this.moveX(diff);
     }
 
     //aligns the center of the hitbox on the x axis
-    public void alignCenterX(HitboxAABB hbRef) {
+    public void alignCenterX(HitboxAabb hbRef) {
         double diff = (hbRef.getRight() + hbRef.getLeft()) / 2.0;
         diff -= ((this.right + this.left) / 2.0);
         this.moveX(diff);
     }
 
     //aligns the top side of the hitbox
-    public void alignTopY(HitboxAABB hbRef) {
+    public void alignTopY(HitboxAabb hbRef) {
         double diff = hbRef.getTop() - this.top;
         this.moveY(diff);
     }
 
     //aligns the bottom side of the hitbox
-    public void alignBottomY(HitboxAABB hbRef) {
+    public void alignBottomY(HitboxAabb hbRef) {
         double diff = hbRef.getBottom() - this.bottom;
         this.moveY(diff);
     }
 
     //aligns the center of the hitbox on the y axis
-    public void alignCenterY(HitboxAABB hbRef) {
+    public void alignCenterY(HitboxAabb hbRef) {
         double diff = (hbRef.getTop() + hbRef.getBottom()) / 2.0;
         diff -= ((this.top + this.bottom) / 2.0);
         this.moveY(diff);

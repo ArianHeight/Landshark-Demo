@@ -1,7 +1,7 @@
 package main.data.structure;
 
 public abstract class GameComponent {
-    public enum gcType { //enums for determining type of component
+    public enum GcType { //enums for determining type of component
         VISUAL_TEXTURE,
         VISUAL_ANIM,
         PHYSICS,
@@ -9,11 +9,11 @@ public abstract class GameComponent {
         TEXT
     }
 
-    private gcType componentType;
+    private GcType componentType;
     private String tag;
     private boolean isActive;
 
-    protected GameComponent(gcType type) {
+    protected GameComponent(GcType type) {
         this.isActive = true;
         this.componentType = type;
         this.tag = "";
@@ -24,7 +24,7 @@ public abstract class GameComponent {
     MODIFIES:NONE
     EFFECT:Accesses the type for this component
      */
-    public gcType getType() {
+    public GcType getType() {
         return this.componentType;
     }
 

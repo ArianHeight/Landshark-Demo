@@ -1,7 +1,7 @@
 package main.data.structure;
 
 
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 /*
 Extends GameComponent
@@ -9,7 +9,7 @@ represents a "physical" hitbox that the physics engine can work with
 TODO add gravity stuff
  */
 public class PhysicsComponent extends GameComponent {
-    private HitboxAABB hitBox;
+    private HitboxAabb hitBox;
     private boolean updated = false; //true if updated by PhysicsEngine
     private double mass = 1.0; //negative mass indicates that the object hitbox is not able to be moved
     private boolean gravity = true; //true if gravity-related calculations are done
@@ -20,27 +20,27 @@ public class PhysicsComponent extends GameComponent {
 
     //cstr
     public PhysicsComponent(double topLeftX, double topLeftY, double width, double height) {
-        super(gcType.PHYSICS); //creates the physics type
-        this.hitBox = new HitboxAABB(topLeftX, topLeftX + width, topLeftY, topLeftY - height); //makes hitbox
+        super(GcType.PHYSICS); //creates the physics type
+        this.hitBox = new HitboxAabb(topLeftX, topLeftX + width, topLeftY, topLeftY - height); //makes hitbox
     }
 
     //alt cstr
     public PhysicsComponent(double topLeftX, double topLeftY, double width, double height, double mass, boolean grav) {
-        super(gcType.PHYSICS); //creates the physics type
-        this.hitBox = new HitboxAABB(topLeftX, topLeftX + width, topLeftY, topLeftY - height); //makes hitbox
+        super(GcType.PHYSICS); //creates the physics type
+        this.hitBox = new HitboxAabb(topLeftX, topLeftX + width, topLeftY, topLeftY - height); //makes hitbox
         this.mass = mass;
         this.gravity = grav;
     }
 
     //alt cstr
-    public PhysicsComponent(HitboxAABB hitBox) {
-        super(gcType.PHYSICS);
+    public PhysicsComponent(HitboxAabb hitBox) {
+        super(GcType.PHYSICS);
         this.hitBox = hitBox;
     }
 
     //alt cstr
-    public PhysicsComponent(HitboxAABB hitBox, double mass, boolean grav) {
-        super(gcType.PHYSICS);
+    public PhysicsComponent(HitboxAabb hitBox, double mass, boolean grav) {
+        super(GcType.PHYSICS);
         this.hitBox = hitBox;
         this.mass = mass;
         this.gravity = grav;

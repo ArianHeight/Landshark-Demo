@@ -4,7 +4,7 @@ import main.data.game0exceptions.FileNotOpenException;
 import main.data.game0exceptions.ImageDidNotLoadException;
 import main.data.game0exceptions.NoDataException;
 import main.data.structure.VisualAnimationComponent;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class AnimationManager {
            are passed as params)
 
      */
-    public VisualAnimationComponent makeAnimation(String filePath, Rectangle plane, HitboxAABB hitbox, int layerVal) {
+    public VisualAnimationComponent makeAnimation(String filePath, Rectangle plane, HitboxAabb hitbox, int layerVal) {
         VisualAnimationComponent animation = this.loadedAnimations.get(filePath);
 
         //check if loaded already
@@ -49,51 +49,66 @@ public class AnimationManager {
         }
 
         this.animationReader = new GameFileReader(filePath); //openfile
-        String msg = this.animationReader.openFile();
-        if (!msg.equals("")) { //error pushing
-            this.errors.add(msg);
-        }
+        this.pushError(this.animationReader.openFile());
 
         boolean passedDouble = false;
         try {
             double framePause = this.animationReader.getNextDouble();
             passedDouble = true;
             animation = new VisualAnimationComponent(framePause, new Rectangle(),
-                    new HitboxAABB(0.0, 1.0, 1.0, 0.0));
-            String temp;
-            while (true) {
-                temp = this.animationReader.readLineFromFile();
-                if (!temp.equals("")) {
-                    animation.addSprite(this.internalTextures.loadImage(temp));
-                }
-            }
+                    new HitboxAabb(0.0, 1.0, 1.0, 0.0));
+            this.unsafeLoadAnimation(animation);
         } catch (FileNotOpenException error) {
-            this.errors.add("Could not read animation file at: " + filePath);
-            animation = new VisualAnimationComponent(1, new Rectangle(),
-                    new HitboxAABB(0.0, 1.0, 1.0, 0.0));
-            animation.addSprite(null);
+            animation = this.pushErrorAndGetDefault("Could not read animation file at: " + filePath);
         } catch (NoDataException errorTwo) {
             if (passedDouble) {
                 animation.setLayerVal(0);
             } else {
-                this.errors.add("File at: " + filePath + " is possibly broken and could not be read...");
-                animation = new VisualAnimationComponent(1, new Rectangle(),
-                        new HitboxAABB(0.0, 1.0, 1.0, 0.0));
-                animation.addSprite(null);
+                animation = this.pushErrorAndGetDefault("File at: " + filePath
+                        + " is possibly broken and could not be read...");
             }
         } catch (ImageDidNotLoadException errorThree) {
-            this.errors.add("Could not read image file at: " + filePath);
-            animation = new VisualAnimationComponent(1, new Rectangle(),
-                    new HitboxAABB(0.0, 1.0, 1.0, 0.0));
-            animation.addSprite(null);
+            animation = this.pushErrorAndGetDefault("Could not read image file at: " + filePath);
         } finally {
-            msg = this.animationReader.closeFile(); //close file
-            if (!msg.equals("")) { //error pushing
-                this.errors.add(msg);
-            }
+            this.pushError(this.animationReader.closeFile()); //close file
         }
 
         return animation.makeCpy(plane, hitbox, layerVal);
+    }
+
+    //calls pushError() and getDefaultAnimation()
+    private VisualAnimationComponent pushErrorAndGetDefault(String msg) {
+        this.pushError(msg);
+        return this.getDefaultAnimation();
+    }
+
+    //takes a String msg and pushes it as a log request if it isn't empty
+    private void pushError(String msg) {
+        if (!msg.equals("")) { //error pushing
+            this.errors.add(msg);
+        }
+    }
+
+    //creates and returns a default animation with a single null sprite
+    private VisualAnimationComponent getDefaultAnimation() {
+        VisualAnimationComponent animation = new VisualAnimationComponent(1, new Rectangle(),
+                new HitboxAabb(0.0, 1.0, 1.0, 0.0));
+        animation.addSprite(null);
+
+        return animation;
+    }
+
+    //an unsafe private method that loads the animations linked from the .anim file
+    //throws all exception to calling method
+    private void unsafeLoadAnimation(VisualAnimationComponent animation) throws
+            NoDataException, FileNotOpenException, ImageDidNotLoadException {
+        String temp;
+        while (true) {
+            temp = this.animationReader.readLineFromFile();
+            if (!temp.equals("")) {
+                animation.addSprite(this.internalTextures.loadImage(temp));
+            }
+        }
     }
 
     //accessor to logs

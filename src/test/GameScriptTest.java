@@ -2,7 +2,7 @@ package test;
 
 import main.data.communication.*;
 import main.data.structure.PhysicsComponent;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -91,8 +91,8 @@ public class GameScriptTest {
 
     @Test
     public void test7() { //CollisionDetected test
-        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 4.0, 1.0, 0.0), -2.0, true);
-        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(1.0, 3.0, 1.5, 0.5), 1.0, true);
+        PhysicsComponent one = new PhysicsComponent(new HitboxAabb(0.0, 4.0, 1.0, 0.0), -2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAabb(1.0, 3.0, 1.5, 0.5), 1.0, true);
 
         subject = new CollisionDetectedRequest(one, two);
         assertTrue(subject.getCmd() == GameScript.GAME_EVENT);
@@ -102,8 +102,8 @@ public class GameScriptTest {
 
     @Test
     public void test8() { //CollisionResponse test
-        PhysicsComponent one = new PhysicsComponent(new HitboxAABB(0.0, 4.0, 1.0, 0.0), -2.0, true);
-        PhysicsComponent two = new PhysicsComponent(new HitboxAABB(1.0, 3.0, 1.5, 0.5), 1.0, true);
+        PhysicsComponent one = new PhysicsComponent(new HitboxAabb(0.0, 4.0, 1.0, 0.0), -2.0, true);
+        PhysicsComponent two = new PhysicsComponent(new HitboxAabb(1.0, 3.0, 1.5, 0.5), 1.0, true);
 
         subject = new CollisionResponseRequest(one, two);
         assertTrue(subject.getCmd() == GameScript.COLLISION_RESPONSE);

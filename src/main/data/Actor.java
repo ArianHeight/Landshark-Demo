@@ -71,6 +71,6 @@ public class Actor extends GameObject {
 
     //protected method to find the HPComponent quickly
     protected HPComponent findHPComponent() {
-        return (HPComponent) this.findFirstActiveComponentInObj(GameComponent.gcType.HITPOINT);
+        return (HPComponent) this.findFirstActiveComponentInObj(GameComponent.GcType.HITPOINT);
     }
 }

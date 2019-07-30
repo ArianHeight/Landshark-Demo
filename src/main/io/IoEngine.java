@@ -7,7 +7,7 @@ import main.data.game0exceptions.ImageDidNotLoadException;
 import main.data.game0exceptions.NoDataException;
 import main.data.structure.VisualAnimationComponent;
 import main.game0logic.GameScore;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import java.awt.*;
 import java.util.Vector;
@@ -17,14 +17,14 @@ import java.util.Vector;
 This class will handle all Outputs to console and file main.io
 
  */
-public class IOEngine {
+public class IoEngine {
     private GameFileWriter logWriter; //responsible for writing game logs
     private GameFileReader scoreReader; //responsible for reading high scores
     private ImageManager textureMngr; //responsible for managing all Images
     private AnimationManager animationMngr; //responsible for managing all animations
 
     //cstr
-    public IOEngine() {
+    public IoEngine() {
         this.logWriter = new GameFileWriter("./Game/system/Logs/game_active.log");
         this.scoreReader = new GameFileReader("./Game/system/data/scores.sav");
         this.textureMngr = new ImageManager();
@@ -93,7 +93,7 @@ public class IOEngine {
     the second param is the error script output
      */
     public VisualAnimationComponent loadAnimation(String filePath, Vector<GameScript> scriptOutput) {
-        HitboxAABB defaultHb = new HitboxAABB(0.0, 1.0, 1.0, 0.0);
+        HitboxAabb defaultHb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
         VisualAnimationComponent returnVal = this.animationMngr.makeAnimation(filePath, new Rectangle(), defaultHb, 0);
 
         Vector<String> errors = this.animationMngr.getErrors();

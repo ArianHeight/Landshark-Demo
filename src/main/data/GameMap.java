@@ -2,7 +2,7 @@ package main.data;
 
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualTextureComponent;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import java.awt.*;
 
@@ -24,7 +24,7 @@ public class GameMap extends GameObject {
     }
 
     //alt cstr
-    public GameMap(HitboxAABB hitbox, Image data) {
+    public GameMap(HitboxAabb hitbox, Image data) {
         this.addComponent(new PhysicsComponent(hitbox, -1.0, false)); //add physics
         this.addComponent(new VisualTextureComponent(data, new Rectangle(0, 0, 1, 1))); //add textures
         this.setAllTags("Map");

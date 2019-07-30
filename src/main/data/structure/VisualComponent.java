@@ -1,6 +1,6 @@
 package main.data.structure;
 
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import java.awt.*;
 
@@ -10,11 +10,11 @@ will represent anything that can be visually drawn(except text, maybe I'll add i
  */
 public abstract class VisualComponent extends GameComponent {
     protected Rectangle renderPlane; //the plane which to render the image on
-    protected HitboxAABB worldPos;
+    protected HitboxAabb worldPos;
     protected int layer; //determines the order in which things get rendered(smaller = rendered later)
 
     //cstr
-    VisualComponent(gcType type) {
+    VisualComponent(GcType type) {
         super(type);
     }
 
@@ -30,13 +30,13 @@ public abstract class VisualComponent extends GameComponent {
         return this.renderPlane;
     }
 
-    //sets the internal reference to a HitboxAABB obj
-    public void setWorldPosRef(HitboxAABB ref) {
+    //sets the internal reference to a HitboxAabb obj
+    public void setWorldPosRef(HitboxAabb ref) {
         this.worldPos = ref;
     }
 
     //gets the worldPos
-    public HitboxAABB getWorldPosRef() {
+    public HitboxAabb getWorldPosRef() {
         return this.worldPos;
     }
 

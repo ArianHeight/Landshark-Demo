@@ -2,7 +2,7 @@ package main.game0logic;
 
 import main.data.Player;
 import main.data.structure.*;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,14 +27,14 @@ public class LandSharkPlayer extends Player {
     //cstr
     public LandSharkPlayer() {
         super(new PhysicsComponent(2.0, 3.0, 2.0, 1.0, 1.0, true),
-                standardAnimation.makeCpy(new Rectangle(), new HitboxAABB(0.0, 3.0, 1.5, 0.0), 0),
-                //new VisualAnimationComponent(0.2, new Rectangle(0, 0, 64, 64), new HitboxAABB(0.0, 3.0, 1.5, 0.0)),
+                standardAnimation.makeCpy(new Rectangle(), new HitboxAabb(0.0, 3.0, 1.5, 0.0), 0),
+                //new VisualAnimationComponent(0.2, new Rectangle(0, 0, 64, 64), new HitboxAabb(0.0, 3.0, 1.5, 0.0)),
                 new HPComponent(1));
         this.addComponent(new PhysicsComponent(2.0, 2.5, 2.0,0.5, 1.0, true)); //crouch hitbox
         this.memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
         this.addComponent(new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/crouchShark1.png").getImage(),
                                                      new Rectangle(),
-                                                     new HitboxAABB(0.0, 3.0, 0.75, 0.0), 0));
+                                                     new HitboxAabb(0.0, 3.0, 0.75, 0.0), 0));
         this.memberComponents.get(CROUCHING_TEXTURE_INDEX).deactivate();
         this.setAllTags("Player");
 
@@ -106,8 +106,8 @@ public class LandSharkPlayer extends Player {
     @Override
     public void updateObj() {
         //TODO temp code will change with crouch
-        HitboxAABB target = ((VisualComponent)this.memberComponents.get(this.activeAnimation)).getWorldPosRef();
-        HitboxAABB source = (HitboxAABB)this.memberComponents.get(this.activeHitbox).getData();
+        HitboxAabb target = ((VisualComponent)this.memberComponents.get(this.activeAnimation)).getWorldPosRef();
+        HitboxAabb source = (HitboxAabb)this.memberComponents.get(this.activeHitbox).getData();
         target.alignBottomY(source);
         target.alignRightX(source);
 

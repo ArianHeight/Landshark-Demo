@@ -1,6 +1,6 @@
 package main.data.structure;
 
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class VisualTextureComponent extends VisualComponent {
 
     //cstr
     public VisualTextureComponent(Image newData, Rectangle newPlane) {
-        super(gcType.VISUAL_TEXTURE);
+        super(GcType.VISUAL_TEXTURE);
         this.data = newData;
         this.renderPlane = newPlane;
         this.worldPos = null;
@@ -22,8 +22,8 @@ public class VisualTextureComponent extends VisualComponent {
     }
 
     //alt cstr
-    public VisualTextureComponent(Image newData, Rectangle newPlane, HitboxAABB hitbox, int layer) {
-        super(gcType.VISUAL_TEXTURE);
+    public VisualTextureComponent(Image newData, Rectangle newPlane, HitboxAabb hitbox, int layer) {
+        super(GcType.VISUAL_TEXTURE);
         this.data = newData;
         this.renderPlane = newPlane;
         this.worldPos = hitbox;

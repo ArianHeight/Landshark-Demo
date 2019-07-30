@@ -5,7 +5,7 @@ import main.data.communication.LogRequest;
 import main.data.GameObject;
 import main.data.structure.*;
 import main.data.structure.TextComponent;
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 import main.utility.Sorter;
 
 import javax.swing.*;
@@ -103,7 +103,7 @@ public class RenderEngine {
      */
     private void renderToWindow(VisualComponent renderTarget, Graphics grContext) {
         Rectangle r = renderTarget.getRenderPlane(); //temp holder for rendering plane
-        HitboxAABB hb = renderTarget.getWorldPosRef();
+        HitboxAabb hb = renderTarget.getWorldPosRef();
 
         if (hb != null) {
             Dimension topLeft = worldSpaceToScreenSpace(hb.getLeft(), hb.getTop(), null);
@@ -149,7 +149,7 @@ public class RenderEngine {
 
             //grabs all the textures into a single vector
             this.renderTargets.clear(); //clear before compiling list
-            scene.compileComponentList(this.renderTargets, GameComponent.gcType.VISUAL_TEXTURE);
+            scene.compileComponentList(this.renderTargets, GameComponent.GcType.VISUAL_TEXTURE);
 
             this.updateAnimationSprites(scene, timeElapsed);
             this.renderAllVisualComponents(grContext);
@@ -169,7 +169,7 @@ public class RenderEngine {
     private void updateAnimationSprites(GameObject scene, double timeElapsed) {
         //grabs all the animations into a single vector, and adds the current sprites to the texture vector
         this.animations.clear();
-        scene.compileComponentList(this.animations, GameComponent.gcType.VISUAL_ANIM);
+        scene.compileComponentList(this.animations, GameComponent.GcType.VISUAL_ANIM);
 
         //grabs the current sprite and puts it into the renderTargets
         //also updates the sprite timings
@@ -198,7 +198,7 @@ public class RenderEngine {
     private void renderAllText(GameObject scene, Graphics grContext) {
         //reuse renderTargets, but this time for text
         this.renderTargets.clear();
-        scene.compileComponentList(this.renderTargets, GameComponent.gcType.TEXT);
+        scene.compileComponentList(this.renderTargets, GameComponent.GcType.TEXT);
 
         //iterates through all text and renders them to screen
         Iterator<GameComponent> gcIt = this.renderTargets.iterator();

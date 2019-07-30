@@ -7,7 +7,7 @@ import main.data.GameObject;
 import main.data.GameScene;
 import main.game0logic.GameScore;
 import main.game0logic.LogicEngine;
-import main.io.IOEngine;
+import main.io.IoEngine;
 import main.physics.PhysicsEngine;
 import main.render.RenderEngine;
 import main.user0input.InputEngine;
@@ -26,7 +26,7 @@ public class GameEngine {
     private PhysicsEngine physEngine;
     private RenderEngine renderer;
     private InputEngine inputProcessor;
-    private IOEngine fileCommunicator;
+    private IoEngine fileCommunicator;
     private TimeProcessor timer;
     private LogicEngine logicProcessor;
     private ScriptProcessor scriptProcessor;
@@ -42,7 +42,7 @@ public class GameEngine {
         this.physEngine = new PhysicsEngine();
         this.renderer = new RenderEngine();
         this.inputProcessor = new InputEngine();
-        this.fileCommunicator = new IOEngine();
+        this.fileCommunicator = new IoEngine();
         this.timer = new TimeProcessor();
         this.logicProcessor = new LogicEngine();
         this.scriptProcessor = new ScriptProcessor();

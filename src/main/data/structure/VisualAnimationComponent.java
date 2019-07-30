@@ -1,6 +1,6 @@
 package main.data.structure;
 
-import main.utility.HitboxAABB;
+import main.utility.HitboxAabb;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -11,7 +11,7 @@ A game component specifically used for storing a single Animation
 will do so in the form of a Vector of VisualTextureComponents
 Extends the GameComponent class
  */
-public class VisualAnimationComponent extends VisualComponent{
+public class VisualAnimationComponent extends VisualComponent {
     private Vector<Image> sprites;
     private double secondsBetweenFrame;
     private double secondsElapsed = 0.0; //time passed since last change
@@ -20,8 +20,8 @@ public class VisualAnimationComponent extends VisualComponent{
 
     //cstr
     //framePause is the amount of seconds between each frame of the animation
-    public VisualAnimationComponent(double framePause, Rectangle plane, HitboxAABB hitbox) {
-        super(gcType.VISUAL_ANIM);
+    public VisualAnimationComponent(double framePause, Rectangle plane, HitboxAabb hitbox) {
+        super(GcType.VISUAL_ANIM);
         this.sprites = new Vector<Image>();
         this.secondsBetweenFrame = framePause;
         this.it = this.sprites.iterator();
@@ -37,7 +37,7 @@ public class VisualAnimationComponent extends VisualComponent{
     //to the same thing, and all rectangles should point to the same thing
     /*
     public VisualAnimationComponent(Vector<VisualTextureComponent> v_textures, double framePause) {
-        super(gcType.VISUAL_ANIM);
+        super(GcType.VISUAL_ANIM);
         this.sprites = v_textures;
         this.secondsBetweenFrame = framePause;
         this.it = this.sprites.iterator();
@@ -74,7 +74,8 @@ public class VisualAnimationComponent extends VisualComponent{
             this.it = this.sprites.iterator(); //start the animation
         }
 
-        while (this.secondsElapsed >= this.secondsBetweenFrame) { //iterates through the loop if the seconds elapsed is greater
+        //iterates through the loop if the seconds elapsed is greater
+        while (this.secondsElapsed >= this.secondsBetweenFrame) {
             if (!this.it.hasNext()) { //when the iterator reaches the end
                 this.it = this.sprites.iterator(); //restart the animation
             }
@@ -106,7 +107,7 @@ public class VisualAnimationComponent extends VisualComponent{
     /*
     makes a copy of this animation using new worldPosRef, a new drawing rectangle and a new layer value
      */
-    public VisualAnimationComponent makeCpy(Rectangle plane, HitboxAABB hitbox, int layerVal) {
+    public VisualAnimationComponent makeCpy(Rectangle plane, HitboxAabb hitbox, int layerVal) {
         //makes copy
         VisualAnimationComponent returnVal = new VisualAnimationComponent(this.secondsBetweenFrame, plane, hitbox);
         returnVal.setLayerVal(layerVal);
