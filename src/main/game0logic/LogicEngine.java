@@ -139,11 +139,11 @@ public class LogicEngine {
             this.scoreDisplay.setText("Score: " + this.currentScore);
 
             scene.updateObj();
-        }
 
-        if (!this.player.isAlive()) {
-            this.paused = true;
-            //TODO call endgame
+            if (!this.player.isAlive()) {
+                this.paused = true;
+                this.restartGame(scene, new Vector<GameScript>()); //TODO temp code
+            }
         }
     }
 
@@ -184,5 +184,20 @@ public class LogicEngine {
             this.paused = true;
             this.activeGame.freeze();
         }
+    }
+
+    /*
+    this method takes the scenegraph and resets it, restarting the game from scratch
+     */
+    private void restartGame(GameObject scene, Vector<GameScript> scripts) {
+        this.activeGame.setForDelete();
+        scene.updateObj(); //deletes the game
+
+        this.acceleration = 0.05;
+        this.vel = -10.0;
+        this.distance = 0.0;
+        this.paused = false;
+
+        this.makeGameObjs(scene); //remakes everything
     }
 }

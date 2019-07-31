@@ -135,7 +135,7 @@ public abstract class GameObject {
     /*
     this method, when called, will set the object to be deleted
      */
-    protected void setForDelete() {
+    public void setForDelete() {
         this.delete = true;
     }
 
