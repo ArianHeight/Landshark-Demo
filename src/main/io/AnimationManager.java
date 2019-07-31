@@ -49,8 +49,18 @@ public class AnimationManager {
         }
 
         this.animationReader = new GameFileReader(filePath); //openfile
-        this.pushError(this.animationReader.openFile());
 
+        this.pushError(this.animationReader.openFile());
+        animation = this.loadAnimation(filePath);
+        this.pushError(this.animationReader.closeFile()); //close file
+
+        return animation.makeCpy(plane, hitbox, layerVal);
+    }
+
+    //Actually loads a new animation and returns it
+    //takes the animation filePath as an input
+    private VisualAnimationComponent loadAnimation(String filePath) {
+        VisualAnimationComponent animation = null;
         boolean passedDouble = false;
         try {
             double framePause = this.animationReader.getNextDouble();
@@ -61,19 +71,27 @@ public class AnimationManager {
         } catch (FileNotOpenException error) {
             animation = this.pushErrorAndGetDefault("Could not read animation file at: " + filePath);
         } catch (NoDataException errorTwo) {
-            if (passedDouble) {
-                animation.setLayerVal(0);
-            } else {
-                animation = this.pushErrorAndGetDefault("File at: " + filePath
-                        + " is possibly broken and could not be read...");
-            }
+            animation = this.testSucessfulLoad(animation, passedDouble, filePath);
         } catch (ImageDidNotLoadException errorThree) {
             animation = this.pushErrorAndGetDefault("Could not read image file at: " + filePath);
-        } finally {
-            this.pushError(this.animationReader.closeFile()); //close file
         }
 
-        return animation.makeCpy(plane, hitbox, layerVal);
+        return animation;
+    }
+
+    //pushes an error if animation has been loaded past the 1st line sucessfully
+    //returns a finished animation with layer value of 0 otherwise
+    //passedDouble is whether or no the animation loaded past the 1st line
+    //filePath is the String filePath that we use for error pushing
+    private VisualAnimationComponent testSucessfulLoad(VisualAnimationComponent animation,
+                                                       boolean passedDouble, String filePath) {
+        if (passedDouble) {
+            animation.setLayerVal(0);
+            return animation;
+        }
+
+        return this.pushErrorAndGetDefault("File at: " + filePath
+                + " is possibly broken and could not be read...");
     }
 
     //calls pushError() and getDefaultAnimation()

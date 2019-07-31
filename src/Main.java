@@ -10,7 +10,7 @@ import main.system.*;
 
 public class Main {
     //entry method, args is cmd line arguments
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Tester.run();
 
         TimeProcessor t = new TimeProcessor();
