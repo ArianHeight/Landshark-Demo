@@ -25,34 +25,8 @@ public class Sorter {
             return;
         }
 
-        int pivotVal = ((VisualComponent)input.get(pivot)).getLayer();
-        swap(input, pivot, input.size() - 1);
-        int left = 0;
-        int right = input.size() - 2;
-        int found = 0;
-
-        while (left <= right) {
-            found = 0;
-            if (((VisualComponent)input.get(left)).getLayer() < pivotVal) {
-                left++;
-            } else {
-                found++;
-            }
-            if (((VisualComponent)input.get(right)).getLayer() > pivotVal) {
-                right--;
-            } else {
-                found++;
-            }
-
-            if (found == 2) {
-                swap(input, left, right);
-                left++;
-                right--;
-            }
-        }
-
-        swap(input, left, input.size() - 1);
-        pivot = left;
+        pivot = actualQuickSortVC(input, pivot, 0, input.size() - 2,
+                ((VisualComponent)input.get(pivot)).getLayer(), false);
 
         if (input.size() <= 3) {
             return;
@@ -60,5 +34,31 @@ public class Sorter {
 
         quicksortForVC(input.subList(0, pivot),  pivot / 2);
         quicksortForVC(input.subList(pivot + 1, input.size()), (input.size() - pivot) / 2);
+    }
+
+    //private method that sorts the input list so that smaller elements are to the left of the pivot
+    //returns the pivot value
+    private static int actualQuickSortVC(List<GameComponent> input, int pivot, int left, int right,
+                                         int pivotVal, boolean found) {
+        swap(input, pivot, input.size() - 1);
+
+        while (left <= right) {
+            found = false;
+            if (((VisualComponent)input.get(left)).getLayer() < pivotVal) {
+                left++;
+            } else {
+                found = true;
+            }
+            if (((VisualComponent)input.get(right)).getLayer() > pivotVal) {
+                right--;
+            } else if (found) {
+                swap(input, left, right);
+                left++;
+                right--;
+            }
+        }
+
+        swap(input, left, input.size() - 1);
+        return left; //left index is the new pivot
     }
 }
