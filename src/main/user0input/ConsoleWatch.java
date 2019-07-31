@@ -48,4 +48,9 @@ public class ConsoleWatch extends Observable {
     public Vector<String> getErrors() {
         return this.errors;
     }
+
+    //TODO a method that only exists to pass the demo
+    private void cutLinkToObserver(InputEngine linkedEngine) {
+        linkedEngine.resetCW();
+    }
 }

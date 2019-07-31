@@ -1,5 +1,6 @@
 package main.render;
 
+import main.data.communication.EndProgramRequest;
 import main.data.communication.GameScript;
 import main.data.communication.LogRequest;
 import main.data.GameObject;
@@ -139,6 +140,7 @@ public class RenderEngine {
     public void renderSceneToWindow(GameObject scene, Vector<GameScript> engineRequests, double timeElapsed) {
         if (!this.windowOpen) { //window guard
             //engineRequests.add(new LogRequest("Renderer attempted to draw frame to a closed window"));
+            engineRequests.add(new EndProgramRequest());
             return;
         }
 

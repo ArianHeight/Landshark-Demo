@@ -9,6 +9,7 @@ public abstract class GameObject {
     protected Vector<GameComponent> memberComponents;
     protected Vector<GameObject> memberObjects;
     private boolean delete; //if true then delete from the scene
+    private boolean frozen; //whether this object is frozen or not
 
     //cstr
     public GameObject() {
@@ -55,6 +56,10 @@ public abstract class GameObject {
            does not clear the vector output
      */
     public void compileComponentList(Vector<GameComponent> output, GameComponent.GcType type) {
+        if (this.frozen) { //frozen objects are not iterated to find active components
+            return;
+        }
+
         //variable to store individual GameComponents
         GameComponent gcTemp = null;
 
@@ -80,6 +85,10 @@ public abstract class GameObject {
            returns null if nothing is found
      */
     public GameComponent findFirstActiveComponentInObj(GameComponent.GcType type) {
+        if (this.frozen) { //frozen objects are not iterated to find active components
+            return null;
+        }
+
         //variable to store individual GameComponents
         GameComponent gcTemp = null;
 
@@ -106,6 +115,10 @@ public abstract class GameObject {
     Also removes objs set up for deleting from the scene graph
      */
     public void updateObj() {
+        if (this.frozen) { //frozen objects are not updated
+            return;
+        }
+
         //recursive call
         Iterator<GameObject> goIt = this.memberObjects.iterator();
         GameObject goTemp = null;
@@ -124,5 +137,19 @@ public abstract class GameObject {
      */
     protected void setForDelete() {
         this.delete = true;
+    }
+
+    /*
+    this method, when called, will freeze the object
+     */
+    public void freeze() {
+        this.frozen = true;
+    }
+
+    /*
+    this method, when called, will unfreeze the object
+     */
+    public void unfreeze() {
+        this.frozen = false;
     }
 }

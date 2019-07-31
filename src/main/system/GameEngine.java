@@ -55,7 +55,10 @@ public class GameEngine {
     //dstr would go here, but java is a thing so..........
 
     /*
-    TODO description
+
+    starting the engine
+    does all the initializing stuff to do with the game
+
      */
     public int startEngine(String fileLoc) {
         this.scriptQueue.add(new LogRequest("Game Engine Initializing...")); //starts the engine
@@ -68,9 +71,8 @@ public class GameEngine {
 
         this.scriptQueue.add(new LogRequest("Attempting to link keyboard handler to window context..."));
         this.renderer.addKeyListenerToWindow(this.inputProcessor.getKeyHandler());
-        this.scriptQueue.add(new LogRequest("Link established..."));
 
-        //TODO flesh out this part
+        this.scriptQueue.add(new LogRequest("Initializing game..."));
         this.logicProcessor.startGame(this.sceneGraph, this.scriptQueue, this.fileCommunicator);
 
         //TODO temp test code
@@ -122,7 +124,8 @@ public class GameEngine {
 
     /*
 
-    TODO description...
+    the main running method that is called every single game tickS
+    updates everything and calls render
 
      */
     public void run() {
@@ -153,9 +156,13 @@ public class GameEngine {
     }
 
     /*
-    TODO description and the actual functions
+
+    does all the cleanup for the engine
+
      */
     public void endEngine() {
+        this.processScript(new LogRequest("Closing system..."));
         this.fileCommunicator.closeSystem(); //closes the system
+        this.scriptQueue.clear();
     }
 }

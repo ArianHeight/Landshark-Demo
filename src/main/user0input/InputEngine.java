@@ -10,7 +10,7 @@ import java.util.Vector;
 
 /*
 
-TODO insert description of what class does here
+This class takes care of all forms of user inputs
 
  */
 public class InputEngine implements Observer {
@@ -59,6 +59,12 @@ public class InputEngine implements Observer {
                     return;
             }
         }
+    }
+
+    //TODO a method that only exists to pass the demo
+    public void resetCW() {
+        this.cwListener.deleteObserver(this);
+        this.cwListener = new ConsoleWatch(this);
     }
 
     /*

@@ -1,11 +1,12 @@
 package main.game0logic;
 
+import main.data.ControlInterface;
+import main.data.GameObject;
+import main.data.GameScene;
 import main.data.communication.CollisionDetectedRequest;
 import main.data.communication.CollisionResponseRequest;
 import main.data.communication.GameEventRequest;
 import main.data.communication.GameScript;
-import main.data.ControlInterface;
-import main.data.GameObject;
 import main.data.structure.PhysicsComponent;
 import main.data.structure.VisualTextureComponent;
 import main.io.IoEngine;
@@ -25,6 +26,7 @@ public class LogicEngine {
     ControlInterface player;
     Vector<GameScript> collisionResponseRequests;
     LandSharkText scoreDisplay;
+    GameScene activeGame;
     int currentScore;
 
     double acceleration;
@@ -70,13 +72,15 @@ public class LogicEngine {
 
     //this method makes all the game objs necessary to play the game
     private void makeGameObjs(GameObject scene) {
-        scene.addComponent(new VisualTextureComponent(
+        this.activeGame = new GameScene();
+        scene.addGameObject(this.activeGame);
+        this.activeGame.addComponent(new VisualTextureComponent(
                 new ImageIcon("./Game/Assets/Textures/backDrop.png").getImage(),
                 new Rectangle(0, 0, 1280, 720), null, 2));
         LandSharkPlayer lspPlayer = new LandSharkPlayer();
         this.player = lspPlayer;
-        scene.addGameObject(lspPlayer);
-        scene.addGameObject(new LandSharkMap());
+        this.activeGame.addGameObject(lspPlayer);
+        this.activeGame.addGameObject(new LandSharkMap());
         lspPlayer.addGameObject(new SpiderEnemy(this.vel));
         this.scoreDisplay = new LandSharkText();
         lspPlayer.addGameObject(this.scoreDisplay);
@@ -90,7 +94,7 @@ public class LogicEngine {
     public void runScript(GameScript script, GameObject scene) {
         if (script.getData().endsWith("Player")) {
             this.player.inputResponse(script.getData());
-        } else if (script.getData() == "Collision") {
+        } else if (script.getData().equals("Collision")) {
             PhysicsComponent pcOne = ((CollisionDetectedRequest)script).getOne();
             PhysicsComponent pcTwo = ((CollisionDetectedRequest)script).getTwo();
 
@@ -102,6 +106,8 @@ public class LogicEngine {
             int player = Misc.numEquals(tagOne, tagTwo, "Player");
 
             this.runProperCollisionResponse(map, enemy, player, scene, pcOne, pcTwo);
+        } else if (script.getData().equals("TogglePause")) {
+            this.togglePause();
         }
     }
 
@@ -167,5 +173,16 @@ public class LogicEngine {
     public Vector<GameScript> getCollisionRequestQueue() {
         //debug code
         return this.collisionResponseRequests;
+    }
+
+    //toggles the pause
+    public void togglePause() {
+        if (this.paused) {
+            this.paused = false;
+            this.activeGame.unfreeze();
+        } else {
+            this.paused = true;
+            this.activeGame.freeze();
+        }
     }
 }

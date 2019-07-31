@@ -13,9 +13,6 @@ public class Main {
     public static void main(String[] args) {
         Tester.run();
 
-        TimeProcessor t = new TimeProcessor();
-        System.out.println(t.tagMsg("I say hi"));
-
         GameEngine e = new GameEngine();
         e.startEngine("./Game/system/Save/game_active.sav");
 
