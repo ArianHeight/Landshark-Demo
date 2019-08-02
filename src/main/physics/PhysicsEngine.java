@@ -203,4 +203,9 @@ public class PhysicsEngine {
                 return (pcTwo.getMass() / (pcOne.getMass() + pcTwo.getMass())); //potential divide by zero error
         }
     }
+
+    //sets the value for gravity on the y axis
+    public void setGravityY(double newVal) {
+        this.gravityY = newVal;
+    }
 }

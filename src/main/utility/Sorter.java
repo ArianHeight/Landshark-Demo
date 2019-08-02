@@ -9,8 +9,10 @@ import java.util.List;
 all kinds of sorting
  */
 public class Sorter {
-    //dangerous no out of bounds checking!
-    private static void swap(List<GameComponent> in, int one, int two) {
+    //REQUIRES: one and two must be valid indices in the list in
+    //EFFECT: swaps the two elements at the indices one and two within the list
+    //DANGEROUS: NO BOUNDS CHECKING!!!
+    public static void swap(List<GameComponent> in, int one, int two) {
         GameComponent temp = in.get(one);
         in.set(one, in.get(two));
         in.set(two, temp);
@@ -19,18 +21,20 @@ public class Sorter {
     /*
     REQUIRES:A list of VisualComponents stored as GameComponents
     EFFECT:Sorts all of them into ascending order by comparing their layer values
+           this method is actually a primer method
      */
-    public static void quicksortForVC(List<GameComponent> input, int pivot) {
+    public static void quicksortForVC(List<GameComponent> input) {
+        quicksortForVC(input, input.size() / 2);
+    }
+
+    //linked/called from the primer method
+    private static void quicksortForVC(List<GameComponent> input, int pivot) {
         if (input.size() <= 1) {
             return;
         }
 
         pivot = actualQuickSortVC(input, pivot, 0, input.size() - 2,
                 ((VisualComponent)input.get(pivot)).getLayer(), false);
-
-        if (input.size() <= 3) {
-            return;
-        }
 
         quicksortForVC(input.subList(0, pivot),  pivot / 2);
         quicksortForVC(input.subList(pivot + 1, input.size()), (input.size() - pivot) / 2);

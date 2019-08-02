@@ -12,6 +12,7 @@ public class RandomNumberGenerator {
         return false;
     }
 
+    //randomly returns a number in between start and end, inclusive
     public static int randomBetween(int start, int end) {
         return (int) (start + Math.random() * (end - start));
     }

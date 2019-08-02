@@ -24,7 +24,7 @@ public class TimeProcessorTest {
     }
 
     @Test
-    public void test2() {
+    public void test2() { //testing tick
         subject.tick();
         assertTrue(subject.getTimeElapsed() >= 0.0);
         try {

@@ -187,7 +187,7 @@ public class RenderEngine {
     //call this after compiling final render list
     private void renderAllVisualComponents(Graphics grContext) {
         //sorts them by layer value
-        Sorter.quicksortForVC(this.renderTargets, this.renderTargets.size() / 2);
+        Sorter.quicksortForVC(this.renderTargets);
 
         //iterates through textures and renders them one by one
         for (int i = this.renderTargets.size() - 1; i >= 0; i--) {

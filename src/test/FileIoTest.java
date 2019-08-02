@@ -138,12 +138,47 @@ public class FileIoTest {
         } catch (Exception e) {
             assertTrue(false);
         }
-        this.test3secondPart();
+        this.test6secondPart();
     }
 
     private void test6secondPart() {
         try {
             reader.getNextInt();
+            assertTrue(false);
+        } catch (NoDataException e) {
+            assertTrue(true);
+        } catch (Exception e1) {
+            assertTrue(false);
+        }
+        assertTrue(reader.closeFile().equals(""));
+        try {
+            reader.readLineFromFile();
+        } catch (FileNotOpenException e) {
+            assertTrue(true);
+        } catch (Exception e1) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    public void test7() { //test next double
+        assertTrue(writer.openFile(true).equals(""));
+        assertTrue(writer.writeContentToFile("2130.00", false).equals(""));
+        assertTrue(writer.closeFile().equals(""));
+        reader = new GameFileReader("./Game/system/Test/write.txt");
+        assertTrue(reader.openFile().equals(""));
+        //main.system.out.println(reader.readLineFromFile());
+        try {
+            assertTrue(reader.getNextDouble() == 2130.0);
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+        this.test7secondPart();
+    }
+
+    private void test7secondPart() {
+        try {
+            reader.getNextDouble();
             assertTrue(false);
         } catch (NoDataException e) {
             assertTrue(true);

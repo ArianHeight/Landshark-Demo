@@ -43,51 +43,71 @@ public class GameObjectTest {
     }
 
     @Test
-    public void test1() {
+    public void test1() { //test compile component list
         obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
         assertTrue(someVector.size() == 2);
     }
 
     @Test
-    public void test2() {
+    public void test2() { //test compile component list
         gc1.deactivate();
         obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
         assertTrue(someVector.size() == 1);
     }
 
     @Test
-    public void test3() {
+    public void test3() { //test compile component list
         obj1.compileComponentList(someVector, GameComponent.GcType.VISUAL_TEXTURE);
         assertTrue(someVector.size() == 2);
     }
 
     @Test
-    public void test4() {
+    public void test4() { //deactivation check
         gc2.deactivate();
         obj1.compileComponentList(someVector, GameComponent.GcType.VISUAL_TEXTURE);
         assertTrue(someVector.size() == 0);
     }
 
     @Test
-    public void test5() {
+    public void test5() { //compile component list test
         obj4.compileComponentList(someVector, GameComponent.GcType.VISUAL_TEXTURE);
         assertTrue(someVector.size() == 0);
     }
 
     @Test
-    public void test6() {
+    public void test6() { //find first active component in obj test
         assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS) == gc1);
         gc1.deactivate();
         assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS) == null);
     }
 
     @Test
-    public void test7() {
+    public void test7() { //set tag test
         obj1.setAllTags("1");
         obj2.setAllTags("2");
         obj3.setAllTags("3");
         assertTrue(gc1.getTag().equals("1"));
         assertTrue(gc2.getTag().equals("2"));
         assertTrue(gc3.getTag().equals("3"));
+    }
+
+    @Test
+    public void test8() { //test freeze and unfreeze
+        obj1.freeze();
+        obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 0);
+        assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS) == null);
+        obj1.unfreeze();
+        obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 2);
+        assertTrue(obj1.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS) == gc1);
+    }
+
+    @Test
+    public void test9() { //test delete and update
+        obj3.setForDelete();
+        obj1.updateObj();
+        obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 1);
     }
 }
