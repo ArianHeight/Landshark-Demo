@@ -1,4 +1,4 @@
-package main.user0input;
+package main.ui.user0input;
 
 import main.data.communication.GameScript;
 

@@ -1,4 +1,4 @@
-package main.user0input;
+package main.ui.user0input;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

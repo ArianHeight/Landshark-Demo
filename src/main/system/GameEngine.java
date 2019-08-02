@@ -9,8 +9,8 @@ import main.game0logic.GameScore;
 import main.game0logic.LogicEngine;
 import main.io.IoEngine;
 import main.physics.PhysicsEngine;
-import main.render.RenderEngine;
-import main.user0input.InputEngine;
+import main.ui.render.RenderEngine;
+import main.ui.user0input.InputEngine;
 
 import java.util.Vector;
 

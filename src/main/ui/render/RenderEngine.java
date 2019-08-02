@@ -1,4 +1,4 @@
-package main.render;
+package main.ui.render;
 
 import main.data.communication.EndProgramRequest;
 import main.data.communication.GameScript;
