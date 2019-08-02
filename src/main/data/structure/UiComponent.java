@@ -32,4 +32,9 @@ public class UiComponent extends GameComponent {
     public void resetState() {
         this.pressState = false;
     }
+
+    //gets the pressedStated of the component
+    public boolean getPressedState() {
+        return this.pressState;
+    }
 }

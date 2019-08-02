@@ -28,6 +28,7 @@ public class LogicEngine {
     LandSharkText scoreDisplay;
     GameScene activeGame;
     GameScene pauseMenu;
+    ReplayButton button;
     int currentScore;
 
     double acceleration;
@@ -74,7 +75,9 @@ public class LogicEngine {
     //this method makes all the game objs necessary to play the game
     private void makeGameObjs(GameObject scene) {
         this.activeGame = new GameScene();
+        this.pauseMenu = new GameScene();
         scene.addGameObject(this.activeGame);
+        scene.addGameObject(this.pauseMenu);
         this.activeGame.addComponent(new VisualTextureComponent(
                 new ImageIcon("./Game/Assets/Textures/backDrop.png").getImage(),
                 new Rectangle(0, 0, 1280, 720), null, 2));
@@ -85,6 +88,9 @@ public class LogicEngine {
         lspPlayer.addGameObject(new SpiderEnemy(this.vel));
         this.scoreDisplay = new LandSharkText();
         lspPlayer.addGameObject(this.scoreDisplay);
+        this.button = new ReplayButton();
+        this.pauseMenu.addGameObject(this.button);
+        this.pauseMenu.freeze();
     }
 
     /*
@@ -181,9 +187,11 @@ public class LogicEngine {
         if (this.paused) {
             this.paused = false;
             this.activeGame.unfreeze();
+            this.pauseMenu.freeze();
         } else {
             this.paused = true;
             this.activeGame.freeze();
+            this.pauseMenu.unfreeze();
         }
     }
 

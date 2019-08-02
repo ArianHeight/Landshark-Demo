@@ -86,9 +86,6 @@ public class PhysicsEngine {
     private void doAllMouseClickDetections() {
         //collision detection
         int sizeOfVector = this.mouseClickLocations.size();
-        if (sizeOfVector == 0) {
-            return;
-        }
 
         //init vars for iterating
         Point point = null;
