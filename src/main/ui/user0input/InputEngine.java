@@ -18,12 +18,14 @@ public class InputEngine implements Observer {
     private ConsoleWatch cwListener;
     private Vector<GameScript> scripts;
     private GameKeyInput gkiListener;
+    private GameMouseInput gmiListener;
 
     //cstr
     public InputEngine() {
         this.cwListener = new ConsoleWatch(this); //makes a linked cw obj
         this.scripts = new Vector<GameScript>();
-        gkiListener = new GameKeyInput();
+        this.gkiListener = new GameKeyInput();
+        this.gmiListener = new GameMouseInput();
 
         KeyBindings.createKeyBindings(); //make the key bindings
     }
@@ -37,6 +39,7 @@ public class InputEngine implements Observer {
         this.scripts.clear(); //clears the scripts
         this.cwListener.run(); //tells the console watch to listen
         this.gkiListener.refresh(this.scripts); //gives this.scripts as an output to the listener's refresh method
+        this.gmiListener.refresh(this.scripts); //gives this.scripts as output to listener's refresh
 
         return this.scripts; //outputs the scripts
     }
@@ -72,5 +75,12 @@ public class InputEngine implements Observer {
      */
     public GameKeyInput getKeyHandler() {
         return gkiListener;
+    }
+
+    /*
+    this method returns a reference to the gmiListener
+     */
+    public GameMouseInput getMouseHandler() {
+        return gmiListener;
     }
 }

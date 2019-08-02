@@ -1,11 +1,10 @@
 package main.system;
 
+import main.data.GameObject;
+import main.data.GameScene;
 import main.data.communication.CollisionResponseRequest;
 import main.data.communication.GameScript;
 import main.data.communication.LogRequest;
-import main.data.GameObject;
-import main.data.GameScene;
-import main.game0logic.GameScore;
 import main.game0logic.LogicEngine;
 import main.io.IoEngine;
 import main.physics.PhysicsEngine;
@@ -71,21 +70,16 @@ public class GameEngine {
 
         this.scriptQueue.add(new LogRequest("Attempting to link keyboard handler to window context..."));
         this.renderer.addKeyListenerToWindow(this.inputProcessor.getKeyHandler());
+        this.scriptQueue.add(new LogRequest("Attempting to link mouse handler to window context..."));
+        this.renderer.addMouseListenerToWindow(this.inputProcessor.getMouseHandler());
 
         this.scriptQueue.add(new LogRequest("Initializing game..."));
         this.logicProcessor.startGame(this.sceneGraph, this.scriptQueue, this.fileCommunicator);
 
-        //TODO temp test code
-        Vector<GameScore> scores = new Vector<GameScore>();
-        this.fileCommunicator.readGameScore(scores, this.scriptQueue);
-        for (GameScore score : scores) {
-            System.out.println(score);
-        }
-
         return 0;
     }
 
-    //TODO dis is temp home for linker sort of method??
+
     public boolean processScript(GameScript script) {
         switch (script.getCmd()) {
             case GameScript.LOG_DATA:
@@ -114,6 +108,9 @@ public class GameEngine {
             case GameScript.COLLISION_RESPONSE:
                 this.physEngine.doCollisionResponse(((CollisionResponseRequest)script).getOne(),
                         ((CollisionResponseRequest)script).getTwo());
+                break;
+            case GameScript.MOUSE_LOCATION:
+                this.physEngine.addMouesLocToQueue(script);
                 break;
             default:
                 return false;

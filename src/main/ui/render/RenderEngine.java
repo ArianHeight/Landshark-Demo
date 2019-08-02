@@ -12,6 +12,7 @@ import main.utility.Sorter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.util.Iterator;
@@ -212,6 +213,11 @@ public class RenderEngine {
     //adds a KeyListener to window context
     public void addKeyListenerToWindow(KeyListener listener) {
         this.windowContext.addKeyListener(listener);
+    }
+
+    //adds a mouseListener to window context
+    public void addMouseListenerToWindow(MouseListener listener) {
+        this.windowContext.addMouseListener(listener);
     }
 
     //takes a double x and y coord in world space and translates it to screen space

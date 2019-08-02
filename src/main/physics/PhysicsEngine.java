@@ -1,12 +1,15 @@
 package main.physics;
 
+import main.data.GameObject;
 import main.data.communication.CollisionDetectedRequest;
 import main.data.communication.GameScript;
-import main.data.GameObject;
+import main.data.communication.MouseLocRequest;
 import main.data.structure.GameComponent;
 import main.data.structure.PhysicsComponent;
+import main.data.structure.UiComponent;
 import main.utility.HitboxAabb;
 
+import java.awt.*;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -21,13 +24,15 @@ public class PhysicsEngine {
     private Vector<GameComponent> physicsComponents;
     private double gravityX;
     private double gravityY;
+    private Vector<Point> mouseClickLocations;
 
     //cstr
     public PhysicsEngine() {
         //initializes member var
         this.physicsComponents = new Vector<GameComponent>();
         this.gravityX = 0.0;
-        this.gravityY = -24.0; //TODO add way to change
+        this.gravityY = -24.0;
+        this.mouseClickLocations = new Vector<Point>();
     }
 
     /*
@@ -53,9 +58,11 @@ public class PhysicsEngine {
         }
 
         this.doAllCollisionDetection(scripts);
+        this.updateMouseCollisions(scene);
     }
 
     //private method to do collision detection with each obj against every other obj in this.physicsComponent
+    //IT IS ASSUMED THAT this.physicsComponents IS FULL OF PhysicsComponent types
     private void doAllCollisionDetection(Vector<GameScript> scripts) {
         //collision detection
         int sizeOfVector = this.physicsComponents.size();
@@ -74,6 +81,34 @@ public class PhysicsEngine {
         }
     }
 
+    //private method to do collision detection with each component against each mouse location
+    //IT IS ASSUMED THAT this.physicsComponents IS FILLED WITH UiComponent s
+    private void doAllMouseClickDetections() {
+        //collision detection
+        int sizeOfVector = this.mouseClickLocations.size();
+        if (sizeOfVector == 0) {
+            return;
+        }
+
+        //init vars for iterating
+        Point point = null;
+        GameComponent gc = null;
+        Iterator<GameComponent> it;
+        Iterator<Point> pointIt = this.mouseClickLocations.iterator();
+
+        while (pointIt.hasNext()) { //iterates through all mouse click locations
+            point = pointIt.next();
+
+            it = this.physicsComponents.iterator();
+            while (it.hasNext()) { //iterates through all ui components
+                gc = it.next();
+                if (doCollisionDetection((Rectangle) gc.getData(), point)) { //if a hit is detected
+                    ((UiComponent) gc).press(); //internalize the response
+                }
+            }
+        }
+    }
+
     /*
     this method takes two hitboxes and checks if they are colliding
      */
@@ -81,6 +116,20 @@ public class PhysicsEngine {
         //AABB collision detection
         if (hbOne.getLeft() <= hbTwo.getRight() && hbOne.getRight() >= hbTwo.getLeft()) {
             if (hbOne.getTop() >= hbTwo.getBottom() && hbOne.getBottom() <= hbTwo.getTop()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+    this method takes one Rectangle and one Point and checks if they are colliding
+     */
+    public static boolean doCollisionDetection(Rectangle hbOne, Point hbTwo) {
+        //AABB collision detection
+        if (hbOne.getMinX() <= hbTwo.getX() && hbOne.getMaxX() >= hbTwo.getX()) {
+            if (hbOne.getMinY() <= hbTwo.getY() && hbOne.getMaxY() >= hbTwo.getY()) {
                 return true;
             }
         }
@@ -202,6 +251,25 @@ public class PhysicsEngine {
             default: //both can be moved
                 return (pcTwo.getMass() / (pcOne.getMass() + pcTwo.getMass())); //potential divide by zero error
         }
+    }
+
+    //takes a mouse location request and pushes it into the correct queue(i.e. click or hold queues)
+    public void addMouesLocToQueue(GameScript script) {
+        if (script.getData().equals("click")) {
+            this.mouseClickLocations.add(((MouseLocRequest)script).getLocation());
+        }
+    }
+
+    //if there are locations in a mouse queue, update them against UiComponents
+    public void updateMouseCollisions(GameObject scene) {
+        if (this.mouseClickLocations.size() != 0) {
+            this.physicsComponents.clear(); //clears for storing ui components
+            scene.compileComponentList(this.physicsComponents, GameComponent.GcType.UI);
+
+            this.doAllMouseClickDetections();
+        }
+
+        this.mouseClickLocations.clear();
     }
 
     //sets the value for gravity on the y axis

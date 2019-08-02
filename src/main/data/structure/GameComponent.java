@@ -6,7 +6,8 @@ public abstract class GameComponent {
         VISUAL_ANIM,
         PHYSICS,
         HITPOINT,
-        TEXT
+        TEXT,
+        UI
     }
 
     private GcType componentType;
