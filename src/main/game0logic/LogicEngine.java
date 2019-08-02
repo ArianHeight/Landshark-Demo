@@ -27,6 +27,7 @@ public class LogicEngine {
     Vector<GameScript> collisionResponseRequests;
     LandSharkText scoreDisplay;
     GameScene activeGame;
+    GameScene pauseMenu;
     int currentScore;
 
     double acceleration;
