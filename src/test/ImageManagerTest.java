@@ -21,6 +21,7 @@ public class ImageManagerTest {
     public void test1() { //tests successful load
         try {
             Image result = subject.loadImage("./Game/Assets/Textures/shark1.png");
+            assertTrue(true);
         } catch (ImageDidNotLoadException error) {
             assertTrue(false);
         }
@@ -42,12 +43,14 @@ public class ImageManagerTest {
         Image resultTwo = null;
         try {
             result = subject.loadImage("./Game/Assets/Textures/shark1.png");
+            assertTrue(true);
         } catch (ImageDidNotLoadException error) {
             assertTrue(false);
         }
 
         try {
             resultTwo = subject.loadImage("./Game/Assets/Textures/shark1.png");
+            assertTrue(true);
         } catch (ImageDidNotLoadException error) {
             assertTrue(false);
         }
