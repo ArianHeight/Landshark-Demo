@@ -113,7 +113,7 @@ public class LogicEngine {
             int player = Misc.numEquals(tagOne, tagTwo, "Player");
 
             this.runProperCollisionResponse(map, enemy, player, scene, pcOne, pcTwo);
-        } else if (script.getData().equals("TogglePause")) {
+        } else if (script.getData().equals("TogglePause") && this.player.isAlive()) {
             this.togglePause();
         }
     }
@@ -148,9 +148,18 @@ public class LogicEngine {
             scene.updateObj();
 
             if (!this.player.isAlive()) {
-                this.paused = true;
-                this.restartGame(scene, new Vector<GameScript>()); //TODO temp code
+                this.paused = false;
+                this.togglePause(); //toggle to true
             }
+        } else {
+            this.checkReplayButton(scene);
+        }
+    }
+
+    //this method will call restartGame() if the replay button has been pressed
+    public void checkReplayButton(GameObject scene) {
+        if (this.button.isPressed()) {
+            this.restartGame(scene, new Vector<GameScript>()); //TODO temp code
         }
     }
 
@@ -200,6 +209,7 @@ public class LogicEngine {
      */
     private void restartGame(GameObject scene, Vector<GameScript> scripts) {
         this.activeGame.setForDelete();
+        this.pauseMenu.setForDelete();
         scene.updateObj(); //deletes the game
 
         this.acceleration = 0.05;
