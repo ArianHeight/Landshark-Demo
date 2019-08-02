@@ -10,6 +10,7 @@ import main.game0logic.GameScore;
 import main.utility.HitboxAabb;
 
 import java.awt.*;
+import java.util.Iterator;
 import java.util.Vector;
 
 /*
@@ -22,6 +23,7 @@ public class IoEngine {
     private GameFileReader scoreReader; //responsible for reading high scores
     private ImageManager textureMngr; //responsible for managing all Images
     private AnimationManager animationMngr; //responsible for managing all animations
+    private Vector<String> logQueue; //holds a queue for logging
 
     //cstr
     public IoEngine() {
@@ -29,17 +31,20 @@ public class IoEngine {
         this.scoreReader = new GameFileReader("./Game/system/data/scores.sav");
         this.textureMngr = new ImageManager();
         this.animationMngr = new AnimationManager(this.textureMngr);
-        System.out.println(this.logWriter.openFile(true)); //resets the file and opens it
+        this.logQueue = new Vector<String>();
+        System.out.println(this.logWriter.openFile(true)); //truncates the file
+        System.out.println(this.logWriter.closeFile());
         System.out.println(this.scoreReader.openFile()); //opens the file for reading
     }
 
     /*
     this method takes a GameScript obj and processes it, before passing data on to the appropriate methods
+    log requests will have data extracted and stored inside a queue
      */
     public void processRequest(GameScript request) {
         switch (request.getCmd()) {
             case GameScript.LOG_DATA:
-                this.log(request.getData());
+                this.logQueue.add(request.getData());
                 break;
             default: //does nothing for now TODO maybe add a return of error
                 break;
@@ -47,9 +52,32 @@ public class IoEngine {
     }
 
     /*
+    this method takes all logs in the queue and log them all, then clears the queue
+     */
+    public void logAll() {
+        String msg = this.logWriter.openFile();
+
+        if (!msg.equals("")) { //file open guard
+            System.out.println(msg);
+            return;
+        }
+
+        Iterator<String> it = this.logQueue.iterator();
+        while (it.hasNext()) {
+            this.log(it.next());
+        }
+
+        this.logQueue.clear();
+        msg = this.logWriter.closeFile(); //file close guard
+        if (!msg.equals("")) {
+            System.out.println(msg);
+        }
+    }
+
+    /*
     this method takes a string msg and logs it to the .log file, as well as outputting it to the console
      */
-    public void log(String log) {
+    private void log(String log) {
         String logOutput = this.logWriter.writeContentToFile(log, true); //saves the output of the write attempt
 
         if (logOutput != "") { //if there is an error with the logging
@@ -114,10 +142,5 @@ public class IoEngine {
     public void closeSystem() {
         this.logWriter.closeFile();
         this.scoreReader.closeFile();
-    }
-
-    //TODO temp method
-    public void outputToConsole(GameScript data) {
-        System.out.println(data.getData());
     }
 }

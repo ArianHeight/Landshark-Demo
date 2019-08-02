@@ -122,6 +122,14 @@ public class GameEngine {
         return true;
     }
 
+    //process all scripts in queue and clear the queue
+    public void processAllScripts() {
+        for (GameScript gsTemp : this.scriptQueue) {
+            this.processScript(gsTemp);
+        }
+        this.scriptQueue.clear();
+    }
+
     /*
 
     the main running method that is called every single game tickS
@@ -135,21 +143,18 @@ public class GameEngine {
             this.logicProcessor.logicUpdate(sceneGraph, this.timer.getTimeElapsed());
             this.physEngine.doScenePhysics(this.sceneGraph, this.scriptQueue, this.timer.getTimeElapsed()); //do physics
 
-            for (GameScript gsTemp : this.scriptQueue) {
-                this.processScript(gsTemp);
-            }
-            this.scriptQueue.clear();
+            this.processAllScripts();
             this.scriptProcessor.processScriptsInQueue(this.scriptQueue);
 
             //grab the stuff that needs to have collision responses computed
             this.scriptQueue.addAll(this.logicProcessor.getCollisionRequestQueue());
-            for (GameScript gsTemp : this.scriptQueue) {
-                this.processScript(gsTemp);
-            }
-            this.scriptQueue.clear();
+            this.processAllScripts();
 
             //draws to window
             this.renderer.renderSceneToWindow(this.sceneGraph, this.scriptQueue, this.timer.getTimeElapsed());
+
+            //log
+            this.fileCommunicator.logAll();
         }
 
         this.renderer.closeWindow(); //exit code
