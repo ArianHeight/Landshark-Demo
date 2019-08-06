@@ -50,7 +50,7 @@ public class ConsoleInput {
                 }
             }
         } catch (IOException error) { //add error msg to output
-            errors.add("main.system encountered main.io error whilst reading msg from console...");
+            errors.add("main.system encountered main.model.io error whilst reading msg from console...");
             output.clear(); //clears output
 
             return true; //early return for error encountered

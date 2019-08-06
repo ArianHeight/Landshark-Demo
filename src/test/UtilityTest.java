@@ -1,12 +1,12 @@
 package test;
 
-import main.data.structure.GameComponent;
-import main.data.structure.VisualAnimationComponent;
-import main.data.structure.VisualComponent;
-import main.data.structure.VisualTextureComponent;
-import main.utility.Misc;
-import main.utility.RandomNumberGenerator;
-import main.utility.Sorter;
+import main.model.data.structure.GameComponent;
+import main.model.data.structure.VisualAnimationComponent;
+import main.model.data.structure.VisualComponent;
+import main.model.data.structure.VisualTextureComponent;
+import main.model.utility.Misc;
+import main.model.utility.RandomNumberGenerator;
+import main.model.utility.Sorter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,8 @@
 package test;
 
-import main.data.structure.VisualAnimationComponent;
-import main.io.AnimationManager;
-import main.utility.HitboxAabb;
+import main.model.data.structure.VisualAnimationComponent;
+import main.model.io.AnimationManager;
+import main.model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

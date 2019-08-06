@@ -1,13 +1,13 @@
 package main.ui.render;
 
-import main.data.communication.EndProgramRequest;
-import main.data.communication.GameScript;
-import main.data.communication.LogRequest;
-import main.data.GameObject;
-import main.data.structure.*;
-import main.data.structure.TextComponent;
-import main.utility.HitboxAabb;
-import main.utility.Sorter;
+import main.model.data.communication.EndProgramRequest;
+import main.model.data.communication.GameScript;
+import main.model.data.communication.LogRequest;
+import main.model.data.GameObject;
+import main.model.data.structure.*;
+import main.model.data.structure.TextComponent;
+import main.model.utility.HitboxAabb;
+import main.model.utility.Sorter;
 
 import javax.swing.*;
 import java.awt.*;

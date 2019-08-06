@@ -1,7 +1,7 @@
 package test;
 
-import main.data.game0exceptions.ImageDidNotLoadException;
-import main.io.ImageManager;
+import main.model.data.game0exceptions.ImageDidNotLoadException;
+import main.model.io.ImageManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

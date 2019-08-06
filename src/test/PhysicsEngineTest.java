@@ -1,11 +1,11 @@
 package test;
 
-import main.data.GameObject;
-import main.data.GameScene;
-import main.data.communication.GameScript;
-import main.data.structure.PhysicsComponent;
-import main.physics.PhysicsEngine;
-import main.utility.HitboxAabb;
+import main.model.data.GameObject;
+import main.model.data.GameScene;
+import main.model.data.communication.GameScript;
+import main.model.data.structure.PhysicsComponent;
+import main.model.physics.PhysicsEngine;
+import main.model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

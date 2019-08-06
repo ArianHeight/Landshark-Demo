@@ -1,10 +1,10 @@
 package test;
 
-import main.data.structure.GameComponent;
-import main.data.structure.HpComponent;
-import main.data.structure.PhysicsComponent;
-import main.data.structure.VisualTextureComponent;
-import main.utility.HitboxAabb;
+import main.model.data.structure.GameComponent;
+import main.model.data.structure.HpComponent;
+import main.model.data.structure.PhysicsComponent;
+import main.model.data.structure.VisualTextureComponent;
+import main.model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

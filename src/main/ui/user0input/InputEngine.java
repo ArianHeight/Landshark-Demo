@@ -1,8 +1,8 @@
 package main.ui.user0input;
 
-import main.data.communication.GameScript;
-import main.game0logic.KeyBindings;
-import main.utility.DataProcessor;
+import main.model.data.communication.GameScript;
+import main.model.game0logic.KeyBindings;
+import main.model.utility.DataProcessor;
 
 import java.util.Observable;
 import java.util.Observer;

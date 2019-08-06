@@ -1,6 +1,6 @@
 package test;
 
-import main.io.IoEngine;
+import main.model.io.IoEngine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
