@@ -12,12 +12,20 @@ this class extends the GameButton class
 used for checking if there will be a replay
  */
 public class ReplayButton extends GameButton {
+    private static Image standardTexture = null;
+
     //cstr
     ReplayButton() {
         super(new UiComponent(new Rectangle(500, 300, 280, 120)),
-                new VisualTextureComponent(null,
+                new VisualTextureComponent(standardTexture,
                         new Rectangle(500, 300, 280, 120), null, 0));
+    }
 
+    /*
+    this method sets the default texutre
+     */
+    public static void setDefaultTexture(Image texture) {
+        standardTexture = texture;
     }
 
     /*

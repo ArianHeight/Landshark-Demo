@@ -13,8 +13,10 @@ import main.io.IoEngine;
 import main.utility.Misc;
 import main.utility.RandomNumberGenerator;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.Vector;
 
 /*
@@ -68,6 +70,13 @@ public class LogicEngine {
                 "./Game/Assets/Animations/walkingDrone.anim", scripts));
         LandSharkPlayer.setDefaultAnimation(fileEngine.loadAnimation(
                 "./Game/Assets/Animations/walkingShark.anim", scripts));
+        try { //TODO remove from code
+            ReplayButton.setDefaultTexture(ImageIO.read(new URL(
+                    "https://png.pngtree.com/png-clipart/20190613/original/"
+                            + "pngtree-replay-button-png-image_3550534.jpg")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         this.makeGameObjs(scene);
     }
