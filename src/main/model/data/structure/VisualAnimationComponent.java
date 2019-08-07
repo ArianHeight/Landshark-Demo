@@ -23,7 +23,7 @@ public class VisualAnimationComponent extends VisualComponent {
     public VisualAnimationComponent(double framePause, Rectangle plane, HitboxAabb hitbox) {
         super(GcType.VISUAL_ANIM);
         this.sprites = new Vector<Image>();
-        this.secondsBetweenFrame = framePause;
+        this.secondsBetweenFrame = (framePause > 0 ? framePause : 1);
         this.it = this.sprites.iterator();
         this.renderPlane = plane;
         this.worldPos = hitbox;
@@ -53,6 +53,7 @@ public class VisualAnimationComponent extends VisualComponent {
         this.sprites.add(data);
 
         this.it = this.sprites.iterator(); //remakes the iterator
+        this.currentSprite = this.it.next();
     }
 
     /*

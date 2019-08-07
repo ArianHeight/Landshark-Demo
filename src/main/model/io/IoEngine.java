@@ -122,7 +122,8 @@ public class IoEngine {
      */
     public VisualAnimationComponent loadAnimation(String filePath, Vector<GameScript> scriptOutput) {
         HitboxAabb defaultHb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
-        VisualAnimationComponent returnVal = this.animationMngr.makeAnimation(filePath, new Rectangle(), defaultHb, 0);
+        VisualAnimationComponent returnVal = this.animationMngr.makeAnimation(filePath,
+                new Rectangle(), defaultHb, 0);
 
         Vector<String> errors = this.animationMngr.getErrors();
         for (String str : errors) {
@@ -135,7 +136,7 @@ public class IoEngine {
 
     /*
     call this when game engine closes!
-    does cleanup for the file main.model.io
+    does cleanup for the file io
 
     DO NOT CALL THIS IF THERE ARE STILL LOGS NEEDING TO BE WRITTEN!
      */
