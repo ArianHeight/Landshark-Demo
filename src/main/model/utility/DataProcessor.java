@@ -1,6 +1,6 @@
-package main.model.utility;
+package model.utility;
 
-import main.model.data.communication.*;
+import model.data.communication.*;
 
 import java.util.Iterator;
 import java.util.Vector;

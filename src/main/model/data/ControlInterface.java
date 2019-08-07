@@ -1,4 +1,4 @@
-package main.model.data;
+package model.data;
 
 /*
 A public interface that will require the implementing class to have a response method

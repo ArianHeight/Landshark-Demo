@@ -1,6 +1,6 @@
-package main.model.data.communication;
+package model.data.communication;
 
-import main.model.data.structure.PhysicsComponent;
+import model.data.structure.PhysicsComponent;
 
 /*
 this class extends the GameEventRequest

@@ -1,8 +1,8 @@
-package main.model.data;
+package model.data;
 
-import main.model.data.structure.PhysicsComponent;
-import main.model.data.structure.VisualTextureComponent;
-import main.model.utility.HitboxAabb;
+import model.data.structure.PhysicsComponent;
+import model.data.structure.VisualTextureComponent;
+import model.utility.HitboxAabb;
 
 import java.awt.*;
 

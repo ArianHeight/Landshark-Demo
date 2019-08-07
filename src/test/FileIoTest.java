@@ -1,9 +1,9 @@
 package test;
 
-import main.model.data.game0exceptions.FileNotOpenException;
-import main.model.data.game0exceptions.NoDataException;
-import main.model.io.GameFileReader;
-import main.model.io.GameFileWriter;
+import model.data.game0exceptions.FileNotOpenException;
+import model.data.game0exceptions.NoDataException;
+import model.io.GameFileReader;
+import model.io.GameFileWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +50,7 @@ public class FileIoTest {
         assertTrue(writer.closeFile().equals(""));
         reader = new GameFileReader("./Game/system/Test/write.txt");
         assertTrue(reader.openFile().equals(""));
-        //main.system.out.println(reader.readLineFromFile());
+        //system.out.println(reader.readLineFromFile());
         try {
             assertTrue(reader.readLineFromFile().equals("Hello World."));
         } catch (Exception e) {
@@ -132,7 +132,7 @@ public class FileIoTest {
         assertTrue(writer.closeFile().equals(""));
         reader = new GameFileReader("./Game/system/Test/write.txt");
         assertTrue(reader.openFile().equals(""));
-        //main.system.out.println(reader.readLineFromFile());
+        //system.out.println(reader.readLineFromFile());
         try {
             assertTrue(reader.getNextInt() == 2130);
         } catch (Exception e) {
@@ -167,7 +167,7 @@ public class FileIoTest {
         assertTrue(writer.closeFile().equals(""));
         reader = new GameFileReader("./Game/system/Test/write.txt");
         assertTrue(reader.openFile().equals(""));
-        //main.system.out.println(reader.readLineFromFile());
+        //system.out.println(reader.readLineFromFile());
         try {
             assertTrue(reader.getNextDouble() == 2130.0);
         } catch (Exception e) {

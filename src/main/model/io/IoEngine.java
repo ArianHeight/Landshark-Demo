@@ -1,13 +1,13 @@
-package main.model.io;
+package model.io;
 
-import main.model.data.communication.GameScript;
-import main.model.data.communication.LogRequest;
-import main.model.data.game0exceptions.FileNotOpenException;
-import main.model.data.game0exceptions.ImageDidNotLoadException;
-import main.model.data.game0exceptions.NoDataException;
-import main.model.data.structure.VisualAnimationComponent;
-import main.model.game0logic.GameScore;
-import main.model.utility.HitboxAabb;
+import model.data.communication.GameScript;
+import model.data.communication.LogRequest;
+import model.data.game0exceptions.FileNotOpenException;
+import model.data.game0exceptions.ImageDidNotLoadException;
+import model.data.game0exceptions.NoDataException;
+import model.data.structure.VisualAnimationComponent;
+import model.game0logic.GameScore;
+import model.utility.HitboxAabb;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -15,7 +15,7 @@ import java.util.Vector;
 
 /*
 
-This class will handle all Outputs to console and file main.model.io
+This class will handle all Outputs to console and file model.io
 
  */
 public class IoEngine {

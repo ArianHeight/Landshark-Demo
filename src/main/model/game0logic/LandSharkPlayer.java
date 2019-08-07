@@ -1,8 +1,8 @@
-package main.model.game0logic;
+package model.game0logic;
 
-import main.model.data.Player;
-import main.model.data.structure.*;
-import main.model.utility.HitboxAabb;
+import model.data.Player;
+import model.data.structure.*;
+import model.utility.HitboxAabb;
 
 import javax.swing.*;
 import java.awt.*;

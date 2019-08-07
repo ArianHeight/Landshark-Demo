@@ -1,4 +1,4 @@
-package main.model.data.structure;
+package model.data.structure;
 
 public abstract class GameComponent {
     public enum GcType { //enums for determining type of component

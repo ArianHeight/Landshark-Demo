@@ -1,13 +1,13 @@
-package main.model.physics;
+package model.physics;
 
-import main.model.data.GameObject;
-import main.model.data.communication.CollisionDetectedRequest;
-import main.model.data.communication.GameScript;
-import main.model.data.communication.MouseLocRequest;
-import main.model.data.structure.GameComponent;
-import main.model.data.structure.PhysicsComponent;
-import main.model.data.structure.UiComponent;
-import main.model.utility.HitboxAabb;
+import model.data.GameObject;
+import model.data.communication.CollisionDetectedRequest;
+import model.data.communication.GameScript;
+import model.data.communication.MouseLocRequest;
+import model.data.structure.GameComponent;
+import model.data.structure.PhysicsComponent;
+import model.data.structure.UiComponent;
+import model.utility.HitboxAabb;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -166,7 +166,7 @@ public class PhysicsEngine {
     this method takes two PhysicsComponents and does collision response on them
     takes two references to PhysicsComponents, so this method modifies them directly
 
-    public so it can be called from the main.model.game0logic package
+    public so it can be called from the model.game0logic package
      */
     public static void doCollisionResponse(PhysicsComponent pcOne, PhysicsComponent pcTwo) {
         //how much movement will be enacted on pcOne(pcOne's weight / total weight)

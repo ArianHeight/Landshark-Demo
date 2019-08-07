@@ -1,4 +1,4 @@
-package main.model.game0logic;
+package model.game0logic;
 
 /*
 

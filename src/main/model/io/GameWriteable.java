@@ -1,4 +1,4 @@
-package main.model.io;
+package model.io;
 
 /*
 this interface contains a method that allows the class to write to a file

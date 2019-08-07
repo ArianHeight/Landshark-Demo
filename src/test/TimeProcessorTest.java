@@ -1,7 +1,7 @@
 package test;
 
-import main.model.data.communication.LogRequest;
-import main.model.system.TimeProcessor;
+import model.data.communication.LogRequest;
+import model.system.TimeProcessor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

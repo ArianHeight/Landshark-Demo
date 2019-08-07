@@ -1,4 +1,4 @@
-package main.model.utility;
+package model.utility;
 
 public class Misc {
     /*

@@ -1,8 +1,8 @@
-package main.model.game0logic;
+package model.game0logic;
 
-import main.model.data.GameButton;
-import main.model.data.structure.UiComponent;
-import main.model.data.structure.VisualTextureComponent;
+import model.data.GameButton;
+import model.data.structure.UiComponent;
+import model.data.structure.VisualTextureComponent;
 
 import java.awt.*;
 

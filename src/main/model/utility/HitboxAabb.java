@@ -1,8 +1,8 @@
-package main.model.utility;
+package model.utility;
 
 /*
 
-A utility class used by main.model.physics component and PhysicsEngine to do AABB collision detection
+A utility class used by model.physics component and PhysicsEngine to do AABB collision detection
 
  */
 public class HitboxAabb {

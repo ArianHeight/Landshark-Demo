@@ -1,7 +1,7 @@
-package main.model.game0logic;
+package model.game0logic;
 
-import main.model.data.GameObject;
-import main.model.data.structure.TextComponent;
+import model.data.GameObject;
+import model.data.structure.TextComponent;
 
 import java.awt.*;
 

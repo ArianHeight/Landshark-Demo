@@ -1,10 +1,10 @@
-package main.model.io;
+package model.io;
 
-import main.model.data.game0exceptions.FileNotOpenException;
-import main.model.data.game0exceptions.ImageDidNotLoadException;
-import main.model.data.game0exceptions.NoDataException;
-import main.model.data.structure.VisualAnimationComponent;
-import main.model.utility.HitboxAabb;
+import model.data.game0exceptions.FileNotOpenException;
+import model.data.game0exceptions.ImageDidNotLoadException;
+import model.data.game0exceptions.NoDataException;
+import model.data.structure.VisualAnimationComponent;
+import model.utility.HitboxAabb;
 
 import java.awt.*;
 import java.util.HashMap;

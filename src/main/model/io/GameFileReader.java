@@ -1,7 +1,7 @@
-package main.model.io;
+package model.io;
 
-import main.model.data.game0exceptions.FileNotOpenException;
-import main.model.data.game0exceptions.NoDataException;
+import model.data.game0exceptions.FileNotOpenException;
+import model.data.game0exceptions.NoDataException;
 
 import java.io.File;
 import java.io.IOException;

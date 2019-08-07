@@ -1,7 +1,7 @@
-package main.model.io;
+package model.io;
 
 /*
-this interface will be used for every thing that handles file main.model.io
+this interface will be used for every thing that handles file model.io
 (reads/writes)
  */
 public interface GameFileHandler {

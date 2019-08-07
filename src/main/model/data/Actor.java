@@ -1,6 +1,6 @@
-package main.model.data;
+package model.data;
 
-import main.model.data.structure.*;
+import model.data.structure.*;
 
 import java.awt.*;
 

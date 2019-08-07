@@ -1,7 +1,7 @@
-package main.model.game0logic;
+package model.game0logic;
 
-import main.model.data.communication.GameEventRequest;
-import main.model.data.communication.GameScript;
+import model.data.communication.GameEventRequest;
+import model.data.communication.GameScript;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;

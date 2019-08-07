@@ -1,8 +1,8 @@
-package main.model.data;
+package model.data;
 
-import main.model.data.structure.HpComponent;
-import main.model.data.structure.PhysicsComponent;
-import main.model.data.structure.VisualComponent;
+import model.data.structure.HpComponent;
+import model.data.structure.PhysicsComponent;
+import model.data.structure.VisualComponent;
 
 import java.awt.*;
 

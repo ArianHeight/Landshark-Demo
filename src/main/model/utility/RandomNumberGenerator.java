@@ -1,4 +1,4 @@
-package main.model.utility;
+package model.utility;
 
 /*
 this class will contain all rng or prng-related methods

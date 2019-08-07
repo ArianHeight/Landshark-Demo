@@ -1,4 +1,4 @@
-package main.model.data.game0exceptions;
+package model.data.game0exceptions;
 
 import java.io.IOException;
 

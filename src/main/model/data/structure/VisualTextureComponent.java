@@ -1,6 +1,6 @@
-package main.model.data.structure;
+package model.data.structure;
 
-import main.model.utility.HitboxAabb;
+import model.utility.HitboxAabb;
 
 import java.awt.*;
 

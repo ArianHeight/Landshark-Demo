@@ -1,6 +1,6 @@
-package main.model.io;
+package model.io;
 
-import main.model.data.game0exceptions.ImageDidNotLoadException;
+import model.data.game0exceptions.ImageDidNotLoadException;
 
 import javax.swing.*;
 import java.awt.*;

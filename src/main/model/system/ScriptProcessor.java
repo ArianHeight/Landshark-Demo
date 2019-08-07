@@ -1,7 +1,7 @@
-package main.model.system;
+package model.system;
 
-import main.model.data.communication.EndProgramRequest;
-import main.model.data.communication.GameScript;
+import model.data.communication.EndProgramRequest;
+import model.data.communication.GameScript;
 
 import java.util.Iterator;
 import java.util.Vector;

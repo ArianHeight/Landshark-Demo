@@ -1,4 +1,4 @@
-package main.model.data;
+package model.data;
 
 /*
 extends the GameObject class

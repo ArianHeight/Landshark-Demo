@@ -1,6 +1,6 @@
-package main.ui.user0input;
+package ui.user0input;
 
-import main.model.data.communication.GameScript;
+import model.data.communication.GameScript;
 
 import java.util.Vector;
 import java.util.Observable;

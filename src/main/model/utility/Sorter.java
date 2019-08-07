@@ -1,7 +1,7 @@
-package main.model.utility;
+package model.utility;
 
-import main.model.data.structure.GameComponent;
-import main.model.data.structure.VisualComponent;
+import model.data.structure.GameComponent;
+import model.data.structure.VisualComponent;
 
 import java.util.List;
 

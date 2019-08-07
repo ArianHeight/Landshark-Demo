@@ -1,4 +1,4 @@
-package main.model.data.structure;
+package model.data.structure;
 
 import java.awt.*;
 

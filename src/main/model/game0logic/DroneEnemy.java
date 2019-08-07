@@ -1,8 +1,8 @@
-package main.model.game0logic;
+package model.game0logic;
 
-import main.model.data.structure.HpComponent;
-import main.model.data.structure.PhysicsComponent;
-import main.model.data.structure.VisualAnimationComponent;
+import model.data.structure.HpComponent;
+import model.data.structure.PhysicsComponent;
+import model.data.structure.VisualAnimationComponent;
 
 import java.awt.*;
 

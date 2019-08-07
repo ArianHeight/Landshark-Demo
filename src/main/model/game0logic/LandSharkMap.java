@@ -1,9 +1,9 @@
-package main.model.game0logic;
+package model.game0logic;
 
-import main.model.data.GameMap;
-import main.model.data.structure.PhysicsComponent;
-import main.model.data.structure.VisualTextureComponent;
-import main.model.utility.HitboxAabb;
+import model.data.GameMap;
+import model.data.structure.PhysicsComponent;
+import model.data.structure.VisualTextureComponent;
+import model.utility.HitboxAabb;
 
 import java.awt.*;
 

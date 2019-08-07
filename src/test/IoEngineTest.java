@@ -1,11 +1,11 @@
 package test;
 
-import main.model.data.communication.GameScript;
-import main.model.data.communication.LogRequest;
-import main.model.data.communication.ProcessRequest;
-import main.model.data.game0exceptions.NoDataException;
-import main.model.io.GameFileReader;
-import main.model.io.IoEngine;
+import model.data.communication.GameScript;
+import model.data.communication.LogRequest;
+import model.data.communication.ProcessRequest;
+import model.data.game0exceptions.NoDataException;
+import model.io.GameFileReader;
+import model.io.IoEngine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package main.ui.user0input;
+package ui.user0input;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,9 +16,9 @@ public class ConsoleInput {
     //member vars
     //a variable used to hold the current line in the console(null if no input detected)
     private static String currentLine = null;
-    //input stream reader for main.system.in
+    //input stream reader for system.in
     private static InputStreamReader reader = new InputStreamReader(System.in);
-    //console reader reading from main.system.in
+    //console reader reading from system.in
     private static BufferedReader console = new BufferedReader(reader);
 
     /*
@@ -50,7 +50,7 @@ public class ConsoleInput {
                 }
             }
         } catch (IOException error) { //add error msg to output
-            errors.add("main.system encountered main.model.io error whilst reading msg from console...");
+            errors.add("system encountered model.io error whilst reading msg from console...");
             output.clear(); //clears output
 
             return true; //early return for error encountered

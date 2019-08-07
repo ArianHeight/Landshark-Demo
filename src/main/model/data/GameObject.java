@@ -1,6 +1,6 @@
-package main.model.data;
+package model.data;
 
-import main.model.data.structure.GameComponent;
+import model.data.structure.GameComponent;
 
 import java.util.Iterator;
 import java.util.Vector;

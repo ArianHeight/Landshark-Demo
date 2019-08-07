@@ -1,7 +1,7 @@
-package main.ui.user0input;
+package ui.user0input;
 
-import main.model.data.communication.GameScript;
-import main.model.data.communication.MouseLocRequest;
+import model.data.communication.GameScript;
+import model.data.communication.MouseLocRequest;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

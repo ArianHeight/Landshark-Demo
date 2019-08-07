@@ -1,8 +1,8 @@
-package main.model.data;
+package model.data;
 
-import main.model.data.structure.GameComponent;
-import main.model.data.structure.UiComponent;
-import main.model.data.structure.VisualComponent;
+import model.data.structure.GameComponent;
+import model.data.structure.UiComponent;
+import model.data.structure.VisualComponent;
 
 /*
 this class extends the GameObject class

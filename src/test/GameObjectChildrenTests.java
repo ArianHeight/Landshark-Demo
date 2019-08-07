@@ -1,8 +1,8 @@
 package test;
 
-import main.model.data.*;
-import main.model.data.structure.*;
-import main.model.utility.HitboxAabb;
+import model.data.*;
+import model.data.structure.*;
+import model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

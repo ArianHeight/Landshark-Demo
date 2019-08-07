@@ -1,4 +1,4 @@
-package main.model.io;
+package model.io;
 
 
 import java.io.BufferedWriter;

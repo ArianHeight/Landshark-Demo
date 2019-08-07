@@ -1,4 +1,4 @@
-package main.model.game0logic;
+package model.game0logic;
 
 /*
 this class extends the Actor class
@@ -6,11 +6,11 @@ this class extends the Actor class
 acts as a superclass for all in game enemies to extend
  */
 
-import main.model.data.Actor;
-import main.model.data.structure.HpComponent;
-import main.model.data.structure.PhysicsComponent;
-import main.model.data.structure.VisualComponent;
-import main.model.utility.HitboxAabb;
+import model.data.Actor;
+import model.data.structure.HpComponent;
+import model.data.structure.PhysicsComponent;
+import model.data.structure.VisualComponent;
+import model.utility.HitboxAabb;
 
 public abstract class GameEnemy extends Actor {
     protected static final int WALKING_HITBOX_INDEX = 0;

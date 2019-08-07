@@ -1,17 +1,17 @@
-package main.model.game0logic;
+package model.game0logic;
 
-import main.model.data.ControlInterface;
-import main.model.data.GameObject;
-import main.model.data.GameScene;
-import main.model.data.communication.CollisionDetectedRequest;
-import main.model.data.communication.CollisionResponseRequest;
-import main.model.data.communication.GameEventRequest;
-import main.model.data.communication.GameScript;
-import main.model.data.structure.PhysicsComponent;
-import main.model.data.structure.VisualTextureComponent;
-import main.model.io.IoEngine;
-import main.model.utility.Misc;
-import main.model.utility.RandomNumberGenerator;
+import model.data.ControlInterface;
+import model.data.GameObject;
+import model.data.GameScene;
+import model.data.communication.CollisionDetectedRequest;
+import model.data.communication.CollisionResponseRequest;
+import model.data.communication.GameEventRequest;
+import model.data.communication.GameScript;
+import model.data.structure.PhysicsComponent;
+import model.data.structure.VisualTextureComponent;
+import model.io.IoEngine;
+import model.utility.Misc;
+import model.utility.RandomNumberGenerator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

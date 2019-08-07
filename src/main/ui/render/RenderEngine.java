@@ -1,13 +1,13 @@
-package main.ui.render;
+package ui.render;
 
-import main.model.data.communication.EndProgramRequest;
-import main.model.data.communication.GameScript;
-import main.model.data.communication.LogRequest;
-import main.model.data.GameObject;
-import main.model.data.structure.*;
-import main.model.data.structure.TextComponent;
-import main.model.utility.HitboxAabb;
-import main.model.utility.Sorter;
+import model.data.communication.EndProgramRequest;
+import model.data.communication.GameScript;
+import model.data.communication.LogRequest;
+import model.data.GameObject;
+import model.data.structure.*;
+import model.data.structure.TextComponent;
+import model.utility.HitboxAabb;
+import model.utility.Sorter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +59,7 @@ public class RenderEngine {
      */
     public String openWindow() {
         if (this.windowOpen) { //window guard
-            return "main.system tried to open a window when there is one already";
+            return "system tried to open a window when there is one already";
         }
 
         try {
@@ -81,7 +81,7 @@ public class RenderEngine {
      */
     public String closeWindow() {
         if (!this.windowOpen) { //window guard
-            return "main.system tried to close a window that doesn't exist";
+            return "system tried to close a window that doesn't exist";
         }
 
         try {

@@ -6,7 +6,7 @@ Main will definitely call GameEngine to start the game execution
 
  */
 
-import main.model.system.*;
+import model.system.*;
 
 public class Main {
     //entry method, args is cmd line arguments

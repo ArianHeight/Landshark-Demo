@@ -1,15 +1,15 @@
-package main.model.system;
+package model.system;
 
-import main.model.data.GameObject;
-import main.model.data.GameScene;
-import main.model.data.communication.CollisionResponseRequest;
-import main.model.data.communication.GameScript;
-import main.model.data.communication.LogRequest;
-import main.model.game0logic.LogicEngine;
-import main.model.io.IoEngine;
-import main.model.physics.PhysicsEngine;
-import main.ui.render.RenderEngine;
-import main.ui.user0input.InputEngine;
+import model.data.GameObject;
+import model.data.GameScene;
+import model.data.communication.CollisionResponseRequest;
+import model.data.communication.GameScript;
+import model.data.communication.LogRequest;
+import model.game0logic.LogicEngine;
+import model.io.IoEngine;
+import model.physics.PhysicsEngine;
+import ui.render.RenderEngine;
+import ui.user0input.InputEngine;
 
 import java.util.Vector;
 

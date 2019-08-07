@@ -1,6 +1,6 @@
-package main.model.system;
+package model.system;
 
-import main.model.data.communication.GameScript;
+import model.data.communication.GameScript;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalTime;
