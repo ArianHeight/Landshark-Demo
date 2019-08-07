@@ -1,10 +1,7 @@
 package test;
 
 import main.model.data.*;
-import main.model.data.structure.GameComponent;
-import main.model.data.structure.HpComponent;
-import main.model.data.structure.PhysicsComponent;
-import main.model.data.structure.VisualTextureComponent;
+import main.model.data.structure.*;
 import main.model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +19,7 @@ public class GameObjectChildrenTests {
     }
 
     @Test
-    public void test1() {
+    public void test1() { //find first active component test
         HitboxAabb hb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
         subject = new GameMap(hb, null);
         assertTrue(subject != null);
@@ -31,7 +28,7 @@ public class GameObjectChildrenTests {
     }
 
     @Test
-    public void test1b() {
+    public void test1b() { //find first active component test 2
         HitboxAabb hb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
         PhysicsComponent pc = new PhysicsComponent(hb, 2.0, false);
         VisualTextureComponent vtc = new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1), hb, 1);
@@ -42,13 +39,13 @@ public class GameObjectChildrenTests {
     }
 
     @Test
-    public void test2() {
+    public void test2() { //GameScene cstr
         subject = new GameScene();
         assertTrue(subject != null);
     }
 
     @Test
-    public void test3() {
+    public void test3() { //Actor test
         HitboxAabb hb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
         PhysicsComponent pc = new PhysicsComponent(hb, 2.0, false);
         VisualTextureComponent vtc = new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1), hb, 1);
@@ -68,7 +65,7 @@ public class GameObjectChildrenTests {
     }
 
     @Test
-    public void test4() {
+    public void test4() { //Actor test
         subject = new Actor(0.0, 1.0, 1.0, 1.0,
                 2.0, true, null, 5);
         assertTrue(subject != null);
@@ -83,7 +80,7 @@ public class GameObjectChildrenTests {
     }
 
     @Test
-    public void test5() {
+    public void test5() { //Olayer test
         HitboxAabb hb = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
         PhysicsComponent pc = new PhysicsComponent(hb, 2.0, false);
         VisualTextureComponent vtc = new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1), hb, 1);
@@ -99,7 +96,7 @@ public class GameObjectChildrenTests {
     }
 
     @Test
-    public void test5b() {
+    public void test5b() { //Player test
         subject = new Player(0.0, 1.0, 1.0, 1.0, 2.0, true, null, 5);
         assertTrue(subject != null);
         HitboxAabb hb = (HitboxAabb)subject.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS).getData();
@@ -111,5 +108,21 @@ public class GameObjectChildrenTests {
         assertTrue(((VisualTextureComponent)subject.findFirstActiveComponentInObj(
                 GameComponent.GcType.VISUAL_TEXTURE)).getTexture() == null);
 
+    }
+
+    @Test
+    public void test6() { //GameButton test
+        UiComponent uic = new UiComponent(null);
+        VisualTextureComponent vtc = new VisualTextureComponent(null, new Rectangle(0, 0, 1, 1), null, 1);
+        subject = new GameButton(uic, vtc);
+        assertTrue(subject.findFirstActiveComponentInObj(GameComponent.GcType.UI) == uic);
+        assertTrue(subject.findFirstActiveComponentInObj(GameComponent.GcType.VISUAL_TEXTURE) == vtc);
+        uic.press();
+        assertTrue(((GameButton)subject).isPressed());
+        uic.resetState();
+        assertTrue(!((GameButton)subject).isPressed());
+        uic.press();
+        assertTrue(((GameButton)subject).getPressedAndReset());
+        assertTrue(!((GameButton)subject).isPressed());
     }
 }

@@ -15,7 +15,7 @@ public class ReplayButton extends GameButton {
     private static Image standardTexture = null;
 
     //cstr
-    ReplayButton() {
+    public ReplayButton() {
         super(new UiComponent(new Rectangle(500, 300, 280, 120)),
                 new VisualTextureComponent(standardTexture,
                         new Rectangle(500, 300, 280, 120), null, 0));
