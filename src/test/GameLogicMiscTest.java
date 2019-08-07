@@ -1,16 +1,17 @@
 package test;
 
-import main.model.data.structure.GameComponent;
+import main.model.data.GameObject;
+import main.model.data.GameScene;
+import main.model.data.structure.*;
 import main.model.data.structure.TextComponent;
-import main.model.data.structure.UiComponent;
-import main.model.game0logic.KeyBindings;
-import main.model.game0logic.LandSharkText;
-import main.model.game0logic.ReplayButton;
+import main.model.game0logic.*;
+import main.model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -55,7 +56,39 @@ public class GameLogicMiscTest {
     }
 
     @Test
-    public void test4() {
-        
+    public void test4() { //GameEnemy test
+        VisualAnimationComponent vac = new VisualAnimationComponent(0, null, null);
+        DroneEnemy.setDefaultAnimation(vac);
+        GameEnemy subject = new DroneEnemy(1.0);
+        SpiderEnemy.setDefaultAnimation(vac);
+        GameEnemy subject2 = new SpiderEnemy(2.0);
+        vac = (VisualAnimationComponent) subject.findFirstActiveComponentInObj(GameComponent.GcType.VISUAL_ANIM);
+        assertTrue(vac.getTexture() == null);
+        vac = (VisualAnimationComponent) subject2.findFirstActiveComponentInObj(GameComponent.GcType.VISUAL_ANIM);
+        assertTrue(vac.getTexture() == null);
+        test4secondPart(new GameScene(), new Vector<GameComponent>(), subject, subject2);
+    }
+
+    //tests the updateObj() in both children of GameEnemy
+    public void test4secondPart(GameObject tester, Vector<GameComponent> someVector,
+                                GameEnemy subject, GameEnemy subject2) {
+        tester.addGameObject(subject);
+        tester.addGameObject(subject2);
+        tester.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 2);
+        someVector.clear();
+        PhysicsComponent pc = (PhysicsComponent)subject.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS);
+        HitboxAabb hb = (HitboxAabb)pc.getData();
+        hb.moveX(-hb.getRight() - 1.1);
+        tester.updateObj();
+        tester.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 1);
+        someVector.clear();
+        pc = (PhysicsComponent)subject2.findFirstActiveComponentInObj(GameComponent.GcType.PHYSICS);
+        hb = (HitboxAabb)pc.getData();
+        hb.moveX(-hb.getRight() - 1.1);
+        tester.updateObj();
+        tester.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 0);
     }
 }
