@@ -91,4 +91,64 @@ public class GameLogicMiscTest {
         tester.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
         assertTrue(someVector.size() == 0);
     }
+
+    @Test
+    public void test5() { //LandSharkPlayer ground and crouch testing
+        VisualAnimationComponent vac = new VisualAnimationComponent(0, null, null);
+        LandSharkPlayer.setDefaultAnimation(vac);
+        LandSharkPlayer subject = new LandSharkPlayer();
+
+        subject.setTouchingGroundTrue();
+        subject.updateObj();
+        assertTrue(subject.isTouchingGround());
+        assertTrue(!subject.isCrouching());
+
+        subject.updateObj();
+        subject.inputResponse("CrouchPlayer");
+        assertTrue(!subject.isTouchingGround());
+        subject.updateObj();
+        assertTrue(!subject.isTouchingGround());
+        assertTrue(!subject.isCrouching());
+
+        test5secondPart(subject);
+    }
+
+    public void test5secondPart(LandSharkPlayer subject) {
+        subject.setTouchingGroundTrue();
+        subject.updateObj();
+        subject.inputResponse("CrouchPlayer");
+        subject.setTouchingGroundTrue();
+        subject.updateObj();
+        assertTrue(subject.isTouchingGround());
+        assertTrue(subject.isCrouching());
+    }
+
+    @Test
+    public void test5b() { //LandSharkPlayer input test
+        VisualAnimationComponent vac = new VisualAnimationComponent(0, null, null);
+        LandSharkPlayer.setDefaultAnimation(vac);
+        LandSharkPlayer subject = new LandSharkPlayer();
+
+        subject.inputResponse("JumpPlayer");
+        subject.updateObj();
+        assertTrue(((PhysicsComponent)subject.findFirstActiveComponentInObj(
+                        GameComponent.GcType.PHYSICS)).getVelY() == 0.0);
+        subject.setTouchingGroundTrue();
+        subject.updateObj();
+        subject.inputResponse("JumpPlayer");
+        subject.updateObj();
+        assertTrue(((PhysicsComponent)subject.findFirstActiveComponentInObj(
+                GameComponent.GcType.PHYSICS)).getVelY() > 0.0);
+
+        test5bsecondPart(subject);
+    }
+
+    public void test5bsecondPart(LandSharkPlayer subject) {
+        subject.setTouchingGroundTrue();
+        subject.updateObj();
+        subject.setTouchingGroundTrue();
+        subject.inputResponse("CrouchPlayer");
+        subject.updateObj();
+        assertTrue(subject.isCrouching());
+    }
 }

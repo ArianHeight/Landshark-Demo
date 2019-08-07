@@ -28,7 +28,6 @@ public class LandSharkPlayer extends Player {
     public LandSharkPlayer() {
         super(new PhysicsComponent(2.0, 3.0, 2.0, 1.0, 1.0, true),
                 standardAnimation.makeCpy(new Rectangle(), new HitboxAabb(0.0, 3.0, 1.5, 0.0), 0),
-                //new VisualAnimationComponent(0.2, new Rectangle(0, 0, 64, 64), new HitboxAabb(0.0, 3.0, 1.5, 0.0)),
                 new HpComponent(1));
         //crouch hitbox
         this.addComponent(new PhysicsComponent(2.0, 2.5, 2.0,0.5, 1.0, true));
@@ -98,6 +97,14 @@ public class LandSharkPlayer extends Player {
     //self-explaining
     public void setTouchingGroundTrue() {
         this.thisFrameOnGround = true;
+    }
+
+    public boolean isTouchingGround() {
+        return this.touchingGround;
+    }
+
+    public boolean isCrouching() {
+        return this.crouching;
     }
 
     /*
