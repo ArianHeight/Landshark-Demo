@@ -87,7 +87,7 @@ public class FileIoTest {
             assertTrue(false);
         }
         assertTrue(reader.closeFile().equals(""));
-        this.test3secondPart();
+        this.test3bSecondPart();
     }
 
     private void test3bSecondPart() {
@@ -153,6 +153,19 @@ public class FileIoTest {
         assertTrue(reader.closeFile().equals(""));
         try {
             reader.readLineFromFile();
+            assertTrue(false);
+        } catch (FileNotOpenException e) {
+            assertTrue(true);
+        } catch (Exception e1) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    public void test6b() { //next int file guard
+        try {
+            reader.getNextInt();
+            assertTrue(false);
         } catch (FileNotOpenException e) {
             assertTrue(true);
         } catch (Exception e1) {
@@ -193,5 +206,33 @@ public class FileIoTest {
         } catch (Exception e1) {
             assertTrue(false);
         }
+    }
+
+    @Test
+    public void test7b() { //next int file guard
+        try {
+            reader.getNextDouble();
+            assertTrue(false);
+        } catch (FileNotOpenException e) {
+            assertTrue(true);
+        } catch (Exception e1) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    public void test8() { //filePath check and opening already opened file
+        assertTrue(reader.openFile().equals(""));
+        assertTrue(!reader.openFile().equals(""));
+        assertTrue(writer.openFile().equals(""));
+        assertTrue(!writer.openFile().equals(""));
+
+        assertTrue(reader.getFilePath().equals("./Game/system/Test/read.txt"));
+        assertTrue(writer.getFilePath().equals("./Game/system/Test/write.txt"));
+    }
+
+    @Test
+    public void test9() { //testing file writing with closed file
+        assertTrue(!writer.writeContentToFile("blue bird", false).equals(""));
     }
 }

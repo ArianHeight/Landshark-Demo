@@ -53,4 +53,18 @@ public class AnimationMngrTest {
                 new HitboxAabb(-1.0, 0.0, -1.0, -2.0), 5);
         assertTrue(subject.getErrors().size() > 0);
     }
+
+    @Test
+    public void test5() { //test already loaded
+        Rectangle rect = new Rectangle(4, 5, 5, 5);
+        HitboxAabb hb = new HitboxAabb(-1.0, 0.0, -1.0, -2.0);
+        VisualAnimationComponent animation = subject.makeAnimation(
+                "./Game/Assets/Animations/walkingShark.anim", rect, hb, 5);
+        VisualAnimationComponent animationTwo = subject.makeAnimation(
+                "./Game/Assets/Animations/walkingShark.anim", null, null, 4);
+        assertTrue(animation.getData().equals(animationTwo.getData()));
+        assertTrue(animationTwo.getLayer() == 4);
+        assertTrue(animationTwo.getRenderPlane() == null);
+        assertTrue(animationTwo.getWorldPosRef() == null);
+    }
 }

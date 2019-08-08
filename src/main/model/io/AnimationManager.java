@@ -129,11 +129,6 @@ public class AnimationManager {
         }
     }
 
-    //accessor to logs
-    public Vector<String> getLogs() {
-        return this.logs;
-    }
-
     //accessor to errors
     public Vector<String> getErrors() {
         return this.errors;
