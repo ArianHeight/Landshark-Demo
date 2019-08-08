@@ -1,12 +1,14 @@
 package test;
 
 import model.data.structure.*;
+import model.data.structure.TextComponent;
 import model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -106,6 +108,8 @@ public class GameComponentTest {
         ((VisualAnimationComponent)subject).addSprite(im2);
         assertTrue(((VisualAnimationComponent)subject).getCurrentSprite(0.1) == im);
         assertTrue(((VisualAnimationComponent)subject).getCurrentSprite(1.0) == im2);
+        assertTrue(((VisualAnimationComponent)subject).getCurrentSprite(1.1) == im);
+        assertTrue(((Vector<Image>)subject.getData()).size() == 2);
     }
 
     @Test
@@ -120,6 +124,17 @@ public class GameComponentTest {
         assertTrue(((UiComponent)subject).getPressedState() == true);
         ((UiComponent)subject).resetState();
         assertTrue(((UiComponent)subject).getPressedState() == false);
+    }
+
+    @Test
+    public void test1i() { //text component test
+        Font font = new Font("arial", 0, 12);
+        subject = new TextComponent("hi", font, 15, 20, Color.black);
+        assertTrue(((TextComponent)subject).getFont() == font);
+        assertTrue(((TextComponent)subject).getData().equals("hi"));
+        assertTrue(((TextComponent)subject).getColor().equals(Color.black));
+        assertTrue(((TextComponent)subject).getX() == 15);
+        assertTrue(((TextComponent)subject).getY() == 20);
     }
 
     @Test

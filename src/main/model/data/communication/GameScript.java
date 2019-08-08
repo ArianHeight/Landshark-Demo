@@ -44,15 +44,6 @@ public abstract class GameScript {
     }
 
     /*
-    REQUIRES:input from a public int field in this class
-    MODIFIES:this
-    EFFECT:Sets a new script type based on the input
-     */
-    private void setCmd(int newCmd) {
-        this.cmd = newCmd;
-    }
-
-    /*
     REQUIRES:String input
     MODIFIES:this
     EFFECT:Sets the data contained to newData

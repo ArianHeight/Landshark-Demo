@@ -24,8 +24,9 @@ public class UtilityTest {
 
     @Test
     public void test1() { //test random bool
-        assertTrue(RandomNumberGenerator.randomBool() || true);
-        assertTrue(RandomNumberGenerator.randomBool() || true);
+        for (int i = 0; i < 10; i++) {
+            assertTrue(RandomNumberGenerator.randomBool() || true);
+        }
     }
 
     @Test

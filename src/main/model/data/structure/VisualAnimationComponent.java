@@ -71,16 +71,14 @@ public class VisualAnimationComponent extends VisualComponent {
     public void updateCurrentSprite(double timeElapsed) {
         this.secondsElapsed += timeElapsed;
 
-        if (this.it == null) { //null guard
-            this.it = this.sprites.iterator(); //start the animation
-        }
-
         //iterates through the loop if the seconds elapsed is greater
         while (this.secondsElapsed >= this.secondsBetweenFrame) {
             if (!this.it.hasNext()) { //when the iterator reaches the end
                 this.it = this.sprites.iterator(); //restart the animation
             }
-            this.currentSprite = it.next(); //next sprite in the animation
+            if (this.it.hasNext()) {
+                this.currentSprite = it.next(); //next sprite in the animation only if sprite list is not empty
+            }
             this.secondsElapsed -= this.secondsBetweenFrame;
         }
     }

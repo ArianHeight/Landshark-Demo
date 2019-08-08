@@ -2,7 +2,7 @@ package ui.user0input;
 
 import model.data.communication.GameScript;
 import model.game0logic.KeyBindings;
-import model.utility.DataProcessor;
+import model.system.ScriptProcessor;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -53,10 +53,10 @@ public class InputEngine implements Observer {
             //only for updates from cwListener
             switch ((int) arg) {
                 case(GameScript.LOG_DATA): //gets error data and puts it in queue
-                    DataProcessor.processErrorData(this.scripts, this.cwListener.getErrors());
+                    ScriptProcessor.processErrorData(this.scripts, this.cwListener.getErrors());
                     break;
                 case(GameScript.PROCESS_DATA): //gets process requests and puts it in queue
-                    DataProcessor.processStringData(this.scripts, this.cwListener.getInputs());
+                    ScriptProcessor.processStringData(this.scripts, this.cwListener.getInputs());
                     break;
                 default:
                     return;

@@ -6,6 +6,8 @@ import model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameScriptTest {
@@ -109,5 +111,13 @@ public class GameScriptTest {
         assertTrue(subject.getCmd() == GameScript.COLLISION_RESPONSE);
         assertTrue(((CollisionResponseRequest)subject).getOne() == one);
         assertTrue(((CollisionResponseRequest)subject).getTwo() == two);
+    }
+
+    @Test
+    public void test9() { //MouseLocRequest test
+        Point point = new Point(5, 10);
+        subject = new MouseLocRequest("click", point);
+        assertTrue(subject.getData().equals("click"));
+        assertTrue(((MouseLocRequest)subject).getLocation() == point);
     }
 }

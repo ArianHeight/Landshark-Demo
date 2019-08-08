@@ -43,10 +43,6 @@ public class Actor extends GameObject {
         //grabs the hp
         HpComponent health = this.findHpComponent();
 
-        if (health == null) { //null guard
-            return -1;
-        }
-
         boolean returnVal = health.takeDmg(dmg); //take dmg
         if (returnVal) { //obj is alive
             return 1;
@@ -61,10 +57,6 @@ public class Actor extends GameObject {
     public void setHP(int newHP) {
         //grabs the hp
         HpComponent health = this.findHpComponent();
-
-        if (health == null) { //null guard
-            return; //no hp
-        }
 
         health.setHP(newHP); //sets the hp
     }

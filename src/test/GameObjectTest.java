@@ -110,4 +110,18 @@ public class GameObjectTest {
         obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
         assertTrue(someVector.size() == 1);
     }
+
+    @Test
+    public void test10() { //tests freezing updates
+        obj1.freeze();
+        obj3.setForDelete();
+        obj1.updateObj();
+        obj1.unfreeze();
+        obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 2);
+        obj1.updateObj();
+        someVector.clear();
+        obj1.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 1);
+    }
 }

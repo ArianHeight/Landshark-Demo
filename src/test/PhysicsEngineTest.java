@@ -3,12 +3,15 @@ package test;
 import model.data.GameObject;
 import model.data.GameScene;
 import model.data.communication.GameScript;
+import model.data.communication.MouseLocRequest;
 import model.data.structure.PhysicsComponent;
+import model.data.structure.UiComponent;
 import model.physics.PhysicsEngine;
 import model.utility.HitboxAabb;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -51,6 +54,16 @@ public class PhysicsEngineTest {
     }
 
     @Test
+    public void test1c() { //test collision against a point
+        Rectangle rect = new Rectangle(0, 0, 10, 5);
+        assertTrue(pe.doCollisionDetection(rect, new Point(5, 2)));
+        assertTrue(!pe.doCollisionDetection(rect, new Point(-1, 2)));
+        assertTrue(!pe.doCollisionDetection(rect, new Point(11, 2)));
+        assertTrue(!pe.doCollisionDetection(rect, new Point(5, -1)));
+        assertTrue(!pe.doCollisionDetection(rect, new Point(-1, 6)));
+    }
+
+    @Test
     public void test2() { //test right
         PhysicsComponent one = new PhysicsComponent(new HitboxAabb(0.0, 1.0, 1.0, 0.0), 2.0, true);
         PhysicsComponent two = new PhysicsComponent(new HitboxAabb(-0.5, 0.5, 1.0, 0.0), -1.0, true);
@@ -84,6 +97,52 @@ public class PhysicsEngineTest {
         pe.doCollisionResponse(one, two);
         assertTrue(((HitboxAabb)two.getData()).getBottom() == 1.0);
         assertTrue(((HitboxAabb)one.getData()).getTop() == 1.0);
+    }
+
+    @Test
+    public void test5b() { //testing collision response on two inmovable components
+        HitboxAabb hbOne = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
+        HitboxAabb hbTwo = new HitboxAabb(0.5, 1.5, 1.0, 0.0);
+        PhysicsComponent one = new PhysicsComponent(hbOne, -2.0, true);
+        PhysicsComponent two = new PhysicsComponent(hbTwo, -1.0, true);
+        pe.doCollisionResponse(one, two);
+        assertTrue(hbOne.getLeft() == 0.0);
+        assertTrue(hbTwo.getLeft() == 0.5);
+    }
+
+    @Test
+    public void test5c() { //testing response on two moveable components
+        HitboxAabb hbOne = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
+        HitboxAabb hbTwo = new HitboxAabb(0.5, 1.5, 1.0, 0.0);
+        PhysicsComponent one = new PhysicsComponent(hbOne, 1.0, true);
+        PhysicsComponent two = new PhysicsComponent(hbTwo, 1.0, true);
+        pe.doCollisionResponse(one, two);
+        assertTrue(hbOne.getLeft() == -0.25);
+        assertTrue(hbTwo.getLeft() == 0.75);
+    }
+
+    @Test
+    public void test5d() { //testing response on border case for resetting velocity
+        HitboxAabb hbOne = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
+        HitboxAabb hbTwo = new HitboxAabb(1.0, 2.0, 1.0, 0.0);
+        PhysicsComponent one = new PhysicsComponent(hbOne, -1.0, true);
+        PhysicsComponent two = new PhysicsComponent(hbTwo, 1.0, true);
+        two.setVelX(-1.0);
+        pe.doCollisionResponse(one, two);
+        assertTrue(hbTwo.getLeft() == 1.0);
+        assertTrue(two.getVelX() == 0.0);
+    }
+
+    @Test
+    public void test5e() { //testing response on border case for resetting velocity(y instead of x)
+        HitboxAabb hbOne = new HitboxAabb(0.0, 1.0, 1.0, 0.0);
+        HitboxAabb hbTwo = new HitboxAabb(0.0, 1.0, 2.0, 1.0);
+        PhysicsComponent one = new PhysicsComponent(hbOne, -1.0, true);
+        PhysicsComponent two = new PhysicsComponent(hbTwo, 1.0, true);
+        two.setVelY(-1.0);
+        pe.doCollisionResponse(one, two);
+        assertTrue(hbTwo.getBottom() == 1.0);
+        assertTrue(two.getVelY() == 0.0);
     }
 
     @Test
@@ -177,5 +236,22 @@ public class PhysicsEngineTest {
         assertTrue(hbOne.getTop() == 1.5);
         assertTrue(hbTwo.getTop() == 1.0);
         assertTrue(hbTwo.getLeft() == 0.0);
+    }
+
+    @Test
+    public void test10() { //mouse click detection testing
+        UiComponent uiOne = new UiComponent(new Rectangle(0, 0, 10, 5));
+        UiComponent uiTwo = new UiComponent(new Rectangle(100, 100, 110, 105));
+        GameObject scene = new GameScene();
+        scene.addComponent(uiOne);
+        scene.addComponent(uiTwo);
+
+        pe.addMouesLocToQueue(new MouseLocRequest("click", new Point(5, 2)));
+        pe.addMouesLocToQueue(new MouseLocRequest("click", new Point(20, 30)));
+        pe.addMouesLocToQueue(new MouseLocRequest("hold", new Point(5, 3)));
+
+        pe.updateMouseCollisions(scene);
+        assertTrue(uiOne.getPressedState());
+        assertTrue(!uiTwo.getPressedState());
     }
 }
