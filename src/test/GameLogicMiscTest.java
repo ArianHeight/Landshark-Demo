@@ -41,6 +41,9 @@ public class GameLogicMiscTest {
         assertTrue(subject.getPressedAndReset());
         assertTrue(!subject.isPressed());
         assertTrue(!subject.getPressedAndReset());
+        uic.press();
+        subject.updateObj();
+        assertTrue(!subject.isPressed());
     }
 
     @Test
@@ -59,12 +62,15 @@ public class GameLogicMiscTest {
     public void test4() { //GameEnemy test
         VisualAnimationComponent vac = new VisualAnimationComponent(0, null, null);
         DroneEnemy.setDefaultAnimation(vac);
-        GameEnemy subject = new DroneEnemy(1.0);
+        GameEnemy subject = new DroneEnemy(1.0, false);
         SpiderEnemy.setDefaultAnimation(vac);
         GameEnemy subject2 = new SpiderEnemy(2.0);
+        GameEnemy subject3 = new DroneEnemy(1.0, true);
         vac = (VisualAnimationComponent) subject.findFirstActiveComponentInObj(GameComponent.GcType.VISUAL_ANIM);
         assertTrue(vac.getTexture() == null);
         vac = (VisualAnimationComponent) subject2.findFirstActiveComponentInObj(GameComponent.GcType.VISUAL_ANIM);
+        assertTrue(vac.getTexture() == null);
+        vac = (VisualAnimationComponent) subject3.findFirstActiveComponentInObj(GameComponent.GcType.VISUAL_ANIM);
         assertTrue(vac.getTexture() == null);
         test4secondPart(new GameScene(), new Vector<GameComponent>(), subject, subject2);
     }
@@ -95,7 +101,9 @@ public class GameLogicMiscTest {
     @Test
     public void test5() { //LandSharkPlayer ground and crouch testing
         VisualAnimationComponent vac = new VisualAnimationComponent(0, null, null);
+        VisualAnimationComponent vac2 = new VisualAnimationComponent(0, null, null);
         LandSharkPlayer.setDefaultAnimation(vac);
+        LandSharkPlayer.setCrouchAnimation(vac2);
         LandSharkPlayer subject = new LandSharkPlayer();
 
         subject.setTouchingGroundTrue();
@@ -121,6 +129,8 @@ public class GameLogicMiscTest {
         subject.updateObj();
         assertTrue(subject.isTouchingGround());
         assertTrue(subject.isCrouching());
+        subject.updateObj();
+        assertTrue(!subject.isCrouching());
     }
 
     @Test
@@ -150,5 +160,28 @@ public class GameLogicMiscTest {
         subject.inputResponse("CrouchPlayer");
         subject.updateObj();
         assertTrue(subject.isCrouching());
+    }
+
+    @Test
+    public void test5c() { //kill player test
+        VisualAnimationComponent vac = new VisualAnimationComponent(0, null, null);
+        LandSharkPlayer.setDefaultAnimation(vac);
+        LandSharkPlayer subject = new LandSharkPlayer();
+        GameObject scene = new GameScene();
+        scene.addGameObject(subject);
+
+        subject.setHP(0);
+        scene.updateObj();
+        Vector<GameComponent> someVector = new Vector<GameComponent>();
+        scene.compileComponentList(someVector, GameComponent.GcType.PHYSICS);
+        assertTrue(someVector.size() == 0);
+    }
+
+    @Test
+    public void test6() { //landshark map test
+        LandSharkMap.setDefaultTexture(null);
+        LandSharkMap subject = new LandSharkMap();
+        assertTrue(subject.findFirstActiveComponentInObj(
+                GameComponent.GcType.VISUAL_TEXTURE).getData() == null);
     }
 }

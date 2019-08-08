@@ -62,4 +62,10 @@ public class IoEngineTest {
         subject.loadTexture("./Game/System/Test/some.png", errors);
         assertTrue(errors.size() == 1);
     }
+
+    @Test
+    public void test4() { //closed system test
+        subject.closeSystem();
+        assertTrue(true);
+    }
 }

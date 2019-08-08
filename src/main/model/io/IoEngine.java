@@ -2,11 +2,8 @@ package model.io;
 
 import model.data.communication.GameScript;
 import model.data.communication.LogRequest;
-import model.data.game0exceptions.FileNotOpenException;
 import model.data.game0exceptions.ImageDidNotLoadException;
-import model.data.game0exceptions.NoDataException;
 import model.data.structure.VisualAnimationComponent;
-import model.game0logic.GameScore;
 import model.utility.HitboxAabb;
 
 import java.awt.*;
@@ -20,7 +17,6 @@ This class will handle all Outputs to console and file model.io
  */
 public class IoEngine {
     private GameFileWriter logWriter; //responsible for writing game logs
-    private GameFileReader scoreReader; //responsible for reading high scores
     private ImageManager textureMngr; //responsible for managing all Images
     private AnimationManager animationMngr; //responsible for managing all animations
     private Vector<String> logQueue; //holds a queue for logging
@@ -28,13 +24,11 @@ public class IoEngine {
     //cstr
     public IoEngine() {
         this.logWriter = new GameFileWriter("./Game/system/Logs/game_active.log");
-        this.scoreReader = new GameFileReader("./Game/system/data/scores.sav");
         this.textureMngr = new ImageManager();
         this.animationMngr = new AnimationManager(this.textureMngr);
         this.logQueue = new Vector<String>();
         System.out.println(this.logWriter.openFile(true)); //truncates the file
         System.out.println(this.logWriter.closeFile());
-        System.out.println(this.scoreReader.openFile()); //opens the file for reading
     }
 
     /*
@@ -87,22 +81,6 @@ public class IoEngine {
     }
 
     /*
-    this method takes a Vector<GameScore> as an output, reads all high scores and stores them in the vector
-    pushes all warnings/errors out to the scriptOutput to be logged
-     */
-    public void readGameScore(Vector<GameScore> scores, Vector<GameScript> scriptOutput) {
-        int intScore = 0;
-        try {
-            intScore = this.scoreReader.getNextInt();
-            scores.add(new GameScore("Tester", intScore)); //TODO temp code
-        } catch (NoDataException errorOne) {
-            scriptOutput.add(new LogRequest("data could not be read from file at " + this.scoreReader.getFilePath()));
-        } catch (FileNotOpenException errorTwo) {
-            scriptOutput.add(new LogRequest("The file at " + this.scoreReader.getFilePath() + " is not open."));
-        }
-    }
-
-    /*
     this method takes a filePath to the Image and loads it, returning the Image itself
     second param is the error script output
      */
@@ -142,6 +120,5 @@ public class IoEngine {
      */
     public void closeSystem() {
         this.logWriter.closeFile();
-        this.scoreReader.closeFile();
     }
 }

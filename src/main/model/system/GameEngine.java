@@ -167,4 +167,9 @@ public class GameEngine {
         this.fileCommunicator.closeSystem(); //closes the system
         this.scriptQueue.clear();
     }
+
+    //adds a script to queue
+    public void addScript(GameScript script) {
+        this.scriptQueue.add(script);
+    }
 }

@@ -1,10 +1,12 @@
 package model.game0logic;
 
 import model.data.Player;
-import model.data.structure.*;
+import model.data.structure.HpComponent;
+import model.data.structure.PhysicsComponent;
+import model.data.structure.VisualAnimationComponent;
+import model.data.structure.VisualComponent;
 import model.utility.HitboxAabb;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class LandSharkPlayer extends Player {
@@ -15,6 +17,7 @@ public class LandSharkPlayer extends Player {
     private static final int CROUCHING_TEXTURE_INDEX = 4;
     private static final double JUMP_VELOCITY = 12.0;
     private static VisualAnimationComponent standardAnimation = null;
+    private static VisualAnimationComponent crouchAnimation = null;
 
     private boolean crouchCalled; //whether or not crouch() has been called
     private boolean crouching; //whether or not player is crouching
@@ -32,10 +35,8 @@ public class LandSharkPlayer extends Player {
         //crouch hitbox
         this.addComponent(new PhysicsComponent(2.0, 2.5, 2.0,0.5, 1.0, true));
         this.memberComponents.get(CROUCHING_HITBOX_INDEX).deactivate();
-        this.addComponent(
-                new VisualTextureComponent(new ImageIcon("./Game/Assets/Textures/crouchShark1.png").getImage(),
-                                                     new Rectangle(),
-                                                     new HitboxAabb(0.0, 3.0, 0.75, 0.0), 0));
+        this.addComponent(crouchAnimation.makeCpy(new Rectangle(),
+                        new HitboxAabb(0.0, 3.0, 0.75, 0.0), 0));
         this.memberComponents.get(CROUCHING_TEXTURE_INDEX).deactivate();
         this.setAllTags("Player");
 
@@ -71,6 +72,13 @@ public class LandSharkPlayer extends Player {
      */
     public static void setDefaultAnimation(VisualAnimationComponent anim) {
         standardAnimation = anim;
+    }
+
+    /*
+    this method sets the crouch animations
+     */
+    public static void setCrouchAnimation(VisualAnimationComponent anim) {
+        crouchAnimation = anim;
     }
 
     //makes the player jump in the air if touching the ground

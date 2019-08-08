@@ -13,10 +13,8 @@ import model.io.IoEngine;
 import model.utility.Misc;
 import model.utility.RandomNumberGenerator;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 import java.util.Vector;
 
 /*
@@ -70,13 +68,12 @@ public class LogicEngine {
                 "./Game/Assets/Animations/walkingDrone.anim", scripts));
         LandSharkPlayer.setDefaultAnimation(fileEngine.loadAnimation(
                 "./Game/Assets/Animations/walkingShark.anim", scripts));
-        try { //TODO remove from code
-            ReplayButton.setDefaultTexture(ImageIO.read(new URL(
-                    "https://png.pngtree.com/png-clipart/20190613/original/"
-                            + "pngtree-replay-button-png-image_3550534.jpg")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        LandSharkPlayer.setCrouchAnimation(fileEngine.loadAnimation(
+                "./Game/Assets/Animations/crouchShark.anim", scripts));
+        ReplayButton.setDefaultTexture(fileEngine.loadTexture(
+                "./Game/Assets/Textures/replay.png", scripts));
+        LandSharkMap.setDefaultTexture(fileEngine.loadTexture(
+                "./Game/Assets/Textures/floor.png", scripts));
 
         this.makeGameObjs(scene);
     }
@@ -168,28 +165,30 @@ public class LogicEngine {
     //this method will call restartGame() if the replay button has been pressed
     public void checkReplayButton(GameObject scene) {
         if (this.button.isPressed()) {
-            this.restartGame(scene, new Vector<GameScript>()); //TODO temp code
+            this.restartGame(scene, new Vector<GameScript>()); 
         }
     }
 
-    //private method used for spawning enemies
-    private void spawnEnemies(GameObject scene, double timeElapsed) {
+    //method used for spawning enemies
+    public void spawnEnemies(GameObject scene, double timeElapsed) {
         double randomNum = RandomNumberGenerator.randomBetween(0, 100);
         randomNum *= Math.atan(2.0 * (this.timeSinceLastGen - 1 - 2.5 * this.vel));
 
         if (randomNum > 90 && this.timeSinceLastSecond >= 1.0) { //spawn an enemy
-            if (RandomNumberGenerator.randomBool()) {
+            if (RandomNumberGenerator.randomBetween(0, 100) < 40) {
                 ((LandSharkPlayer) this.player).addGameObject(new SpiderEnemy(this.vel));
+            } else if (RandomNumberGenerator.randomBetween(0, 100) < 60) {
+                ((LandSharkPlayer) this.player).addGameObject(new DroneEnemy(this.vel, false));
             } else {
-                ((LandSharkPlayer) this.player).addGameObject(new DroneEnemy(this.vel));
+                ((LandSharkPlayer) this.player).addGameObject(new DroneEnemy(this.vel, true));
             }
-            this.timeSinceLastGen = 0.0;
-        } else if (this.timeSinceLastSecond >= 1.0) { //add time to time since second
-            this.timeSinceLastSecond = 0.0;
-        } else { //add time to time since last generation/spawn
-            this.timeSinceLastGen += timeElapsed;
-            this.timeSinceLastSecond += timeElapsed;
         }
+        if (this.timeSinceLastSecond >= 1.0) { //add time to time since second
+            this.timeSinceLastSecond = 0.0;
+        }
+        //add time to time since last generation/spawn
+        this.timeSinceLastGen += timeElapsed;
+        this.timeSinceLastSecond += timeElapsed;
     }
 
     /*
