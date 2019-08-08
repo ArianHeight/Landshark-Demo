@@ -165,7 +165,7 @@ public class LogicEngine {
     //this method will call restartGame() if the replay button has been pressed
     public void checkReplayButton(GameObject scene) {
         if (this.button.isPressed()) {
-            this.restartGame(scene, new Vector<GameScript>()); 
+            this.restartGame(scene, new Vector<GameScript>());
         }
     }
 
