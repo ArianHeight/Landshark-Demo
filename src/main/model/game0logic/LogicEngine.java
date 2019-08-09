@@ -172,7 +172,7 @@ public class LogicEngine {
     //method used for spawning enemies
     public void spawnEnemies(GameObject scene, double timeElapsed) {
         double randomNum = RandomNumberGenerator.randomBetween(0, 100);
-        randomNum *= Math.atan(2.0 * (this.timeSinceLastGen - 1 - 2.5 * this.vel));
+        randomNum *= Math.atan(0.5 * (this.timeSinceLastGen - 1 + 0.0001 * this.vel) * -this.vel);
 
         if (randomNum > 90 && this.timeSinceLastSecond >= 1.0) { //spawn an enemy
             if (RandomNumberGenerator.randomBetween(0, 100) < 40) {

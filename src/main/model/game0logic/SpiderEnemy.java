@@ -15,7 +15,7 @@ public class SpiderEnemy extends GameEnemy {
 
     //cstr
     public SpiderEnemy(double vel) {
-        super(new PhysicsComponent(16.0, 3.0, 1.5, 1.0, 1.0, false),
+        super(new PhysicsComponent(25.0, 3.0, 1.5, 1.0, 1.0, false),
                 standardAnimation.makeCpy(new Rectangle(), null, 1),
                 new HpComponent(1),
                 vel);
