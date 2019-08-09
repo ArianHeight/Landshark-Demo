@@ -63,17 +63,17 @@ public class LogicEngine {
         this.paused = false;
 
         SpiderEnemy.setDefaultAnimation(fileEngine.loadAnimation(
-                "./Game/Assets/Animations/walkingSpider.anim", scripts));
+                "data/assets/animations/walkingSpider.anim", scripts));
         DroneEnemy.setDefaultAnimation(fileEngine.loadAnimation(
-                "./Game/Assets/Animations/walkingDrone.anim", scripts));
+                "data/assets/animations/walkingDrone.anim", scripts));
         LandSharkPlayer.setDefaultAnimation(fileEngine.loadAnimation(
-                "./Game/Assets/Animations/walkingShark.anim", scripts));
+                "data/assets/animations/walkingShark.anim", scripts));
         LandSharkPlayer.setCrouchAnimation(fileEngine.loadAnimation(
-                "./Game/Assets/Animations/crouchShark.anim", scripts));
+                "data/assets/animations/crouchShark.anim", scripts));
         ReplayButton.setDefaultTexture(fileEngine.loadTexture(
-                "./Game/Assets/Textures/replay.png", scripts));
+                "data/assets/textures/replay.png", scripts));
         LandSharkMap.setDefaultTexture(fileEngine.loadTexture(
-                "./Game/Assets/Textures/floor.png", scripts));
+                "data/assets/textures/floor.png", scripts));
 
         this.makeGameObjs(scene);
     }
@@ -85,7 +85,7 @@ public class LogicEngine {
         scene.addGameObject(this.activeGame);
         scene.addGameObject(this.pauseMenu);
         this.activeGame.addComponent(new VisualTextureComponent(
-                new ImageIcon("./Game/Assets/Textures/backDrop.png").getImage(),
+                new ImageIcon("data/assets/textures/backDrop.png").getImage(),
                 new Rectangle(0, 0, 1280, 720), null, 2));
         LandSharkPlayer lspPlayer = new LandSharkPlayer();
         this.player = lspPlayer;

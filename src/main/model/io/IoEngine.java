@@ -23,7 +23,7 @@ public class IoEngine {
 
     //cstr
     public IoEngine() {
-        this.logWriter = new GameFileWriter("./Game/system/Logs/game_active.log");
+        this.logWriter = new GameFileWriter("data/system/logs/game_active.log");
         this.textureMngr = new ImageManager();
         this.animationMngr = new AnimationManager(this.textureMngr);
         this.logQueue = new Vector<String>();

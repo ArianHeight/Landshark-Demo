@@ -20,7 +20,7 @@ public class ImageManagerTest {
     @Test
     public void test1() { //tests successful load
         try {
-            Image result = subject.loadImage("./Game/Assets/Textures/shark1.png");
+            Image result = subject.loadImage("data/assets/textures/shark1.png");
             assertTrue(true);
         } catch (ImageDidNotLoadException error) {
             assertTrue(false);
@@ -30,7 +30,7 @@ public class ImageManagerTest {
     @Test
     public void test2() { //tests failed load
         try {
-            Image result = subject.loadImage("./Game/System/Test/some.png");
+            Image result = subject.loadImage("data/system/test/some.png");
             assertTrue(false);
         } catch (ImageDidNotLoadException error) {
             assertTrue(true);
@@ -42,14 +42,14 @@ public class ImageManagerTest {
         Image result = null;
         Image resultTwo = null;
         try {
-            result = subject.loadImage("./Game/Assets/Textures/shark1.png");
+            result = subject.loadImage("data/assets/textures/shark1.png");
             assertTrue(true);
         } catch (ImageDidNotLoadException error) {
             assertTrue(false);
         }
 
         try {
-            resultTwo = subject.loadImage("./Game/Assets/Textures/shark1.png");
+            resultTwo = subject.loadImage("data/assets/textures/shark1.png");
             assertTrue(true);
         } catch (ImageDidNotLoadException error) {
             assertTrue(false);
